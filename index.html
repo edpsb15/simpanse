@@ -79,8 +79,8 @@
         <!-- Area Konten Halaman -->
         <div class="p-6 flex-1 overflow-y-auto">
             
-            <!-- HALAMAN: TABEL DATA -->
-            <div id="page-data" class="page-content active h-full flex flex-col">
+            <!-- HALAMAN: TABEL DATA (Data Keluarga) -->
+            <div id="page-keluarga" class="page-content h-full flex flex-col">
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex flex-wrap justify-between items-end gap-4">
                     <div class="flex flex-wrap gap-4 items-end w-full lg:w-auto">
                         <div>
@@ -134,7 +134,7 @@
         // GANTI teks di bawah ini dengan URL Web App Apps Script Anda!
 	const API_URL = "https://script.google.com/macros/s/AKfycbxLgpQJ5jJbr8NvRTQD0DyuW_oRfVGlf8wOH2nFQCS31QaaLJnDBoTRek68fHZj5k-0Kg/exec";
         
-        let currentMode = 'keluarga';
+        let currentMode = 'dashboard';
         let dataMitraGlobal = {}; // Menyimpan struktur mitra dari server
 
         // Tanggal Header
@@ -205,24 +205,54 @@
         // Panggil fungsi muatDataMitra saat halaman pertama kali dibuka
         window.onload = () => {
             muatDataMitra();
+
+            // Default tampilan: Dashboard
+            switchPage('dashboard');
         };
 
         // Navigasi UI
         function switchPage(mode) {
             currentMode = mode;
+
+            // reset highlight
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('bg-orange-600', 'text-white'); btn.classList.add('text-gray-300');
-                document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
-                document.getElementById('page-' + mode).classList.remove('hidden');
+                btn.classList.remove('bg-orange-600', 'text-white');
+                btn.classList.add('text-gray-300');
             });
-            document.getElementById('nav-' + mode).classList.remove('text-gray-300');
-            document.getElementById('nav-' + mode).classList.add('bg-orange-600', 'text-white');
-            
-            document.getElementById('header-title').innerText = mode === 'keluarga' ? 'Manajemen Data Keluarga' : 'Manajemen Data Usaha';
-            document.getElementById('th-nama').innerText = mode === 'keluarga' ? 'Nama Kepala Keluarga' : 'Nama Usaha';
-            
-            // Bersihkan tabel
-            document.getElementById('tabel-body').innerHTML = '<tr><td colspan="7" class="p-8 text-center text-gray-400">Silakan tekan "Tarik Data" untuk memulai</td></tr>';
+
+            // hide all pages
+            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+
+            // show selected page if it exists
+            const pageEl = document.getElementById('page-' + mode);
+            if (pageEl) pageEl.classList.remove('hidden');
+
+            // highlight selected nav button if it exists
+            const navEl = document.getElementById('nav-' + mode);
+            if (navEl) {
+                navEl.classList.remove('text-gray-300');
+                navEl.classList.add('bg-orange-600', 'text-white');
+            }
+
+            // update header only for table modes
+            const headerTitle = document.getElementById('header-title');
+            const thNama = document.getElementById('th-nama');
+            if (headerTitle) {
+                headerTitle.innerText = mode === 'keluarga'
+                    ? 'Manajemen Data Keluarga'
+                    : mode === 'usaha'
+                        ? 'Manajemen Data Usaha'
+                        : 'Manajemen Data Keluarga';
+            }
+            if (thNama) {
+                thNama.innerText = mode === 'keluarga' ? 'Nama Kepala Keluarga' : 'Nama Usaha';
+            }
+
+            // Bersihkan tabel (hanya jika elemen tabel ada)
+            const tbody = document.getElementById('tabel-body');
+            if (tbody) {
+                tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-gray-400">Silakan tekan "Tarik Data" untuk memulai</td></tr>';
+            }
         }
 
         async function tarikData() {
