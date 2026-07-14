@@ -23,13 +23,13 @@
 </head>
 <body class="bg-gray-100 font-sans text-gray-800 flex h-screen overflow-hidden">
 
-    <aside class="w-64 bg-gray-900 text-white flex flex-col transition-all duration-300">
+    <aside class="w-64 bg-gray-900 text-white flex flex-col transition-all duration-300 z-30">
         <div class="p-6 border-b border-gray-800">
             <h1 class="text-xl font-bold text-orange-400"><i class="fas fa-chart-line mr-2"></i>SIMPANSE</h1>
             <p class="text-xs text-gray-400 mt-1">SIstem Manajemen Penyelesaian ANomali SE2026</p>
         </div>
         <nav class="flex-1 p-4 space-y-2">
-            <button onclick="switchPage('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center p-3 text-left rounded-lg bg-orange-600 text-white hover:bg-orange-500 transition">
+            <button onclick="switchPage('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center p-3 text-left rounded-lg bg-orange-600 text-white hover:bg-orange-500 transition shadow-md">
                 <i class="fas fa-tachometer-alt w-6"></i> Dashboard
             </button>
             <button onclick="switchPage('keluarga')" id="nav-keluarga" class="nav-btn w-full flex items-center p-3 text-left rounded-lg text-gray-300 hover:bg-gray-800 transition">
@@ -41,60 +41,71 @@
         </nav>
     </aside>
 
-    <main class="flex-1 flex flex-col h-screen overflow-hidden">
-        <!-- Header (Global untuk semua halaman) -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
         <header class="bg-white shadow-sm p-4 flex justify-between items-center z-20">
-            <h2 id="header-title" class="text-2xl font-bold text-gray-800">Dashboard Anomali</h2>
+            <h2 id="header-title" class="text-2xl font-bold text-gray-800">Dashboard Interaktif</h2>
             <div class="flex items-center text-sm text-gray-600">
                 <i class="far fa-calendar-alt mr-2"></i> <span id="current-date">Hari Ini</span>
                 <div class="ml-6 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-md">A</div>
             </div>
         </header>
         
-        <!-- Area Konten Halaman (Scrollable) -->
         <div class="p-6 flex-1 overflow-y-auto">
             
-        <!-- HALAMAN: DASHBOARD -->
-            <div id="page-dashboard" class="page-content hidden h-full flex flex-col">
-                <div class="bg-white p-4 rounded-xl shadow-sm border mb-4 flex gap-4 items-end">
+            <!-- HALAMAN: DASHBOARD -->
+            <div id="page-dashboard" class="page-content active h-full flex flex-col">
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex gap-4 items-end">
                     <div>
-                        <label class="block text-xs font-bold text-gray-600 mb-1">Tanggal</label>
-                        <!-- DIUBAH MENJADI SELECT -->
-                        <select id="dash-tgl" class="border p-2 rounded-lg text-sm w-40 outline-none focus:ring-2 focus:ring-orange-400">
+                        <label class="block text-xs font-bold text-gray-600 mb-1">Pilih Tanggal</label>
+                        <!-- DIUBAH MENJADI DROPDOWN -->
+                        <select id="dash-tgl" class="border border-gray-300 p-2 rounded-lg text-sm w-48 focus:ring-2 focus:ring-orange-400 outline-none">
                             <option value="">Memuat tanggal...</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-600 mb-1">Anomali</label>
-                        <select id="dash-tipe" class="border border-gray-300 p-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-400">
+                        <label class="block text-xs font-bold text-gray-600 mb-1">Pilih Anomali</label>
+                        <select id="dash-tipe" class="border border-gray-300 p-2 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 outline-none">
                             <option value="Keluarga">Keluarga</option>
                             <option value="Usaha">Usaha</option>
-                            <option value="Keluarga+Usaha" selected>Keluarga + Usaha</option>
+                            <option value="Keluarga+Usaha">Keluarga+Usaha</option>
                         </select>
                     </div>
-                    <button onclick="tarikDashboard()" class="bg-orange-600 text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-orange-500 transition shadow-sm h-[38px] flex items-center">
-                        <i class="fas fa-play mr-2"></i> Run Pivot
+                    <button onclick="tarikDashboard()" class="bg-orange-600 text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-orange-500 shadow-sm transition h-[38px] flex items-center">
+                        <i class="fas fa-play mr-2"></i> Jalankan
                     </button>
                 </div>
+                
                 <div id="dash-container" class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <div class="col-span-3 text-center p-10 bg-white border border-gray-200 rounded-xl">
-                        <i class="fas fa-chart-pie text-gray-300 text-5xl mb-3 block"></i>
-                        <p class="text-gray-500">Pilih tanggal dan jenis anomali, lalu klik <b>Run Pivot</b></p>
+                    <div class="col-span-1 lg:col-span-3 bg-white p-10 rounded-xl shadow-sm border border-gray-200 text-center text-gray-400">
+                        <i class="fas fa-chart-pie text-4xl mb-3 block opacity-50"></i>
+                        Tekan "Jalankan" untuk memuat ringkasan data.
                     </div>
                 </div>
             </div>
-
+            
             <!-- HALAMAN: TABEL DATA -->
-            <div id="page-data" class="page-content active h-full flex flex-col">
+            <div id="page-data" class="page-content hidden h-full flex flex-col">
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex flex-wrap justify-between items-end gap-4">
                     <div class="flex flex-wrap gap-4 items-end w-full lg:w-auto">
+                        
                         <div>
-                            <label class="block font-semibold text-xs text-gray-600 mb-1">Filter Tanggal <span class="text-red-500">*</span></label>
-                            <!-- DIUBAH MENJADI SELECT -->
-                            <select id="input-tanggal" class="border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-orange-400 outline-none w-full min-w-[150px]">
+                            <label class="block font-semibold text-xs text-gray-600 mb-1">Tanggal Data <span class="text-red-500">*</span></label>
+                            <!-- DIUBAH MENJADI DROPDOWN -->
+                            <select id="input-tanggal" class="border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-orange-400 outline-none w-full min-w-[140px]">
                                 <option value="">Memuat tanggal...</option>
                             </select>
                         </div>
+                        
+                        <div class="bg-purple-50 p-1.5 -m-1.5 rounded-lg border border-purple-100 flex items-end gap-3">
+                            <div>
+                                <label class="block font-semibold text-xs text-purple-700 mb-1"><i class="fas fa-history mr-1"></i>Tgl Pembanding (Opsional)</label>
+                                <!-- DROPDOWN BARU: UNTUK LOGIKA IRISAN -->
+                                <select id="input-tgl-banding" class="border border-purple-200 rounded-lg p-2 text-sm focus:ring-2 focus:ring-purple-400 outline-none w-full min-w-[140px] bg-white">
+                                    <option value="">-- Tidak Ada --</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div>
                             <label class="block font-semibold text-xs text-gray-600 mb-1">PML <span class="text-red-500">*</span></label>
                             <select id="input-pml" onchange="renderDropdownPcl()" class="border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-orange-400 outline-none w-full min-w-[150px]">
@@ -108,7 +119,7 @@
                             </select>
                         </div>
                         <button onclick="tarikData()" id="btn-tarik" class="bg-gray-800 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-gray-700 transition shadow-sm flex items-center h-[38px]">
-                            <i class="fas fa-sync-alt mr-2"></i> Tarik Data
+                            <i class="fas fa-sync-alt mr-2"></i> Tarik
                         </button>
                     </div>
                     <div id="status-text" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap"><i class="fas fa-spinner fa-spin mr-1"></i> Berkomunikasi dengan Server...</div>
@@ -119,7 +130,7 @@
                         <thead>
                             <tr class="text-gray-700">
                                 <th class="p-4 border-b w-1/4 whitespace-normal" id="th-nama">Nama</th>
-                                <th class="p-4 border-b w-48">Anomali</th>
+                                <th class="p-4 border-b w-64">Anomali</th>
                                 <th class="p-4 border-b text-center">Fasih</th>
                                 <th class="p-4 border-b">PML</th>
                                 <th class="p-4 border-b">PCL</th>
@@ -128,7 +139,7 @@
                             </tr>
                         </thead>
                         <tbody id="tabel-body" class="divide-y divide-gray-100 text-gray-600">
-                            <tr><td colspan="7" class="p-8 text-center text-gray-400"><i class="fas fa-inbox text-3xl mb-2 block"></i>Silakan tekan "Tarik Data" untuk memulai</td></tr>
+                            <tr><td colspan="7" class="p-8 text-center text-gray-400"><i class="fas fa-inbox text-3xl mb-2 block"></i>Silakan tentukan filter lalu tekan "Tarik"</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -138,17 +149,15 @@
     </main>
 
     <script>
-        // GANTI teks di bawah ini dengan URL Web App Apps Script Anda!
+        // GANTI teks di bawah ini dengan URL Web App Apps Script Anda yang terbaru!
         const API_URL = "https://script.google.com/macros/s/AKfycbxLgpQJ5jJbr8NvRTQD0DyuW_oRfVGlf8wOH2nFQCS31QaaLJnDBoTRek68fHZj5k-0Kg/exec";
         
         let currentMode = 'dashboard';
-        let dataMitraGlobal = {}; // Menyimpan struktur mitra dari server
+        let dataMitraGlobal = {}; 
 
-        // Set Tanggal Hari Ini di Header
         document.getElementById('current-date').innerText = new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-        // Mengambil struktur Mitra saat web dibuka
-         // --- FUNGSI BARU: Mengambil struktur Mitra saat web dibuka ---
+        // --- FUNGSI: Mengambil Mitra & Tanggal dari Server ---
         async function muatDataMitra() {
             try {
                 const requestOptions = {
@@ -163,29 +172,33 @@
                 if (result.status === "sukses") {
                     dataMitraGlobal = result.data;
                     renderDropdownPml();
-                    renderDropdownTanggal(result.dates); // Render tanggal ke form
+                    renderDropdownTanggal(result.dates); // Merender dropdown tanggal
                 }
             } catch (error) {
-                console.error("Gagal memuat data Mitra:", error);
+                console.error("Gagal memuat data awal:", error);
                 document.getElementById('input-pml').innerHTML = '<option value="">Gagal memuat data</option>';
             }
         }
-        // --- FUNGSI BARU: Mengisi Dropdown Tanggal ---
+
+        // --- FUNGSI BARU: Render Dropdown Tanggal ---
         function renderDropdownTanggal(dates) {
-            const dashTgl = document.getElementById('dash-tgl');
-            const inputTgl = document.getElementById('input-tanggal');
-            let options = '<option value="">-- Semua Tanggal --</option>';
+            let optionsTanggal = '';
+            let optionsBanding = '<option value="">-- Tidak Ada --</option>'; // Khusus opsi pembanding
             
-            dates.forEach(d => {
-                options += `<option value="${d}">${d}</option>`;
-            });
-            
-            dashTgl.innerHTML = options;
-            inputTgl.innerHTML = options;
+            if(dates.length === 0) {
+                optionsTanggal = '<option value="">Tidak ada tanggal</option>';
+            } else {
+                dates.forEach(d => {
+                    optionsTanggal += `<option value="${d}">${d}</option>`;
+                    optionsBanding += `<option value="${d}">${d}</option>`;
+                });
+            }
+
+            document.getElementById('dash-tgl').innerHTML = optionsTanggal;
+            document.getElementById('input-tanggal').innerHTML = optionsTanggal;
+            document.getElementById('input-tgl-banding').innerHTML = optionsBanding;
         }
 
-
-        // Mengisi Dropdown PML
         function renderDropdownPml() {
             const pmlSelect = document.getElementById('input-pml');
             pmlSelect.innerHTML = '<option value="">-- Pilih PML --</option>';
@@ -198,17 +211,14 @@
             });
         }
 
-        // Mengisi Dropdown PCL sesuai PML
         function renderDropdownPcl() {
             const pmlTerpilih = document.getElementById('input-pml').value;
             const pclSelect = document.getElementById('input-pcl');
-            
             pclSelect.innerHTML = '<option value="">-- Semua PCL --</option>';
             
             if (pmlTerpilih && dataMitraGlobal[pmlTerpilih]) {
                 pclSelect.disabled = false;
                 const daftarPcl = dataMitraGlobal[pmlTerpilih].sort();
-                
                 daftarPcl.forEach(pcl => {
                     let option = document.createElement('option');
                     option.value = pcl; option.text = pcl;
@@ -222,107 +232,100 @@
 
         window.onload = () => {
             muatDataMitra();
-            // Paksa UI untuk merender tab dashboard dengan rapi di awal
-            switchPage('dashboard');
         };
 
-        // FUNGSI NAVIGASI YANG SUDAH DIPERBAIKI
+        // UI Navigasi Sidebar
         function switchPage(mode) {
             currentMode = mode;
             
-            // 1. Reset warna tombol navigasi (Hapus class aktif, jadikan pasif)
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('bg-orange-600', 'text-white'); 
+                btn.classList.remove('bg-orange-600', 'text-white', 'shadow-md'); 
                 btn.classList.add('text-gray-300');
             });
-            
-            // 2. Beri warna aktif pada tombol yang diklik
-            const activeBtn = document.getElementById('nav-' + mode);
-            if(activeBtn) {
-                activeBtn.classList.remove('text-gray-300');
-                activeBtn.classList.add('bg-orange-600', 'text-white');
-            }
-            
-            // 3. Sembunyikan semua konten halaman
             document.querySelectorAll('.page-content').forEach(p => {
                 p.classList.remove('active');
                 p.classList.add('hidden');
             });
+
+            const activeBtn = document.getElementById('nav-' + mode);
+            activeBtn.classList.remove('text-gray-300');
+            activeBtn.classList.add('bg-orange-600', 'text-white', 'shadow-md');
             
-            // 4. Tampilkan halaman target dan atur judul Header
-            const headerTitle = document.getElementById('header-title');
-            
-            if (mode === 'dashboard') {
-                // Tampilkan container dashboard
+            if(mode === 'dashboard') {
                 document.getElementById('page-dashboard').classList.remove('hidden');
                 document.getElementById('page-dashboard').classList.add('active');
-                headerTitle.innerText = 'Dashboard Pivot';
-                
+                document.getElementById('header-title').innerText = 'Dashboard Interaktif';
             } else {
-                // Untuk Keluarga & Usaha, tampilkan container tabel data
                 document.getElementById('page-data').classList.remove('hidden');
                 document.getElementById('page-data').classList.add('active');
-                
-                if(mode === 'keluarga') {
-                    headerTitle.innerText = 'Manajemen Data Keluarga';
-                    document.getElementById('th-nama').innerText = 'Nama Kepala Keluarga';
-                } else if(mode === 'usaha') {
-                    headerTitle.innerText = 'Manajemen Data Usaha';
-                    document.getElementById('th-nama').innerText = 'Nama Usaha';
-                }
-                
-                // Bersihkan baris tabel
-                document.getElementById('tabel-body').innerHTML = '<tr><td colspan="7" class="p-8 text-center text-gray-400"><i class="fas fa-inbox text-3xl mb-2 block"></i>Silakan tekan "Tarik Data" untuk memulai</td></tr>';
+                document.getElementById('header-title').innerText = mode === 'keluarga' ? 'Manajemen Data Keluarga' : 'Manajemen Data Usaha';
+                document.getElementById('th-nama').innerText = mode === 'keluarga' ? 'Nama Kepala Keluarga' : 'Nama Usaha';
+                document.getElementById('tabel-body').innerHTML = '<tr><td colspan="7" class="p-8 text-center text-gray-400">Silakan tentukan filter lalu tekan "Tarik"</td></tr>';
             }
         }
 
+        // --- FUNGSI UTAMA: Tarik Data Tabel ---
         async function tarikData() {
             const btn = document.getElementById('btn-tarik');
             const status = document.getElementById('status-text');
             const tgl = document.getElementById('input-tanggal').value;
+            const tglBanding = document.getElementById('input-tgl-banding').value; // Mengambil input Tgl Pembanding
             const pml = document.getElementById('input-pml').value.trim();
             const pcl = document.getElementById('input-pcl').value.trim();
             const tbody = document.getElementById('tabel-body');
 
-            // Validasi Input Wajib (Diganti pesan UI, bukan alert)
             if (!tgl || !pml) {
-                tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-orange-600 font-bold"><i class="fas fa-exclamation-triangle mb-2 text-2xl block"></i>Harap isi Filter Tanggal dan Nama PML terlebih dahulu!</td></tr>';
+                alert("Opps! Harap lengkapi isian Tanggal Data dan Nama PML.");
+                return;
+            }
+            if (tgl === tglBanding) {
+                alert("Tanggal Pembanding tidak boleh sama dengan Tanggal Data.");
                 return;
             }
 
             btn.disabled = true; btn.classList.add('opacity-50');
-            status.classList.remove('hidden');
-            tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-gray-500"><i class="fas fa-circle-notch fa-spin text-2xl mb-2 block"></i>Loading data dari Google Sheets...</td></tr>';
+            status.classList.remove('hidden', 'text-red-600'); status.classList.add('text-blue-600');
+            status.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Mengunduh dan menganalisis data...`;
+            tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-gray-500"><i class="fas fa-circle-notch fa-spin text-2xl mb-3 block text-orange-400"></i>Memuat data. Ini mungkin memakan waktu beberapa detik...</td></tr>';
 
             try {
                 const requestOptions = {
                     method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: "ambilData", tipe: currentMode, tanggal: tgl, pml: pml, pcl: pcl })
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
+                    body: JSON.stringify({ 
+                        action: "ambilData", 
+                        tipe: currentMode, 
+                        tanggal: tgl, 
+                        pml: pml, 
+                        pcl: pcl,
+                        tglBanding: tglBanding // Kirim ke Backend
+                    })
                 };
 
                 const response = await fetch(API_URL, requestOptions);
                 const result = await response.json();
 
                 if (result.status === "sukses") {
-                    renderTabel(result.data);
+                    renderTabel(result.data, tglBanding);
                 } else {
                     throw new Error(result.pesan);
                 }
             } catch (error) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-red-500 font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Gagal mengambil data: ${error.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-red-500 font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Gagal menarik data: ${error.message}</td></tr>`;
+                status.classList.add('hidden');
             } finally {
                 btn.disabled = false; btn.classList.remove('opacity-50');
-                status.classList.add('hidden');
+                setTimeout(() => status.classList.add('hidden'), 2000);
             }
         }
 
-        function renderTabel(data) {
+        // Render hasil tarikan data ke HTML
+        function renderTabel(data, tglBanding) {
             const tbody = document.getElementById('tabel-body');
             tbody.innerHTML = '';
             
             if(data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-gray-500">Tidak ada data untuk kombinasi filter ini.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-gray-500">Hebat! Tidak ada temuan anomali pada filter ini.</td></tr>';
                 return;
             }
 
@@ -336,27 +339,38 @@
 
                 let anomaliTeks = row.anomali ? row.anomali.toString().replace(/"/g, '&quot;') : "";
                 
+                // --- LOGIKA VISUAL BADGE IRISAN (JIKA ADA) ---
+                let badgeIrisan = row.isIrisan ? 
+                    `<div class="mt-1"><span class="inline-flex items-center gap-1 rounded-full bg-purple-100 px-2 py-0.5 text-[10px] font-bold text-purple-700 border border-purple-200" title="Muncul juga pada data ${tglBanding}"><i class="fas fa-history"></i>Sisa ${tglBanding}</span></div>` : "";
+
                 let tr = document.createElement('tr');
-                tr.classList.add('hover:bg-orange-50', 'transition', 'group');
+                tr.classList.add('hover:bg-orange-50', 'transition', 'group', 'border-b', 'border-gray-100');
                 tr.innerHTML = `
-                    <td class="p-4 font-semibold text-gray-800 whitespace-normal">${row.nama}</td>
-                    <td class="p-4">
-                        <div class="max-w-[150px] truncate text-red-600 text-xs font-bold bg-red-50 px-2 py-1.5 rounded-lg border border-red-100 cursor-help" title="${anomaliTeks}">
+                    <td class="p-4 font-semibold text-gray-800 whitespace-normal">
+                        ${row.nama}
+                    </td>
+                    
+                    <td class="p-4 whitespace-normal">
+                        <div class="inline-block text-red-600 text-xs font-bold bg-red-50 px-2 py-1.5 rounded-lg border border-red-100 cursor-help line-clamp-2" title="${anomaliTeks}">
                             ${row.anomali}
                         </div>
+                        ${badgeIrisan} <!-- Cetak Badge Disini -->
                     </td>
+                    
                     <td class="p-4 text-center">${linkFasihBtn}</td>
-                    <td class="p-4">${row.pml}</td>
-                    <td class="p-4">${row.pcl}</td>
+                    <td class="p-4 text-xs font-bold text-gray-600">${row.pml}</td>
+                    <td class="p-4 text-xs font-medium text-gray-500">${row.pcl}</td>
+                    
                     <td class="p-4">
-                        <select onchange="updateData('${row.id}', 'Pengerjaan', this)" class="p-1.5 text-sm font-semibold border rounded-md shadow-sm outline-none cursor-pointer ${statusColor}">
+                        <select onchange="updateData('${row.id}', 'Pengerjaan', this)" class="p-1.5 text-xs font-bold border rounded-md shadow-sm outline-none cursor-pointer ${statusColor}">
                             <option value="Belum Konfirmasi" ${row.status === "Belum Konfirmasi" ? "selected":""}>Belum Konfirmasi</option>
                             <option value="Sedang Konfirmasi" ${row.status === "Sedang Konfirmasi" ? "selected":""}>Sedang Konfirmasi</option>
                             <option value="Sudah Konfirmasi" ${row.status === "Sudah Konfirmasi" ? "selected":""}>Sudah Konfirmasi</option>
                         </select>
                     </td>
-                    <td class="p-4 min-w-[300px]">
-                        <textarea onchange="updateData('${row.id}', 'Catatan', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-sm group-hover:bg-white group-hover:border-gray-200 transition rounded resize-y" rows="2" placeholder="Ketik catatan panjang lalu klik di luar kotak...">${row.catatan}</textarea>
+                    
+                    <td class="p-4 min-w-[250px]">
+                        <textarea onchange="updateData('${row.id}', 'Catatan', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-sm group-hover:bg-white group-hover:border-gray-200 transition rounded resize-y text-gray-700" rows="1" placeholder="Ketik catatan...">${row.catatan}</textarea>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -367,9 +381,11 @@
             const nilaiBaru = inputElement.value;
             const status = document.getElementById('status-text');
             
-            status.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Menyimpan...`;
-            status.classList.remove('hidden', 'text-blue-600', 'text-green-600', 'text-red-600');
-            status.classList.add('text-orange-500');
+            if(document.getElementById('page-data').classList.contains('active')) {
+                status.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Menyimpan...`;
+                status.classList.remove('hidden', 'text-blue-600', 'text-green-600', 'text-red-600');
+                status.classList.add('text-orange-500');
+            }
             inputElement.disabled = true;
 
             try {
@@ -378,7 +394,6 @@
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify({ action: "updateData", tipe: currentMode, id: id, kolom: kolom, nilai: nilaiBaru })
                 };
-
                 const response = await fetch(API_URL, requestOptions);
                 const result = await response.json();
 
@@ -386,27 +401,26 @@
                     status.innerHTML = `<i class="fas fa-check mr-1"></i> Tersimpan!`;
                     status.classList.replace('text-orange-500', 'text-green-600');
                     if(kolom === 'Pengerjaan') {
-                        inputElement.className = `p-1.5 text-sm font-semibold border rounded-md shadow-sm outline-none cursor-pointer ${nilaiBaru === 'Sudah Konfirmasi' ? 'bg-green-100 text-green-700' : nilaiBaru === 'Sedang Konfirmasi' ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'}`;
+                        inputElement.className = `p-1.5 text-xs font-bold border rounded-md shadow-sm outline-none cursor-pointer ${nilaiBaru === 'Sudah Konfirmasi' ? 'bg-green-100 text-green-700' : nilaiBaru === 'Sedang Konfirmasi' ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'}`;
                     }
-                } else {
-                    throw new Error(result.pesan);
-                }
+                } else throw new Error(result.pesan);
             } catch (error) {
-                // Diubah dari alert menjadi status error
-                status.innerHTML = `<i class="fas fa-times-circle mr-1"></i> Gagal Simpan!`;
-                status.classList.replace('text-orange-500', 'text-red-600');
+                alert("Gagal menyimpan data: " + error.message);
             } finally {
                 inputElement.disabled = false;
-                setTimeout(() => status.classList.add('hidden'), 3500);
+                setTimeout(() => status.classList.add('hidden'), 3000);
             }
         }
 
+        // --- FUNGSI: Tarik dan Render Dashboard Pivot ---
         async function tarikDashboard() {
             const container = document.getElementById('dash-container');
             const tgl = document.getElementById('dash-tgl').value;
             const tipe = document.getElementById('dash-tipe').value;
             
-            container.innerHTML = '<div class="col-span-3 text-center p-10"><i class="fas fa-spinner fa-spin text-3xl text-orange-500 mb-3"></i><p class="text-gray-500">Menghitung Progress Tindak Lanjut...</p></div>';
+            if(!tgl) { alert("Harap pilih tanggal untuk memuat Dashboard."); return; }
+            
+            container.innerHTML = '<div class="col-span-3 text-center p-10"><i class="fas fa-circle-notch fa-spin text-4xl text-orange-400 mb-3 block"></i><p class="text-gray-500 font-medium">Menghitung Agregat Data...</p></div>';
             
             try {
                 const res = await fetch(API_URL, {
@@ -416,69 +430,74 @@
                 });
                 const {data} = await res.json();
                 
-                // Mencegah error jika data kosong
                 if(Object.keys(data.kec).length === 0) {
-                    container.innerHTML = '<div class="col-span-3 text-center p-10 bg-white border border-gray-200 rounded-xl"><p class="text-gray-500"><i class="fas fa-check-circle text-green-500 text-4xl mb-3 block"></i>Tidak ditemukan anomali.</p></div>';
-                    return;
+                     container.innerHTML = '<div class="col-span-3 bg-green-50 text-center p-10 rounded-xl border border-green-200"><i class="fas fa-check-circle text-4xl text-green-500 mb-3 block"></i><p class="text-green-700 font-bold">Luar Biasa! Tidak ada anomali untuk filter ini.</p></div>';
+                     return;
                 }
-                
+
                 container.innerHTML = `
-                    ${renderTabelDash('Kecamatan', data.kec, ['Nama Kecamatan', 'Jml Anomali', 'Tindak Lanjut'])}
-                    ${renderTabelDash('PML', data.pml, ['PML', 'Jml Anomali', 'Tindak Lanjut'])}
+                    ${renderTabelDash('Berdasarkan Kecamatan', data.kec, ['Kecamatan', 'Jml Anomali', 'Tindak Lanjut'])}
+                    ${renderTabelDash('Berdasarkan PML', data.pml, ['PML', 'Jml Anomali', 'Tindak Lanjut'])}
                     ${renderTabelDash('Struktur PML & PCL', data.pmlPcl, ['PML', 'PCL', 'Jml Anomali', 'Tindak Lanjut'])}
                 `;
-            } catch (err) {
-                 container.innerHTML = `<div class="col-span-3 text-center p-10 text-red-500"><i class="fas fa-times-circle text-4xl mb-3 block"></i>Gagal memuat dashboard.</div>`;
+            } catch (error) {
+                container.innerHTML = `<div class="col-span-3 text-center p-10 text-red-500 font-bold">Gagal memuat Dashboard: Server Sibuk.</div>`;
             }
         }
 
+        // Render Cetak UI Progress Bar di Dashboard
         function renderTabelDash(title, data, headers) {
-            let totalBaris = 0;
-            let selesaiBaris = 0;
-            
+            let totalSemua = 0;
+            let selesaiSemua = 0;
+
             let rows = Object.entries(data)
                 .sort((a, b) => a[0].localeCompare(b[0]))
                 .map(([k, v]) => {
-                    totalBaris += v.total;
-                    selesaiBaris += v.selesai;
-                    
-                    let cols = k.includes('|||') ? k.split('|||') : [k];
-                    let persentase = v.total > 0 ? Math.round((v.selesai / v.total) * 100) : 0;
-                    
-                    // UI Progress Bar Tailwind
-                    let progressHtml = `
-                        <div class="flex items-center gap-2" title="${v.selesai} dari ${v.total} selesai">
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-green-500 h-2 rounded-full" style="width: ${persentase}%"></div>
-                            </div>
-                            <span class="text-xs font-bold text-gray-700 w-9">${persentase}%</span>
-                        </div>
-                    `;
+                totalSemua += v.total;
+                selesaiSemua += v.selesai;
+                
+                let cols = k.includes('|||') ? k.split('|||') : [k];
+                let persen = v.total > 0 ? Math.round((v.selesai/v.total)*100) : 0;
+                
+                // Komponen Progress Bar
+                let progressUI = `
+                <div class="flex items-center gap-2 w-full min-w-[120px]" title="${v.selesai} dari ${v.total} selesai">
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-green-500 h-2 rounded-full transition-all duration-500" style="width: ${persen}%"></div>
+                    </div>
+                    <span class="text-[10px] font-black text-gray-600 w-8 text-right">${persen}%</span>
+                </div>`;
 
-                    return `<tr class="border-b hover:bg-gray-50">
-                        ${cols.map(c => `<td class="p-2">${c}</td>`).join('')}
-                        <td class="p-2 font-bold text-orange-600">${v.total}</td>
-                        <td class="p-2 min-w-[120px]">${progressHtml}</td>
-                    </tr>`;
-                }).join('');
+                return `<tr class="border-b hover:bg-gray-50 transition">
+                    ${cols.map(c => `<td class="p-3">${c}</td>`).join('')}
+                    <td class="p-3 font-bold text-orange-600 text-center">${v.total}</td>
+                    <td class="p-3">${progressUI}</td>
+                </tr>`;
+            }).join('');
             
-            let totalPersen = totalBaris > 0 ? Math.round((selesaiBaris / totalBaris) * 100) : 0;
-            
+            let persenSemua = totalSemua > 0 ? Math.round((selesaiSemua/totalSemua)*100) : 0;
+
             return `
-            <div class="bg-white p-4 rounded-xl shadow-sm border h-full flex flex-col">
-                <h3 class="font-bold text-gray-700 mb-3 border-b pb-2"><i class="fas fa-chart-pie text-orange-400 mr-2"></i>${title}</h3>
-                <div class="overflow-y-auto flex-1">
-                    <table class="w-full text-sm text-left">
-                        <thead><tr class="bg-gray-50">${headers.map(h => `<th class="p-2">${h}</th>`).join('')}</tr></thead>
-                        <tbody>${rows}</tbody>
-                        <tfoot>
-                            <tr class="bg-orange-50 border-t-2 border-orange-200">
-                                <td colspan="${headers.length - 2}" class="p-2 font-bold text-right text-gray-700">Total Keseluruhan:</td>
-                                <td class="p-2 font-black text-orange-600">${totalBaris}</td>
-                                <td class="p-2 font-bold text-green-700">${totalPersen}% Tuntas</td>
+            <div class="bg-white rounded-xl shadow-sm border flex flex-col h-[65vh]">
+                <div class="p-4 border-b bg-gray-50 rounded-t-xl flex justify-between items-center">
+                    <h3 class="font-bold text-gray-700"><i class="fas fa-chart-bar text-orange-400 mr-2"></i>${title}</h3>
+                </div>
+                <div class="overflow-y-auto flex-1 p-2">
+                    <table class="w-full text-xs text-left">
+                        <thead class="sticky top-0 bg-white shadow-sm">
+                            <tr class="text-gray-500 uppercase tracking-wider">
+                                ${headers.map(h => `<th class="p-3">${h}</th>`).join('')}
                             </tr>
-                        </tfoot>
+                        </thead>
+                        <tbody>${rows}</tbody>
                     </table>
+                </div>
+                <div class="p-3 border-t bg-orange-50 rounded-b-xl flex justify-between items-center text-sm">
+                    <span class="font-bold text-gray-700">Total Keseluruhan</span>
+                    <div class="flex items-center gap-4">
+                        <span class="font-black text-orange-600">${totalSemua} Anomali</span>
+                        <span class="font-black text-green-700 bg-green-100 px-2 py-1 rounded-md">${persenSemua}% Tuntas</span>
+                    </div>
                 </div>
             </div>`;
         }
