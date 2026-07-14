@@ -54,15 +54,18 @@
         <!-- Area Konten Halaman (Scrollable) -->
         <div class="p-6 flex-1 overflow-y-auto">
             
-            <!-- HALAMAN: DASHBOARD -->
-            <div id="page-dashboard" class="page-content active h-full flex flex-col">
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex gap-4 items-end">
+        <!-- HALAMAN: DASHBOARD -->
+            <div id="page-dashboard" class="page-content hidden h-full flex flex-col">
+                <div class="bg-white p-4 rounded-xl shadow-sm border mb-4 flex gap-4 items-end">
                     <div>
-                        <label class="block text-xs font-bold text-gray-600 mb-1">Tanggal Data</label>
-                        <input type="date" id="dash-tgl" class="border border-gray-300 p-2 rounded-lg text-sm w-40 outline-none focus:ring-2 focus:ring-orange-400">
+                        <label class="block text-xs font-bold text-gray-600 mb-1">Tanggal</label>
+                        <!-- DIUBAH MENJADI SELECT -->
+                        <select id="dash-tgl" class="border p-2 rounded-lg text-sm w-40 outline-none focus:ring-2 focus:ring-orange-400">
+                            <option value="">Memuat tanggal...</option>
+                        </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-600 mb-1">Jenis Anomali</label>
+                        <label class="block text-xs font-bold text-gray-600 mb-1">Anomali</label>
                         <select id="dash-tipe" class="border border-gray-300 p-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-400">
                             <option value="Keluarga">Keluarga</option>
                             <option value="Usaha">Usaha</option>
@@ -81,13 +84,16 @@
                 </div>
             </div>
 
-            <!-- HALAMAN: TABEL DATA (Keluarga & Usaha) -->
-            <div id="page-data" class="page-content hidden h-full flex flex-col">
+            <!-- HALAMAN: TABEL DATA -->
+            <div id="page-data" class="page-content active h-full flex flex-col">
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex flex-wrap justify-between items-end gap-4">
                     <div class="flex flex-wrap gap-4 items-end w-full lg:w-auto">
                         <div>
                             <label class="block font-semibold text-xs text-gray-600 mb-1">Filter Tanggal <span class="text-red-500">*</span></label>
-                            <input type="date" id="input-tanggal" class="border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-orange-400 outline-none w-full">
+                            <!-- DIUBAH MENJADI SELECT -->
+                            <select id="input-tanggal" class="border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-orange-400 outline-none w-full min-w-[150px]">
+                                <option value="">Memuat tanggal...</option>
+                            </select>
                         </div>
                         <div>
                             <label class="block font-semibold text-xs text-gray-600 mb-1">PML <span class="text-red-500">*</span></label>
@@ -142,6 +148,7 @@
         document.getElementById('current-date').innerText = new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
         // Mengambil struktur Mitra saat web dibuka
+         // --- FUNGSI BARU: Mengambil struktur Mitra saat web dibuka ---
         async function muatDataMitra() {
             try {
                 const requestOptions = {
@@ -156,12 +163,27 @@
                 if (result.status === "sukses") {
                     dataMitraGlobal = result.data;
                     renderDropdownPml();
+                    renderDropdownTanggal(result.dates); // Render tanggal ke form
                 }
             } catch (error) {
                 console.error("Gagal memuat data Mitra:", error);
                 document.getElementById('input-pml').innerHTML = '<option value="">Gagal memuat data</option>';
             }
         }
+        // --- FUNGSI BARU: Mengisi Dropdown Tanggal ---
+        function renderDropdownTanggal(dates) {
+            const dashTgl = document.getElementById('dash-tgl');
+            const inputTgl = document.getElementById('input-tanggal');
+            let options = '<option value="">-- Semua Tanggal --</option>';
+            
+            dates.forEach(d => {
+                options += `<option value="${d}">${d}</option>`;
+            });
+            
+            dashTgl.innerHTML = options;
+            inputTgl.innerHTML = options;
+        }
+
 
         // Mengisi Dropdown PML
         function renderDropdownPml() {
@@ -384,13 +406,7 @@
             const tgl = document.getElementById('dash-tgl').value;
             const tipe = document.getElementById('dash-tipe').value;
             
-            // Validasi Input
-            if(!tgl) {
-                container.innerHTML = '<div class="col-span-3 text-center p-10"><p class="text-orange-500 font-bold"><i class="fas fa-exclamation-triangle mb-2 text-2xl block"></i> Harap isi tanggal data terlebih dahulu!</p></div>';
-                return;
-            }
-
-            container.innerHTML = '<div class="col-span-3 text-center p-10"><i class="fas fa-circle-notch fa-spin text-3xl text-orange-500 mb-3"></i><p class="text-gray-500">Menganalisis data, mohon tunggu...</p></div>';
+            container.innerHTML = '<div class="col-span-3 text-center p-10"><i class="fas fa-spinner fa-spin text-3xl text-orange-500 mb-3"></i><p class="text-gray-500">Menghitung Progress Tindak Lanjut...</p></div>';
             
             try {
                 const res = await fetch(API_URL, {
@@ -400,43 +416,68 @@
                 });
                 const {data} = await res.json();
                 
-                // Mencegah error jika data kosong / tidak ada anomali
+                // Mencegah error jika data kosong
                 if(Object.keys(data.kec).length === 0) {
-                    container.innerHTML = '<div class="col-span-3 text-center p-10 bg-white border border-gray-200 rounded-xl"><p class="text-gray-500"><i class="fas fa-check-circle text-green-500 text-4xl mb-3 block"></i>Tidak ditemukan anomali pada tanggal tersebut.</p></div>';
+                    container.innerHTML = '<div class="col-span-3 text-center p-10 bg-white border border-gray-200 rounded-xl"><p class="text-gray-500"><i class="fas fa-check-circle text-green-500 text-4xl mb-3 block"></i>Tidak ditemukan anomali.</p></div>';
                     return;
                 }
-
+                
                 container.innerHTML = `
-                    ${renderTabelDash('Berdasarkan Kecamatan', data.kec, ['Nama Kecamatan', 'Jumlah'])}
-                    ${renderTabelDash('Berdasarkan PML', data.pml, ['PML', 'Jumlah'])}
-                    ${renderTabelDash('Struktur PML & PCL', data.pmlPcl, ['PML', 'PCL', 'Jumlah'])}
+                    ${renderTabelDash('Kecamatan', data.kec, ['Nama Kecamatan', 'Jml Anomali', 'Tindak Lanjut'])}
+                    ${renderTabelDash('PML', data.pml, ['PML', 'Jml Anomali', 'Tindak Lanjut'])}
+                    ${renderTabelDash('Struktur PML & PCL', data.pmlPcl, ['PML', 'PCL', 'Jml Anomali', 'Tindak Lanjut'])}
                 `;
             } catch (err) {
-                 container.innerHTML = `<div class="col-span-3 text-center p-10 text-red-500"><i class="fas fa-times-circle text-4xl mb-3 block"></i>Gagal membuat dashboard: Koneksi terputus.</div>`;
+                 container.innerHTML = `<div class="col-span-3 text-center p-10 text-red-500"><i class="fas fa-times-circle text-4xl mb-3 block"></i>Gagal memuat dashboard.</div>`;
             }
         }
 
         function renderTabelDash(title, data, headers) {
-            let total = 0;
+            let totalBaris = 0;
+            let selesaiBaris = 0;
+            
             let rows = Object.entries(data)
-                .sort((a, b) => a[0].localeCompare(b[0])) // Mengurutkan berdasarkan abjad A-Z
+                .sort((a, b) => a[0].localeCompare(b[0]))
                 .map(([k, v]) => {
-                    total += v;
+                    totalBaris += v.total;
+                    selesaiBaris += v.selesai;
+                    
                     let cols = k.includes('|||') ? k.split('|||') : [k];
+                    let persentase = v.total > 0 ? Math.round((v.selesai / v.total) * 100) : 0;
+                    
+                    // UI Progress Bar Tailwind
+                    let progressHtml = `
+                        <div class="flex items-center gap-2" title="${v.selesai} dari ${v.total} selesai">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: ${persentase}%"></div>
+                            </div>
+                            <span class="text-xs font-bold text-gray-700 w-9">${persentase}%</span>
+                        </div>
+                    `;
+
                     return `<tr class="border-b hover:bg-gray-50">
                         ${cols.map(c => `<td class="p-2">${c}</td>`).join('')}
-                        <td class="p-2 font-bold text-orange-600">${v}</td>
+                        <td class="p-2 font-bold text-orange-600">${v.total}</td>
+                        <td class="p-2 min-w-[120px]">${progressHtml}</td>
                     </tr>`;
                 }).join('');
             
+            let totalPersen = totalBaris > 0 ? Math.round((selesaiBaris / totalBaris) * 100) : 0;
+            
             return `
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 h-full flex flex-col">
-                <h3 class="font-bold text-gray-700 mb-3 border-b pb-2"><i class="fas fa-table text-orange-400 mr-2"></i>${title}</h3>
+            <div class="bg-white p-4 rounded-xl shadow-sm border h-full flex flex-col">
+                <h3 class="font-bold text-gray-700 mb-3 border-b pb-2"><i class="fas fa-chart-pie text-orange-400 mr-2"></i>${title}</h3>
                 <div class="overflow-y-auto flex-1">
                     <table class="w-full text-sm text-left">
-                        <thead><tr class="bg-gray-50 text-gray-500">${headers.map(h => `<th class="p-2">${h}</th>`).join('')}</tr></thead>
+                        <thead><tr class="bg-gray-50">${headers.map(h => `<th class="p-2">${h}</th>`).join('')}</tr></thead>
                         <tbody>${rows}</tbody>
-                        <tfoot><tr class="bg-orange-50 border-t-2 border-orange-200"><td colspan="${headers.length - 1}" class="p-2 font-bold text-right text-gray-700">Total Anomali:</td><td class="p-2 font-black text-orange-600">${total}</td></tr></tfoot>
+                        <tfoot>
+                            <tr class="bg-orange-50 border-t-2 border-orange-200">
+                                <td colspan="${headers.length - 2}" class="p-2 font-bold text-right text-gray-700">Total Keseluruhan:</td>
+                                <td class="p-2 font-black text-orange-600">${totalBaris}</td>
+                                <td class="p-2 font-bold text-green-700">${totalPersen}% Tuntas</td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>`;
