@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIMPANSE2026</title>
+    <title>SiMANISE2026</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
@@ -40,21 +40,12 @@
             </button>
         </nav>
     </aside>
-    
 
-    <!-- MAIN CONTENT -->
     <main class="flex-1 flex flex-col h-screen overflow-hidden">
-        <header class="bg-white shadow-sm p-4 flex justify-between items-center z-20">
-            <h2 id="header-title" class="text-2xl font-bold text-gray-800">Dashboard</h2>
-            <div class="flex items-center text-sm text-gray-600">
-                <span id="current-date">Hari Ini</span>
-            </div>
-        </header>
-
-        <div class="p-6 flex-1 overflow-y-auto">
-            
-            <!-- PAGE: DASHBOARD -->
-            <div id="page-dashboard" class="page-content active h-full flex flex-col">
+        <!-- Header -->
+        
+        <!-- HALAMAN: DASHBOARD -->
+            <div id="page-dashboard" class="page-content hidden h-full flex flex-col">
                 <div class="bg-white p-4 rounded-xl shadow-sm border mb-4 flex gap-4 items-end">
                     <div>
                         <label class="block text-xs font-bold text-gray-600 mb-1">Tanggal</label>
@@ -72,11 +63,24 @@
                         <i class="fas fa-play mr-2"></i> Run
                     </button>
                 </div>
-                <div id="dash-container" class="grid grid-cols-1 lg:grid-cols-3 gap-4"></div>
+                <div id="dash-container" class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <!-- Tabel akan di-inject disini -->
+                </div>
             </div>
+        
+        <header class="bg-white shadow-sm p-4 flex justify-between items-center z-20">
+            <h2 id="header-title" class="text-2xl font-bold text-gray-800">Manajemen Data Keluarga</h2>
+            <div class="flex items-center text-sm text-gray-600">
+                <i class="far fa-calendar-alt mr-2"></i> <span id="current-date">Hari Ini</span>
+                <div class="ml-6 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-md">A</div>
+            </div>
+        </header>
+        
+        <!-- Area Konten Halaman -->
+        <div class="p-6 flex-1 overflow-y-auto">
             
-            <!-- HALAMAN: TABEL DATA (Data Keluarga) -->
-            <div id="page-keluarga" class="page-content h-full flex flex-col">
+            <!-- HALAMAN: TABEL DATA -->
+            <div id="page-data" class="page-content active h-full flex flex-col">
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex flex-wrap justify-between items-end gap-4">
                     <div class="flex flex-wrap gap-4 items-end w-full lg:w-auto">
                         <div>
@@ -130,7 +134,7 @@
         // GANTI teks di bawah ini dengan URL Web App Apps Script Anda!
 	const API_URL = "https://script.google.com/macros/s/AKfycbxLgpQJ5jJbr8NvRTQD0DyuW_oRfVGlf8wOH2nFQCS31QaaLJnDBoTRek68fHZj5k-0Kg/exec";
         
-        let currentMode = 'dashboard';
+        let currentMode = 'keluarga';
         let dataMitraGlobal = {}; // Menyimpan struktur mitra dari server
 
         // Tanggal Header
@@ -201,54 +205,24 @@
         // Panggil fungsi muatDataMitra saat halaman pertama kali dibuka
         window.onload = () => {
             muatDataMitra();
-
-            // Default tampilan: Dashboard
-            switchPage('dashboard');
         };
 
         // Navigasi UI
         function switchPage(mode) {
             currentMode = mode;
-
-            // reset highlight
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('bg-orange-600', 'text-white');
-                btn.classList.add('text-gray-300');
+                btn.classList.remove('bg-orange-600', 'text-white'); btn.classList.add('text-gray-300');
+                document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+                document.getElementById('page-' + mode).classList.remove('hidden');
             });
-
-            // hide all pages
-            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
-
-            // show selected page if it exists
-            const pageEl = document.getElementById('page-' + mode);
-            if (pageEl) pageEl.classList.remove('hidden');
-
-            // highlight selected nav button if it exists
-            const navEl = document.getElementById('nav-' + mode);
-            if (navEl) {
-                navEl.classList.remove('text-gray-300');
-                navEl.classList.add('bg-orange-600', 'text-white');
-            }
-
-            // update header only for table modes
-            const headerTitle = document.getElementById('header-title');
-            const thNama = document.getElementById('th-nama');
-            if (headerTitle) {
-                headerTitle.innerText = mode === 'keluarga'
-                    ? 'Manajemen Data Keluarga'
-                    : mode === 'usaha'
-                        ? 'Manajemen Data Usaha'
-                        : 'Manajemen Data Keluarga';
-            }
-            if (thNama) {
-                thNama.innerText = mode === 'keluarga' ? 'Nama Kepala Keluarga' : 'Nama Usaha';
-            }
-
-            // Bersihkan tabel (hanya jika elemen tabel ada)
-            const tbody = document.getElementById('tabel-body');
-            if (tbody) {
-                tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-gray-400">Silakan tekan "Tarik Data" untuk memulai</td></tr>';
-            }
+            document.getElementById('nav-' + mode).classList.remove('text-gray-300');
+            document.getElementById('nav-' + mode).classList.add('bg-orange-600', 'text-white');
+            
+            document.getElementById('header-title').innerText = mode === 'keluarga' ? 'Manajemen Data Keluarga' : 'Manajemen Data Usaha';
+            document.getElementById('th-nama').innerText = mode === 'keluarga' ? 'Nama Kepala Keluarga' : 'Nama Usaha';
+            
+            // Bersihkan tabel
+            document.getElementById('tabel-body').innerHTML = '<tr><td colspan="7" class="p-8 text-center text-gray-400">Silakan tekan "Tarik Data" untuk memulai</td></tr>';
         }
 
         async function tarikData() {
