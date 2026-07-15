@@ -383,14 +383,14 @@
                     <td class="p-4 text-xs font-bold text-gray-600">${row.pml}</td>
                     <td class="p-4 text-xs font-medium text-gray-500">${row.pcl}</td>
                     <td class="p-4">
-                        <select onchange="updateData('${row.id}', 'Pengerjaan', this)" class="p-1.5 text-xs font-bold border rounded-md shadow-sm outline-none cursor-pointer ${statusColor}">
+                        <select data-anomali="${anomaliTeks}" onchange="updateData('${row.id}', 'Pengerjaan', this)" class="p-1.5 text-xs font-bold border rounded-md shadow-sm outline-none cursor-pointer ${statusColor}">
                             <option value="Belum Konfirmasi" ${row.status === "Belum Konfirmasi" ? "selected":""}>Belum Konfirmasi</option>
                             <option value="Sedang Konfirmasi" ${row.status === "Sedang Konfirmasi" ? "selected":""}>Sedang Konfirmasi</option>
                             <option value="Sudah Konfirmasi" ${row.status === "Sudah Konfirmasi" ? "selected":""}>Sudah Konfirmasi</option>
                         </select>
                     </td>
                     <td class="p-4 min-w-[250px]">
-                        <textarea onchange="updateData('${row.id}', 'Catatan', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-sm group-hover:bg-white group-hover:border-gray-200 transition rounded resize-y text-gray-700" rows="1" placeholder="Ketik catatan...">${row.catatan}</textarea>
+                        <textarea data-anomali="${anomaliTeks}" onchange="updateData('${row.id}', 'Catatan', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-sm group-hover:bg-white group-hover:border-gray-200 transition rounded resize-y text-gray-700" rows="1" placeholder="Ketik catatan...">${row.catatan}</textarea>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -400,6 +400,8 @@
         async function updateData(id, kolom, inputElement) {
             const nilaiBaru = inputElement.value;
             const status = document.getElementById('status-text');
+            const tgl = document.getElementById('input-tanggal').value; // Ambil Tanggal saat ini
+            const anomali = inputElement.getAttribute('data-anomali'); // Ambil Nama Anomali
             
             if(document.getElementById('page-data').classList.contains('active')) {
                 status.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Menyimpan...`;
@@ -412,7 +414,7 @@
                 const requestOptions = {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: "updateData", tipe: currentMode, id: id, kolom: kolom, nilai: nilaiBaru })
+                    body: JSON.stringify({ action: "updateData", tipe: currentMode, id: id, tanggal: tgl, anomali: anomali, kolom: kolom, nilai: nilaiBaru })
                 };
                 const response = await fetch(API_URL, requestOptions);
                 const result = await response.json();
