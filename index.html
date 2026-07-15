@@ -55,11 +55,12 @@
         
         <div class="p-6 flex-1 overflow-y-auto">
             
+            <!-- HALAMAN: DASHBOARD -->
             <div id="page-dashboard" class="page-content active h-full flex flex-col">
                 <!-- Filter -->
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex gap-4 items-end">
+                <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-200 mb-4 flex gap-4 items-end shrink-0 z-10">
                     <div>
-                        <label class="block text-xs font-bold text-gray-600 mb-1">Pilih Tanggal Acuan</label>
+                        <label class="block text-xs font-bold text-gray-600 mb-1">Pilih Tanggal</label>
                         <select id="dash-tgl" class="border border-gray-300 p-2 rounded-lg text-sm w-48 focus:ring-2 focus:ring-orange-400 outline-none">
                             <option value="">Memuat tanggal...</option>
                         </select>
@@ -77,46 +78,45 @@
                     </button>
                 </div>
                 
-                <!-- PERBAIKAN: Struktur HTML Dashboard diperbaiki agar unik dan berurutan -->
-                <!-- 1. SCORECARDS (Ringkasan) -->
-                <div class="grid grid-cols-2 gap-4 mb-6">
-                    <div class="bg-orange-600 p-6 rounded-2xl text-white shadow-lg">
-                        <p class="text-orange-100 text-sm font-medium uppercase">Total Anomali di Tgl Acuan</p>
-                        <h3 id="dash-total" class="text-4xl font-black">0</h3>
-                    </div>
-                    <div class="bg-green-500 p-6 rounded-2xl text-white shadow-lg">
-                        <p class="text-green-100 text-sm font-medium uppercase">Progress Tindak Lanjut Terkini</p>
-                        <h3 id="dash-persen" class="text-4xl font-black">0%</h3>
-                    </div>
-                </div>
+                <!-- KONTEN DASHBOARD KOMPAK (Satu Layar) -->
+                <div class="flex-1 flex flex-col lg:flex-row gap-4 min-h-0">
+                    
+                    <!-- PANEL KIRI: Scorecards & Grafik (Lebar 30%) -->
+                    <div class="w-full lg:w-1/3 flex flex-col gap-4 min-h-0">
+                        <!-- Scorecards -->
+                        <div class="grid grid-cols-2 gap-4 shrink-0">
+                            <div class="bg-orange-600 p-4 rounded-xl text-white shadow-md">
+                                <p class="text-orange-100 text-[10px] font-bold uppercase mb-1">Total Anomali</p>
+                                <h3 id="dash-total" class="text-3xl font-black">0</h3>
+                            </div>
+                            <div class="bg-green-500 p-4 rounded-xl text-white shadow-md">
+                                <p class="text-green-100 text-[10px] font-bold uppercase mb-1">Tindak Lanjut</p>
+                                <h3 id="dash-persen" class="text-3xl font-black">0%</h3>
+                            </div>
+                        </div>
 
-                <!-- 2. GRAFIK -->
-                <div class="bg-white p-6 rounded-xl shadow-sm border mb-6">
-                    <h3 class="font-bold text-gray-700 mb-4">Grafik Sebaran Anomali & Progress</h3>
-                    <canvas id="dash-chart" height="100"></canvas>
-                </div>
-
-                <!-- 3. TABEL PIVOT -->
-                <div id="dash-container" class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <div class="col-span-1 lg:col-span-3 bg-white p-10 rounded-xl shadow-sm border border-gray-200 text-center text-gray-400">
-                        <i class="fas fa-chart-pie text-4xl mb-3 block opacity-50"></i>
-                        Tekan "Jalankan" untuk memuat ringkasan data.
+                        <!-- Grafik -->
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex-1 flex flex-col min-h-0">
+                            <h3 class="font-bold text-gray-700 text-sm mb-2 shrink-0">Grafik Sebaran Anomali</h3>
+                            <div class="relative flex-1 w-full min-h-0">
+                                <canvas id="dash-chart"></canvas>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- PANEL KANAN: Tabel Pivot (Lebar 70%) -->
+                    <div id="dash-container" class="w-full lg:w-2/3 grid grid-cols-1 lg:grid-cols-3 gap-4 min-h-0">
+                        <div class="col-span-1 lg:col-span-3 bg-white p-10 rounded-xl shadow-sm border border-gray-200 text-center text-gray-400 flex flex-col items-center justify-center h-full">
+                            <i class="fas fa-chart-pie text-4xl mb-3 block opacity-50"></i>
+                            <span class="text-sm">Tekan "Jalankan" untuk memuat ringkasan data.</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <div id="page-data" class="page-content hidden h-full flex flex-col">
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex flex-wrap justify-between items-end gap-4">
-                    <div class="flex flex-wrap gap-4 items-end w-full lg:w-auto">
-                        
-                        <div>
-                            <label class="block font-semibold text-xs text-gray-600 mb-1">Tanggal Data <span class="text-red-500">*</span></label>
-                            <select id="input-tanggal" class="border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-orange-400 outline-none w-full min-w-[140px]">
-                                <option value="">Memuat tanggal...</option>
-                            </select>
-                        </div>
-                        
-                        <div class="bg-purple-50 p-1.5 -m-1.5 rounded-lg border border-purple-100 flex items-end gap-3">
+            
+            <!-- HALAMAN: TABEL DATA -->
                             <div>
                                 <label class="block font-semibold text-xs text-purple-700 mb-1"><i class="fas fa-history mr-1"></i>Tgl Pembanding (Opsional)</label>
                                 <select id="input-tgl-banding" class="border border-purple-200 rounded-lg p-2 text-sm focus:ring-2 focus:ring-purple-400 outline-none w-full min-w-[140px] bg-white">
@@ -438,10 +438,9 @@
             const tgl = document.getElementById('dash-tgl').value;
             const tipe = document.getElementById('dash-tipe').value;
             
-            // PERBAIKAN: Validasi di awal
             if(!tgl) { alert("Harap pilih tanggal untuk memuat Dashboard."); return; }
             
-            container.innerHTML = '<div class="col-span-3 text-center p-10"><i class="fas fa-circle-notch fa-spin text-4xl text-orange-400 mb-3 block"></i><p class="text-gray-500 font-medium">Menghitung Agregat Data...</p></div>';
+            container.innerHTML = '<div class="col-span-3 text-center p-10 flex flex-col justify-center h-full"><i class="fas fa-circle-notch fa-spin text-4xl text-orange-400 mb-3 block"></i><p class="text-gray-500 text-sm font-medium">Menghitung Agregat Data...</p></div>';
             
             try {
                 const res = await fetch(API_URL, {
@@ -449,12 +448,10 @@
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify({ action: "getDashboard", tipe, tanggal: tgl })
                 });
-                // PERBAIKAN: Memanggil res.json() setelah fetch selesai
                 const {data} = await res.json();
                 
                 if(Object.keys(data.kec).length === 0) {
-                     container.innerHTML = '<div class="col-span-3 bg-green-50 text-center p-10 rounded-xl border border-green-200"><i class="fas fa-check-circle text-4xl text-green-500 mb-3 block"></i><p class="text-green-700 font-bold">Luar Biasa! Tidak ada anomali untuk filter ini.</p></div>';
-                     // Kosongkan grafik & scorecard jika tidak ada data
+                     container.innerHTML = '<div class="col-span-3 bg-green-50 text-center p-10 flex flex-col justify-center rounded-xl border border-green-200 h-full"><i class="fas fa-check-circle text-4xl text-green-500 mb-3 block"></i><p class="text-green-700 text-sm font-bold">Luar Biasa! Tidak ada anomali untuk filter ini.</p></div>';
                      document.getElementById('dash-total').innerText = "0";
                      document.getElementById('dash-persen').innerText = "0%";
                      if (myChart) myChart.destroy();
@@ -466,7 +463,7 @@
                 let persen = data.summary.total > 0 ? Math.round((data.summary.selesai / data.summary.total) * 100) : 0;
                 document.getElementById('dash-persen').innerText = persen + "%";
 
-                // Update Chart
+                // Update Chart (PERBAIKAN: Set maintainAspectRatio ke false)
                 if (myChart) myChart.destroy();
                 const ctx = document.getElementById('dash-chart').getContext('2d');
                 myChart = new Chart(ctx, {
@@ -478,23 +475,26 @@
                             data: Object.values(data.pml).map(v => v.total),
                             backgroundColor: '#f97316'
                         }, {
-                            label: 'Sudah Ditindaklanjuti',
+                            label: 'Tindak Lanjut',
                             data: Object.values(data.pml).map(v => v.selesai),
                             backgroundColor: '#22c55e'
                         }]
                     },
-                    options: { responsive: true, maintainAspectRatio: false }
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, // Mencegah grafik melar tanpa batas
+                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } },
+                        scales: { x: { ticks: { font: { size: 9 } } }, y: { ticks: { font: { size: 10 } } } }
+                    }
                 });
 
-                // Render Tabel Detail Bawah
                 container.innerHTML = `
-                    ${renderTabelDash('Berdasarkan Kecamatan', data.kec, ['Kecamatan', 'Jml Anomali', 'Tindak Lanjut'])}
-                    ${renderTabelDash('Berdasarkan PML', data.pml, ['PML', 'Jml Anomali', 'Tindak Lanjut'])}
-                    ${renderTabelDash('Struktur PML & PCL', data.pmlPcl, ['PML', 'PCL', 'Jml Anomali', 'Tindak Lanjut'])}
+                    ${renderTabelDash('Kecamatan', data.kec, ['Kec', 'Anomali', 'Progress'])}
+                    ${renderTabelDash('PML', data.pml, ['PML', 'Anomali', 'Progress'])}
+                    ${renderTabelDash('Struktur PML & PCL', data.pmlPcl, ['PML', 'PCL', 'Anomali', 'Progress'])}
                 `;
             } catch (error) {
-                console.error(error);
-                container.innerHTML = `<div class="col-span-3 text-center p-10 text-red-500 font-bold">Gagal memuat Dashboard: Server Sibuk atau Error.</div>`;
+                container.innerHTML = `<div class="col-span-3 text-center p-10 text-red-500 text-sm font-bold h-full flex items-center justify-center">Gagal memuat Dashboard: Server Sibuk.</div>`;
             }
         }
 
@@ -514,42 +514,43 @@
                 
                 // Komponen Progress Bar
                 let progressUI = `
-                <div class="flex items-center gap-2 w-full min-w-[120px]" title="${v.selesai} dari ${v.total} selesai">
-                    <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-green-500 h-2 rounded-full transition-all duration-500" style="width: ${persen}%"></div>
+                <div class="flex items-center gap-1.5 w-full min-w-[80px]" title="${v.selesai} selesai">
+                    <div class="w-full bg-gray-200 rounded-full h-1.5">
+                        <div class="bg-green-500 h-1.5 rounded-full" style="width: ${persen}%"></div>
                     </div>
-                    <span class="text-[10px] font-black text-gray-600 w-8 text-right">${persen}%</span>
+                    <span class="text-[9px] font-black text-gray-600 w-6 text-right">${persen}%</span>
                 </div>`;
 
-                return `<tr class="border-b hover:bg-gray-50 transition">
-                    ${cols.map(c => `<td class="p-3">${c}</td>`).join('')}
-                    <td class="p-3 font-bold text-orange-600 text-center">${v.total}</td>
-                    <td class="p-3">${progressUI}</td>
+                return `<tr class="border-b hover:bg-gray-50">
+                    ${cols.map(c => `<td class="p-2 whitespace-nowrap truncate max-w-[100px] hover:text-clip" title="${c}">${c}</td>`).join('')}
+                    <td class="p-2 font-bold text-orange-600 text-center">${v.total}</td>
+                    <td class="p-2">${progressUI}</td>
                 </tr>`;
             }).join('');
             
             let persenSemua = totalSemua > 0 ? Math.round((selesaiSemua/totalSemua)*100) : 0;
 
+            // PERBAIKAN: h-[65vh] dihapus menjadi h-full agar responsif
             return `
-            <div class="bg-white rounded-xl shadow-sm border flex flex-col h-[65vh]">
-                <div class="p-4 border-b bg-gray-50 rounded-t-xl flex justify-between items-center">
-                    <h3 class="font-bold text-gray-700"><i class="fas fa-chart-bar text-orange-400 mr-2"></i>${title}</h3>
+            <div class="bg-white rounded-xl shadow-sm border flex flex-col h-full overflow-hidden">
+                <div class="p-3 border-b bg-gray-50 flex justify-between items-center shrink-0">
+                    <h3 class="font-bold text-gray-700 text-xs"><i class="fas fa-chart-bar text-orange-400 mr-1.5"></i>${title}</h3>
                 </div>
-                <div class="overflow-y-auto flex-1 p-2">
-                    <table class="w-full text-xs text-left">
-                        <thead class="sticky top-0 bg-white shadow-sm">
-                            <tr class="text-gray-500 uppercase tracking-wider">
-                                ${headers.map(h => `<th class="p-3">${h}</th>`).join('')}
+                <div class="overflow-y-auto flex-1 p-1">
+                    <table class="w-full text-[10px] text-left">
+                        <thead class="sticky top-0 bg-white shadow-sm z-10">
+                            <tr class="text-gray-500 uppercase">
+                                ${headers.map(h => `<th class="p-2">${h}</th>`).join('')}
                             </tr>
                         </thead>
                         <tbody>${rows}</tbody>
                     </table>
                 </div>
-                <div class="p-3 border-t bg-orange-50 rounded-b-xl flex justify-between items-center text-sm">
-                    <span class="font-bold text-gray-700">Total Keseluruhan</span>
-                    <div class="flex items-center gap-4">
-                        <span class="font-black text-orange-600">${totalSemua} Anomali</span>
-                        <span class="font-black text-green-700 bg-green-100 px-2 py-1 rounded-md">${persenSemua}% Tuntas</span>
+                <div class="p-2 border-t bg-orange-50 flex justify-between items-center text-xs shrink-0">
+                    <span class="font-bold text-gray-700 text-[10px]">Total</span>
+                    <div class="flex items-center gap-2">
+                        <span class="font-black text-orange-600">${totalSemua}</span>
+                        <span class="font-black text-green-700 bg-green-100 px-1.5 py-0.5 rounded">${persenSemua}%</span>
                     </div>
                 </div>
             </div>`;
