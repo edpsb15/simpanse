@@ -13,15 +13,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .page-content { display: none; animation: fadeIn 0.3s ease-in-out; }
-        .page-content.active { display: block; }
+        /* PERUBAHAN KUNCI: Ubah display menjadi flex agar h-full bekerja sempurna */
+        .page-content.active { display: flex; } 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .table-container { max-height: 65vh; overflow-y: auto; }
         thead { position: sticky; top: 0; background-color: #f3f4f6; z-index: 10; box-shadow: 0 1px 2px rgba(0,0,0,0.05);}
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800 flex h-screen overflow-hidden">
@@ -44,21 +44,23 @@
         </nav>
     </aside>
 
-    <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
-        <header class="bg-white shadow-sm p-4 flex justify-between items-center z-20">
-            <h2 id="header-title" class="text-2xl font-bold text-gray-800">Dashboard Interaktif</h2>
+    <main class="flex-1 flex flex-col h-screen overflow-hidden relative bg-gray-100">
+        <!-- HEADER UTAMA -->
+        <header class="bg-white shadow-sm p-4 flex justify-between items-center z-20 shrink-0">
+            <h2 id="header-title" class="text-xl lg:text-2xl font-bold text-gray-800">Dashboard Interaktif</h2>
             <div class="flex items-center text-sm text-gray-600">
                 <i class="far fa-calendar-alt mr-2"></i> <span id="current-date">Hari Ini</span>
                 <div class="ml-6 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold shadow-md">A</div>
             </div>
         </header>
         
-        <div class="p-6 flex-1 overflow-y-auto">
+        <!-- AREA KONTEN (Tanpa scroll halaman, scroll diserahkan ke komponen di dalamnya) -->
+        <div class="p-4 flex-1 overflow-hidden relative flex flex-col">
             
-            <!-- HALAMAN: DASHBOARD -->
-            <div id="page-dashboard" class="page-content active h-full flex flex-col">
+            <!-- HALAMAN 1: DASHBOARD -->
+            <div id="page-dashboard" class="page-content active h-full flex-col min-h-0">
                 <!-- Filter -->
-                <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-200 mb-4 flex gap-4 items-end shrink-0 z-10">
+                <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-200 mb-4 flex flex-wrap gap-4 items-end shrink-0 z-10">
                     <div>
                         <label class="block text-xs font-bold text-gray-600 mb-1">Pilih Tanggal</label>
                         <select id="dash-tgl" class="border border-gray-300 p-2 rounded-lg text-sm w-48 focus:ring-2 focus:ring-orange-400 outline-none">
@@ -79,44 +81,54 @@
                 </div>
                 
                 <!-- KONTEN DASHBOARD KOMPAK (Satu Layar) -->
-                <div class="flex-1 flex flex-col lg:flex-row gap-4 min-h-0">
+                <div class="flex-1 flex flex-col lg:flex-row gap-4 min-h-0 overflow-hidden">
                     
                     <!-- PANEL KIRI: Scorecards & Grafik (Lebar 30%) -->
-                    <div class="w-full lg:w-1/3 flex flex-col gap-4 min-h-0">
+                    <div class="w-full lg:w-1/3 flex flex-col gap-4 min-h-0 shrink-0 lg:shrink">
                         <!-- Scorecards -->
-                        <div class="grid grid-cols-2 gap-4 shrink-0">
-                            <div class="bg-orange-600 p-4 rounded-xl text-white shadow-md">
+                        <div class="grid grid-cols-2 gap-3 shrink-0">
+                            <div class="bg-orange-600 p-4 rounded-xl text-white shadow-md flex flex-col justify-center">
                                 <p class="text-orange-100 text-[10px] font-bold uppercase mb-1">Total Anomali</p>
-                                <h3 id="dash-total" class="text-3xl font-black">0</h3>
+                                <h3 id="dash-total" class="text-3xl font-black leading-none">0</h3>
                             </div>
-                            <div class="bg-green-500 p-4 rounded-xl text-white shadow-md">
+                            <div class="bg-green-500 p-4 rounded-xl text-white shadow-md flex flex-col justify-center">
                                 <p class="text-green-100 text-[10px] font-bold uppercase mb-1">Tindak Lanjut</p>
-                                <h3 id="dash-persen" class="text-3xl font-black">0%</h3>
+                                <h3 id="dash-persen" class="text-3xl font-black leading-none">0%</h3>
                             </div>
                         </div>
 
                         <!-- Grafik -->
-                        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex-1 flex flex-col min-h-0">
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex-1 flex flex-col min-h-[200px]">
                             <h3 class="font-bold text-gray-700 text-sm mb-2 shrink-0">Grafik Sebaran Anomali</h3>
-                            <div class="relative flex-1 w-full min-h-0">
+                            <div class="relative flex-1 w-full h-full min-h-0">
                                 <canvas id="dash-chart"></canvas>
                             </div>
                         </div>
                     </div>
 
                     <!-- PANEL KANAN: Tabel Pivot (Lebar 70%) -->
-                    <div id="dash-container" class="w-full lg:w-2/3 grid grid-cols-1 lg:grid-cols-3 gap-4 min-h-0">
+                    <div id="dash-container" class="w-full lg:w-2/3 grid grid-cols-1 lg:grid-cols-3 gap-4 min-h-0 overflow-y-auto lg:overflow-hidden">
                         <div class="col-span-1 lg:col-span-3 bg-white p-10 rounded-xl shadow-sm border border-gray-200 text-center text-gray-400 flex flex-col items-center justify-center h-full">
                             <i class="fas fa-chart-pie text-4xl mb-3 block opacity-50"></i>
                             <span class="text-sm">Tekan "Jalankan" untuk memuat ringkasan data.</span>
                         </div>
                     </div>
-
                 </div>
             </div>
 
-            
-            <!-- HALAMAN: TABEL DATA -->
+            <!-- HALAMAN 2: TABEL DATA KELUARGA/USAHA -->
+            <div id="page-data" class="page-content hidden h-full flex-col min-h-0">
+                <!-- Filter Tabel -->
+                <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-200 mb-4 flex flex-wrap justify-between items-end gap-3 shrink-0">
+                    <div class="flex flex-wrap gap-3 items-end w-full lg:w-auto">
+                        <div>
+                            <label class="block font-semibold text-xs text-gray-600 mb-1">Tanggal Data <span class="text-red-500">*</span></label>
+                            <select id="input-tanggal" class="border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-orange-400 outline-none w-full min-w-[140px]">
+                                <option value="">Memuat tanggal...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="bg-purple-50 p-1.5 -m-1.5 rounded-lg border border-purple-100 flex items-end gap-3">
                             <div>
                                 <label class="block font-semibold text-xs text-purple-700 mb-1"><i class="fas fa-history mr-1"></i>Tgl Pembanding (Opsional)</label>
                                 <select id="input-tgl-banding" class="border border-purple-200 rounded-lg p-2 text-sm focus:ring-2 focus:ring-purple-400 outline-none w-full min-w-[140px] bg-white">
@@ -144,26 +156,29 @@
                     <div id="status-text" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap"><i class="fas fa-spinner fa-spin mr-1"></i> Berkomunikasi dengan Server...</div>
                 </div>
                 
-                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 table-container">
-                    <table class="w-full text-left text-sm whitespace-nowrap">
-                        <thead>
-                            <tr class="text-gray-700">
-                                <th class="p-4 border-b w-1/4 whitespace-normal" id="th-nama">Nama</th>
-                                <th class="p-4 border-b w-64">Anomali</th>
-                                <th class="p-4 border-b text-center">Fasih</th>
-                                <th class="p-4 border-b">PML</th>
-                                <th class="p-4 border-b">PCL</th>
-                                <th class="p-4 border-b">Pengerjaan</th>
-                                <th class="p-4 border-b min-w-[300px]">Catatan</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabel-body" class="divide-y divide-gray-100 text-gray-600">
-                            <tr><td colspan="7" class="p-8 text-center text-gray-400"><i class="fas fa-inbox text-3xl mb-2 block"></i>Silakan tentukan filter lalu tekan "Tarik"</td></tr>
-                        </tbody>
-                    </table>
+                <!-- Tabel Utama (Fix size, inner scroll) -->
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col overflow-hidden min-h-0">
+                    <div class="overflow-y-auto flex-1 relative">
+                        <table class="w-full text-left text-sm whitespace-nowrap">
+                            <thead>
+                                <tr class="text-gray-700">
+                                    <th class="p-4 border-b w-1/4 whitespace-normal" id="th-nama">Nama</th>
+                                    <th class="p-4 border-b w-64">Anomali</th>
+                                    <th class="p-4 border-b text-center">Fasih</th>
+                                    <th class="p-4 border-b">PML</th>
+                                    <th class="p-4 border-b">PCL</th>
+                                    <th class="p-4 border-b">Pengerjaan</th>
+                                    <th class="p-4 border-b min-w-[300px]">Catatan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabel-body" class="divide-y divide-gray-100 text-gray-600">
+                                <tr><td colspan="7" class="p-8 text-center text-gray-400"><i class="fas fa-inbox text-3xl mb-2 block"></i>Silakan tentukan filter lalu tekan "Tarik"</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
+            
         </div>
     </main>
 
@@ -514,15 +529,15 @@
                 
                 // Komponen Progress Bar
                 let progressUI = `
-                <div class="flex items-center gap-1.5 w-full min-w-[80px]" title="${v.selesai} selesai">
+                <div class="flex items-center gap-1.5 w-full min-w-[80px]" title="${v.selesai} dari ${v.total} selesai">
                     <div class="w-full bg-gray-200 rounded-full h-1.5">
-                        <div class="bg-green-500 h-1.5 rounded-full" style="width: ${persen}%"></div>
+                        <div class="bg-green-500 h-1.5 rounded-full transition-all duration-500" style="width: ${persen}%"></div>
                     </div>
                     <span class="text-[9px] font-black text-gray-600 w-6 text-right">${persen}%</span>
                 </div>`;
 
-                return `<tr class="border-b hover:bg-gray-50">
-                    ${cols.map(c => `<td class="p-2 whitespace-nowrap truncate max-w-[100px] hover:text-clip" title="${c}">${c}</td>`).join('')}
+                return `<tr class="border-b hover:bg-gray-50 transition">
+                    ${cols.map(c => `<td class="p-2 whitespace-nowrap truncate max-w-[120px]" title="${c}">${c}</td>`).join('')}
                     <td class="p-2 font-bold text-orange-600 text-center">${v.total}</td>
                     <td class="p-2">${progressUI}</td>
                 </tr>`;
@@ -530,27 +545,26 @@
             
             let persenSemua = totalSemua > 0 ? Math.round((selesaiSemua/totalSemua)*100) : 0;
 
-            // PERBAIKAN: h-[65vh] dihapus menjadi h-full agar responsif
             return `
-            <div class="bg-white rounded-xl shadow-sm border flex flex-col h-full overflow-hidden">
-                <div class="p-3 border-b bg-gray-50 flex justify-between items-center shrink-0">
-                    <h3 class="font-bold text-gray-700 text-xs"><i class="fas fa-chart-bar text-orange-400 mr-1.5"></i>${title}</h3>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col h-full min-h-[250px] overflow-hidden">
+                <div class="p-2 border-b bg-gray-50 flex justify-between items-center shrink-0">
+                    <h3 class="font-bold text-gray-700 text-[11px] uppercase tracking-wider truncate"><i class="fas fa-chart-bar text-orange-400 mr-1.5"></i>${title}</h3>
                 </div>
-                <div class="overflow-y-auto flex-1 p-1">
+                <div class="overflow-y-auto flex-1 p-0">
                     <table class="w-full text-[10px] text-left">
                         <thead class="sticky top-0 bg-white shadow-sm z-10">
                             <tr class="text-gray-500 uppercase">
-                                ${headers.map(h => `<th class="p-2">${h}</th>`).join('')}
+                                ${headers.map(h => `<th class="p-2 border-b">${h}</th>`).join('')}
                             </tr>
                         </thead>
-                        <tbody>${rows}</tbody>
+                        <tbody class="divide-y divide-gray-100">${rows}</tbody>
                     </table>
                 </div>
-                <div class="p-2 border-t bg-orange-50 flex justify-between items-center text-xs shrink-0">
+                <div class="p-2 border-t bg-orange-50 flex justify-between items-center shrink-0">
                     <span class="font-bold text-gray-700 text-[10px]">Total</span>
                     <div class="flex items-center gap-2">
-                        <span class="font-black text-orange-600">${totalSemua}</span>
-                        <span class="font-black text-green-700 bg-green-100 px-1.5 py-0.5 rounded">${persenSemua}%</span>
+                        <span class="font-black text-orange-600 text-xs">${totalSemua}</span>
+                        <span class="font-black text-green-700 bg-green-100 px-1.5 py-0.5 rounded text-[10px]">${persenSemua}%</span>
                     </div>
                 </div>
             </div>`;
