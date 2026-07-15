@@ -93,6 +93,13 @@
                             </div>
                         </div>
 
+                        <!-- QUOTE SCOREBOARD -->
+                        <div class="bg-gray-800 p-4 rounded-xl shadow-md shrink-0 relative overflow-hidden flex flex-col justify-center border border-gray-700">
+                            <i class="fas fa-quote-right text-4xl text-gray-700 absolute -bottom-2 -right-2 opacity-40"></i>
+                            <p id="quote-text" class="text-gray-300 text-[11px] italic font-medium leading-relaxed relative z-10">Memuat kutipan...</p>
+                            <p id="quote-author" class="text-orange-400 text-[10px] font-bold text-right mt-2 relative z-10"></p>
+                        </div>
+
                         <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex-1 flex flex-col min-h-[200px]">
                             <h3 class="font-bold text-gray-700 text-sm mb-2 shrink-0">Grafik Sebaran Anomali</h3>
                             <div class="relative flex-1 w-full h-full min-h-0">
@@ -101,8 +108,8 @@
                         </div>
                     </div>
 
-                    <div id="dash-container" class="w-full lg:w-2/3 grid grid-cols-1 lg:grid-cols-3 gap-4 min-h-0 overflow-y-auto lg:overflow-hidden">
-                        <div class="col-span-1 lg:col-span-3 bg-white p-10 rounded-xl shadow-sm border border-gray-200 text-center text-gray-400 flex flex-col items-center justify-center h-full">
+                    <div id="dash-container" class="w-full lg:w-2/3 grid grid-cols-1 lg:grid-cols-2 gap-4 min-h-0 overflow-y-auto lg:overflow-hidden">
+                        <div class="col-span-1 lg:col-span-2 bg-white p-10 rounded-xl shadow-sm border border-gray-200 text-center text-gray-400 flex flex-col items-center justify-center h-full">
                             <i class="fas fa-chart-pie text-4xl mb-3 block opacity-50"></i>
                             <span class="text-sm">Tekan "Jalankan" untuk memuat ringkasan data.</span>
                         </div>
@@ -181,6 +188,22 @@
         let currentMode = 'dashboard';
         let dataMitraGlobal = {}; 
         let myChart = null;
+
+        const quotes = [
+            { text: "Setiap anomali mungkin merupakan hal yang acak; namun, jika Anda memiliki cukup data, Anda dapat mengetahui bahwa itu bukan kebetulan.", author: "Jim Simons" },
+            { text: "Anomali adalah pemberontak dalam kumpulan data Anda. Mereka mencoba untuk menyembunyikan kebenaran, atau terkadang, mereka adalah satu-satunya kebenaran.", author: "Anonim" },
+            { text: "Anomali tidak berarti Salah, Anomali hanya butuh Kepastian", author: "Admin" }
+        ];
+
+        function setRandomQuote() {
+            const q = quotes[Math.floor(Math.random() * quotes.length)];
+            const qText = document.getElementById('quote-text');
+            const qAuth = document.getElementById('quote-author');
+            if (qText && qAuth) {
+                qText.innerText = `"${q.text}"`;
+                qAuth.innerText = `- ${q.author}`;
+            }
+        }
 
         document.getElementById('current-date').innerText = new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
@@ -268,6 +291,7 @@
 
         window.onload = () => {
             muatDataMitra();
+            setRandomQuote();
         };
 
         function switchPage(mode) {
@@ -441,7 +465,7 @@
             
             if(!tgl) { alert("Harap pilih tanggal untuk memuat Dashboard."); return; }
             
-            container.innerHTML = '<div class="col-span-1 lg:col-span-3 text-center p-10"><i class="fas fa-circle-notch fa-spin text-4xl text-orange-400 mb-3 block"></i><p class="text-gray-500 font-medium">Menghitung Agregat Data...</p></div>';
+            container.innerHTML = '<div class="col-span-1 lg:col-span-2 text-center p-10"><i class="fas fa-circle-notch fa-spin text-4xl text-orange-400 mb-3 block"></i><p class="text-gray-500 font-medium">Menghitung Agregat Data...</p></div>';
             
             try {
                 const res = await fetch(API_URL, {
@@ -452,7 +476,7 @@
                 const {data} = await res.json();
                 
                 if(Object.keys(data.kec).length === 0) {
-                     container.innerHTML = '<div class="col-span-1 lg:col-span-3 bg-green-50 text-center p-10 rounded-xl border border-green-200 h-full flex flex-col items-center justify-center"><i class="fas fa-check-circle text-4xl text-green-500 mb-3 block"></i><p class="text-green-700 font-bold">Luar Biasa! Tidak ada anomali untuk filter ini.</p></div>';
+                     container.innerHTML = '<div class="col-span-1 lg:col-span-2 bg-green-50 text-center p-10 rounded-xl border border-green-200 h-full flex flex-col items-center justify-center"><i class="fas fa-check-circle text-4xl text-green-500 mb-3 block"></i><p class="text-green-700 font-bold">Luar Biasa! Tidak ada anomali untuk filter ini.</p></div>';
                      return;
                 }
 
@@ -479,14 +503,23 @@
                     options: { responsive: true, maintainAspectRatio: false }
                 });
 
+                // Perubahan Grid Struktur Pivot (Dua Kolom)
                 container.innerHTML = `
-                    ${renderTabelDash('Kecamatan', data.kec, ['Kecamatan', 'Anomali', 'Progress'])}
-                    ${renderTabelDash('PML', data.pml, ['PML', 'Anomali', 'Progress'])}
-                    ${renderTabelDash('Struktur PML & PCL', data.pmlPcl, ['PML', 'PCL', 'Anomali', 'Progress'])}
+                    <div class="flex flex-col gap-4 min-h-0 h-full overflow-hidden">
+                        <div class="flex-1 min-h-0 overflow-hidden">
+                            ${renderTabelDash('Kecamatan', data.kec, ['Kecamatan', 'Anomali', 'Progress'])}
+                        </div>
+                        <div class="flex-1 min-h-0 overflow-hidden">
+                            ${renderTabelDash('PML', data.pml, ['PML', 'Anomali', 'Progress'])}
+                        </div>
+                    </div>
+                    <div class="h-full min-h-0 overflow-hidden">
+                        ${renderTabelDash('Struktur PML & PCL', data.pmlPcl, ['PML', 'PCL', 'Anomali', 'Progress'])}
+                    </div>
                 `;
             } catch (error) {
                 console.error(error);
-                container.innerHTML = `<div class="col-span-1 lg:col-span-3 text-center p-10 text-red-500 font-bold flex h-full items-center justify-center">Gagal memuat Dashboard: Server Sibuk.</div>`;
+                container.innerHTML = `<div class="col-span-1 lg:col-span-2 text-center p-10 text-red-500 font-bold flex h-full items-center justify-center">Gagal memuat Dashboard: Server Sibuk.</div>`;
             }
         }
 
@@ -517,7 +550,7 @@
             let persenSemua = totalSemua > 0 ? Math.round((selesaiSemua/totalSemua)*100) : 0;
 
             return `
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col h-full min-h-[250px] overflow-hidden">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col h-full min-h-0 overflow-hidden">
                 <div class="p-2 border-b bg-gray-50 flex justify-between items-center shrink-0">
                     <h3 class="font-bold text-gray-700 text-[11px] uppercase tracking-wider truncate"><i class="fas fa-chart-bar text-orange-400 mr-1.5"></i>${title}</h3>
                 </div>
