@@ -9,11 +9,13 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         .page-content { display: none; animation: fadeIn 0.3s ease-in-out; }
-        .page-content.active { display: block; }
+        .page-content.active { display: flex; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        /* Custom Scrollbar untuk Pivot */
+        
+        /* Custom Scrollbar */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f8fafc; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -26,6 +28,8 @@
         /* Dropdown Animation */
         .dropdown-menu { transform-origin: top; transform: scaleY(0); transition: transform 0.2s ease-in-out; }
         .dropdown-menu.open { transform: scaleY(1); }
+        
+        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 flex h-screen overflow-hidden">
@@ -34,7 +38,7 @@
         <div class="p-6 border-b border-slate-800 flex justify-between items-center">
             <div>
                 <h1 class="text-xl font-bold text-orange-400"><i class="fas fa-chart-line mr-2"></i>SIMPANSE</h1>
-                <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-wider">Sistem Manajemen Anomali</p>
+                <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-wider">SIstem Manajemen ANomali SE2026</p>
             </div>
         </div>
         <nav class="flex-1 p-4 space-y-2 overflow-y-auto custom-scrollbar">
@@ -68,7 +72,6 @@
     <main class="flex-1 flex flex-col h-screen min-w-0 bg-gray-100">
         <header class="bg-white shadow-sm p-4 flex justify-between items-center z-20 shrink-0 border-b border-gray-200">
             <div class="flex items-center gap-4">
-                <!-- Hamburger Button (Sekarang tampil untuk semua ukuran layar) -->
                 <button onclick="toggleSidebar()" class="text-gray-500 hover:text-orange-500 transition">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
@@ -82,11 +85,10 @@
         
         <div class="p-4 lg:p-6 flex-1 overflow-y-auto h-full relative custom-scrollbar" id="main-scroll-area">
             
-            <!-- HALAMAN: DASHBOARD -->
-            <div id="page-dashboard" class="page-content active flex-col h-full">
+            <div id="page-dashboard" class="page-content active flex-col min-h-full pb-4">
                 
-                <!-- 1. GLOBAL METRICS (Dimuat otomatis saat web dibuka) -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <!-- 1. GLOBAL METRICS -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 shrink-0">
                     <div class="bg-gradient-to-r from-indigo-800 to-indigo-600 p-4 rounded-xl text-white shadow-md flex justify-between items-center relative overflow-hidden border border-indigo-500">
                         <i class="fas fa-globe absolute -right-4 -bottom-4 text-6xl opacity-10"></i>
                         <div>
@@ -105,8 +107,8 @@
                     </div>
                 </div>
 
-                <!-- Filter Area -->
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex flex-wrap gap-4 items-end">
+                <!-- 2. FILTER AREA -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex flex-wrap gap-4 items-end shrink-0">
                     <div>
                         <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wider">Tanggal Data</label>
                         <select id="dash-tgl" class="border border-gray-300 p-2 rounded-lg text-sm w-48 focus:ring-2 focus:ring-orange-400 outline-none bg-slate-50">
@@ -126,73 +128,71 @@
                     </button>
                 </div>
                 
-                <!-- 2. MAIN DASHBOARD CONTENT -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-4">
-                    <!-- Kolom Kiri: Scorecard, Quote, Grafiks (Lebar 7/12) -->
-                    <div class="lg:col-span-7 flex flex-col gap-4">
-                        
-                        <!-- Scorecards Filtered & Quote -->
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="bg-gradient-to-br from-orange-500 to-orange-600 p-5 rounded-2xl text-white shadow-lg relative overflow-hidden">
-                                <i class="fas fa-bug absolute -right-4 -bottom-4 text-6xl opacity-20"></i>
-                                <p class="text-orange-100 text-[10px] font-bold uppercase tracking-wider mb-1">Total (Filter)</p>
-                                <h3 id="dash-total" class="text-3xl font-black">0</h3>
-                            </div>
-                            <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-5 rounded-2xl text-white shadow-lg relative overflow-hidden">
-                                <i class="fas fa-check-double absolute -right-4 -bottom-4 text-6xl opacity-20"></i>
-                                <p class="text-emerald-100 text-[10px] font-bold uppercase tracking-wider mb-1">Tindak Lanjut</p>
-                                <h3 id="dash-selesai" class="text-3xl font-black flex items-end gap-1">0 <span class="text-[16px] font-bold opacity-80 mb-1">(0%)</span></h3>
-                            </div>
-                            
-                            <div class="bg-slate-800 p-4 rounded-2xl text-white shadow-lg flex flex-col justify-center border border-slate-700">
-                                <i class="fas fa-quote-left text-orange-400 text-sm mb-1 opacity-80"></i>
-                                <p id="quote-text" class="text-[11px] font-medium text-slate-300 italic leading-snug">"Memuat pemikiran..."</p>
-                                <p id="quote-author" class="text-[10px] text-orange-400 font-bold mt-1 text-right">- Admin</p>
-                            </div>
-                        </div>
+                <!-- 3. FILTERED SCORECARDS & QUOTE -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 shrink-0">
+                    <div class="bg-gradient-to-br from-orange-500 to-orange-600 p-5 rounded-2xl text-white shadow-md relative overflow-hidden">
+                        <i class="fas fa-bug absolute -right-4 -bottom-4 text-6xl opacity-20"></i>
+                        <p class="text-orange-100 text-[10px] font-bold uppercase tracking-wider mb-1">Total (Filter)</p>
+                        <h3 id="dash-total" class="text-3xl font-black">0</h3>
+                    </div>
+                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-5 rounded-2xl text-white shadow-md relative overflow-hidden">
+                        <i class="fas fa-check-double absolute -right-4 -bottom-4 text-6xl opacity-20"></i>
+                        <p class="text-emerald-100 text-[10px] font-bold uppercase tracking-wider mb-1">Tindak Lanjut</p>
+                        <h3 id="dash-selesai" class="text-3xl font-black flex items-end gap-1">0 <span class="text-[16px] font-bold opacity-80 mb-1">(0%)</span></h3>
+                    </div>
+                    
+                    <div class="bg-slate-800 p-4 rounded-2xl text-white shadow-md flex flex-col justify-center border border-slate-700">
+                        <i class="fas fa-quote-left text-orange-400 text-sm mb-1 opacity-80"></i>
+                        <p id="quote-text" class="text-[11px] font-medium text-slate-300 italic leading-snug">"Memuat pemikiran..."</p>
+                        <p id="quote-author" class="text-[10px] text-orange-400 font-bold mt-1 text-right">- Admin</p>
+                    </div>
+                </div>
 
-                        <!-- Bar Chart -->
-                        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[300px]">
-                            <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 border-b pb-2"><i class="fas fa-align-left text-orange-500 mr-2"></i>Progress per PML</h3>
-                            <div class="relative flex-1 min-h-0 w-full">
-                                <canvas id="dash-bar-chart"></canvas>
-                            </div>
-                        </div>
-
-                        <!-- Scatter Chart -->
-                        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[300px]">
-                            <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-2 border-b pb-2"><i class="fas fa-crosshairs text-blue-500 mr-2"></i>Kuadran Produktivitas</h3>
-                            
-                            <!-- Legenda Custom Kuadran -->
-                            <div class="flex flex-wrap gap-2 mb-2 justify-center text-[9px] font-bold text-gray-600 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
-                                <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-sm"></span> Hebat (Beban ↑, Cepat)</div>
-                                <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-sm"></span> Cepat (Beban ↓, Cepat)</div>
-                                <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm"></span> Kritis (Beban ↑, Lambat)</div>
-                                <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm"></span> Lambat (Beban ↓, Lambat)</div>
-                            </div>
-                            <div class="relative flex-1 min-h-0 w-full">
-                                <canvas id="dash-scatter-chart"></canvas>
-                            </div>
+                <!-- 4. CHARTS (Side by side grid for compactness) -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 min-h-[300px]">
+                    <!-- Bar Chart -->
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[300px] lg:h-full">
+                        <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 border-b pb-2"><i class="fas fa-align-left text-orange-500 mr-2"></i>Progress per PML</h3>
+                        <div class="relative flex-1 min-h-0 w-full">
+                            <canvas id="dash-bar-chart"></canvas>
                         </div>
                     </div>
 
-                    <!-- Kolom Kanan: Tabel Pivot (Lebar 5/12) -->
-                    <div class="lg:col-span-5 flex flex-col gap-4">
+                    <!-- Scatter Chart -->
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[300px] lg:h-full">
+                        <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-2 border-b pb-2"><i class="fas fa-crosshairs text-blue-500 mr-2"></i>Kuadran Produktivitas</h3>
                         
-                        <!-- Toggle Tombol untuk Pivot -->
-                        <button onclick="togglePivot()" id="btn-toggle-pivot" class="bg-white border-2 border-slate-200 text-slate-700 hover:border-orange-400 hover:text-orange-600 p-3 rounded-xl font-bold shadow-sm transition flex items-center justify-center gap-2 text-sm w-full">
-                            <i class="fas fa-table"></i> Tampilkan Tabel Analisis Detail <i class="fas fa-chevron-down ml-1"></i>
-                        </button>
-
-                        <!-- Area Tabel Pivot -->
-                        <div id="pivot-section" class="hidden opacity-0 transition-opacity duration-500 flex-1 flex flex-col gap-4">
-                            <!-- Container Tabel -->
-                            <div id="dash-container" class="flex flex-col gap-4 h-full">
-                                <!-- Isi Pivot akan dirender disini -->
-                            </div>
+                        <!-- Legenda Custom Kuadran -->
+                        <div class="flex flex-wrap gap-2 mb-2 justify-center text-[9px] font-bold text-gray-600 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-sm"></span> Hebat</div>
+                            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-sm"></span> Cepat</div>
+                            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm"></span> Kritis</div>
+                            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm"></span> Lambat</div>
+                        </div>
+                        <div class="relative flex-1 min-h-0 w-full">
+                            <canvas id="dash-scatter-chart"></canvas>
                         </div>
                     </div>
                 </div>
+
+                <!-- 5. TOGGLE BUTTON & PIVOT SECTION -->
+                <div class="shrink-0 mt-4">
+                    <button onclick="togglePivot()" id="btn-toggle-pivot" class="bg-white border-2 border-slate-200 text-slate-700 hover:border-orange-400 hover:text-orange-600 p-3 rounded-xl font-bold shadow-sm transition flex items-center justify-center gap-2 text-sm w-full">
+                        <i class="fas fa-table"></i> Tampilkan Tabel Analisis Detail <i class="fas fa-chevron-down ml-1"></i>
+                    </button>
+
+                    <div id="pivot-section" class="hidden opacity-0 transition-opacity duration-500 mt-4 flex-col gap-4">
+                        <div id="dash-container" class="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[500px]">
+                            <!-- Tabel Pivot dirender disini -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 6. FOOTER -->
+                <footer class="mt-8 pt-4 border-t border-gray-200 text-center shrink-0">
+                    <p class="text-[10px] text-gray-500 font-medium">© 2026 - Tim Pengolahan dan Teknologi Informasi (SE2026)</p>
+                    <p class="text-[10px] text-gray-400 font-bold">BPS Kabupaten Samosir</p>
+                </footer>
             </div>
 
             <!-- HALAMAN: TABEL DATA -->
@@ -334,7 +334,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </main>
 
@@ -355,7 +354,6 @@
 
         document.getElementById('current-date').innerText = new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-        // Logic Hamburger / Minimize Sidebar (Desktop & Mobile)
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             if(window.innerWidth >= 1024) { 
@@ -405,7 +403,6 @@
             }
         }
 
-        // FUNGSI BARU: Tarik Data Global Khusus
         async function muatGlobalData() {
             try {
                 const res = await fetch(API_URL, {
@@ -456,7 +453,6 @@
             }
         }
 
-        // Window Onload (Jalankan GetMitra dan GetGlobal bersamaan)
         window.onload = () => { 
             muatDataMitra(); 
             muatGlobalData();
@@ -481,6 +477,7 @@
             if(mode === 'sync') title = 'Konfigurasi: Sinkronisasi Anomali';
             document.getElementById('header-title').innerText = title;
 
+            // Optional logic: if switching away from dashboard while pivot is active, turn it off.
             if(mode === 'dashboard' && isPivotVisible) togglePivot();
 
             if (mode === 'dashboard') document.getElementById('page-dashboard').classList.add('active');
@@ -508,8 +505,9 @@
 
             if (isPivotVisible) {
                 container.innerHTML = `
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-[250px] skeleton"></div>
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-[250px] skeleton"></div>`;
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-full skeleton"></div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-full skeleton"></div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-full skeleton"></div>`;
             }
             
             try {
@@ -632,15 +630,9 @@
                 });
 
                 container.innerHTML = `
-                    <div class="flex flex-col gap-4 overflow-hidden h-[300px] lg:h-1/2 shrink-0">
-                        <div class="flex gap-4 h-full w-full">
-                            <div class="w-1/2 h-full">${renderTabelDash('Kecamatan', data.kec, ['Kecamatan', 'Jml', '%'])}</div>
-                            <div class="w-1/2 h-full">${renderTabelDash('PML', data.pml, ['PML', 'Jml', '%'])}</div>
-                        </div>
-                    </div>
-                    <div class="overflow-hidden h-[400px] lg:h-1/2 shrink-0">
-                        ${renderTabelDash('Struktur PML & PCL', data.pmlPcl, ['PML', 'PCL', 'Jml Anomali', 'Progress Tindak Lanjut'])}
-                    </div>
+                    ${renderTabelDash('Kecamatan', data.kec, ['Kecamatan', 'Jml', '%'])}
+                    ${renderTabelDash('PML', data.pml, ['PML', 'Jml', '%'])}
+                    ${renderTabelDash('Struktur PML & PCL', data.pmlPcl, ['PML', 'PCL', 'Jml', '%'])}
                 `;
 
             } catch (error) {
@@ -927,7 +919,6 @@
                     if(kolom === 'Pengerjaan') {
                         inputElement.className = `p-1.5 text-[11px] font-bold border rounded-md shadow-sm outline-none cursor-pointer ${nilaiBaru === 'Sudah Konfirmasi' ? 'bg-emerald-100 text-emerald-700' : nilaiBaru === 'Sedang Konfirmasi' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`;
                     }
-                    // Optional: panggil muatGlobalData() di sini jika ingin global metric update seketika usai simpan data.
                 } else throw new Error(result.pesan);
             } catch (error) {
                 alert("Gagal menyimpan data: " + error.message);
