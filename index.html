@@ -679,6 +679,7 @@
                     `<span class="text-gray-300 inline-block p-2" title="Tidak ada link"><i class="fas fa-unlink"></i></span>`;
 
                 let anomaliTeks = row.anomali ? row.anomali.toString().replace(/"/g, '&quot;') : "";
+                let namaTeks = row.nama ? row.nama.toString().replace(/"/g, '&quot;') : "";
                 
                 let badgeIrisan = row.isIrisan ? 
                     `<div class="mt-1"><span class="inline-flex items-center gap-1 rounded-full bg-purple-100 px-2 py-0.5 text-[10px] font-bold text-purple-700 border border-purple-200" title="Muncul juga pada data ${tglBanding}"><i class="fas fa-history"></i>Sisa ${tglBanding}</span></div>` : "";
@@ -686,23 +687,31 @@
                 let tr = document.createElement('tr');
                 tr.classList.add('hover:bg-orange-50', 'transition', 'group', 'border-b', 'border-gray-100');
                 tr.innerHTML = `
-                    <td class="p-4 font-semibold text-gray-800 whitespace-normal">${row.nama}</td>
+                    <td class="p-4 font-semibold text-gray-800 whitespace-normal">
+                        ${row.nama}
+                    </td>
+                    
                     <td class="p-4 whitespace-normal">
-                        <div class="inline-block text-red-600 text-xs font-bold bg-red-50 px-2 py-1.5 rounded-lg border border-red-100 cursor-help line-clamp-2" title="${anomaliTeks}">${row.anomali}</div>
+                        <div class="inline-block text-red-600 text-xs font-bold bg-red-50 px-2 py-1.5 rounded-lg border border-red-100 cursor-help line-clamp-2" title="${anomaliTeks}">
+                            ${row.anomali}
+                        </div>
                         ${badgeIrisan}
                     </td>
+                    
                     <td class="p-4 text-center">${linkFasihBtn}</td>
                     <td class="p-4 text-xs font-bold text-gray-600">${row.pml}</td>
                     <td class="p-4 text-xs font-medium text-gray-500">${row.pcl}</td>
+                    
                     <td class="p-4">
-                        <select data-anomali="${anomaliTeks}" onchange="updateData('${row.id}', 'Pengerjaan', this)" class="p-1.5 text-xs font-bold border rounded-md shadow-sm outline-none cursor-pointer ${statusColor}">
+                        <select onchange="updateData('${row.id}', 'Pengerjaan', this)" data-anomali="${anomaliTeks}" data-nama="${namaTeks}" class="p-1.5 text-xs font-bold border rounded-md shadow-sm outline-none cursor-pointer ${statusColor}">
                             <option value="Belum Konfirmasi" ${row.status === "Belum Konfirmasi" ? "selected":""}>Belum Konfirmasi</option>
                             <option value="Sedang Konfirmasi" ${row.status === "Sedang Konfirmasi" ? "selected":""}>Sedang Konfirmasi</option>
                             <option value="Sudah Konfirmasi" ${row.status === "Sudah Konfirmasi" ? "selected":""}>Sudah Konfirmasi</option>
                         </select>
                     </td>
+                    
                     <td class="p-4 min-w-[250px]">
-                        <textarea data-anomali="${anomaliTeks}" onchange="updateData('${row.id}', 'Catatan', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-sm group-hover:bg-white group-hover:border-gray-200 transition rounded resize-y text-gray-700" rows="1" placeholder="Ketik catatan...">${row.catatan}</textarea>
+                        <textarea onchange="updateData('${row.id}', 'Catatan', this)" data-anomali="${anomaliTeks}" data-nama="${namaTeks}" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-sm group-hover:bg-white group-hover:border-gray-200 transition rounded resize-y text-gray-700" rows="1" placeholder="Ketik catatan...">${row.catatan}</textarea>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -712,8 +721,9 @@
         async function updateData(id, kolom, inputElement) {
             const nilaiBaru = inputElement.value;
             const status = document.getElementById('status-text');
-            const tgl = document.getElementById('input-tanggal').value; 
-            const anomali = inputElement.getAttribute('data-anomali'); 
+            const aktifTgl = document.getElementById('input-tanggal').value; // Mengambil tanggal aktif dari dropdown
+            const aktifAnomali = inputElement.getAttribute('data-anomali'); // Mengambil nama anomali khusus baris ini
+            const aktifNama = inputElement.getAttribute('data-nama'); // Mengambil NAMA khusus baris ini
             
             if(document.getElementById('page-data').classList.contains('active')) {
                 status.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Menyimpan...`;
@@ -726,7 +736,16 @@
                 const requestOptions = {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: "updateData", tipe: currentMode, id: id, tanggal: tgl, anomali: anomali, kolom: kolom, nilai: nilaiBaru })
+                    body: JSON.stringify({ 
+                        action: "updateData", 
+                        tipe: currentMode, 
+                        id: id, 
+                        tanggal: aktifTgl, 
+                        anomali: aktifAnomali, 
+                        nama: aktifNama, // KIRIM NAMA KE SERVER
+                        kolom: kolom, 
+                        nilai: nilaiBaru 
+                    })
                 };
                 const response = await fetch(API_URL, requestOptions);
                 const result = await response.json();
