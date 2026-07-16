@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIMPANSE2026</title>
+    <!-- Menambahkan Logo Website (Favicon) -->
+    <link rel="icon" href="Logo.png" type="image/png">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -35,11 +37,9 @@
 <body class="bg-gray-50 font-sans text-gray-800 flex h-screen overflow-hidden">
 
     <aside id="sidebar" class="w-64 bg-slate-900 text-white flex flex-col transition-all duration-300 z-30 flex-shrink-0 absolute lg:relative h-full -ml-64 lg:ml-0 shadow-2xl lg:shadow-none">
-        <div class="p-6 border-b border-slate-800 flex justify-between items-center">
-            <div>
-                <h1 class="text-xl font-bold text-orange-400"><i class="fas fa-chart-line mr-2"></i>SIMPANSE</h1>
-                <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-wider">SIstem Manajemen ANomali SE2026</p>
-            </div>
+        <!-- Header Sidebar dengan Logo Full (Bisa diklik ke Dashboard) -->
+        <div class="p-5 border-b border-slate-800 flex justify-center items-center cursor-pointer hover:opacity-80 transition" onclick="switchPage('dashboard')" title="Kembali ke Dashboard">
+            <img src="Logo Full.png" alt="Logo SIMPANSE" class="w-full h-auto object-contain">
         </div>
         <nav class="flex-1 p-4 space-y-2 overflow-y-auto custom-scrollbar">
             <button onclick="switchPage('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center p-3 text-left rounded-lg bg-orange-600 text-white hover:bg-orange-500 transition shadow-md font-medium text-sm">
