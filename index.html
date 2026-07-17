@@ -37,7 +37,7 @@
 <body class="bg-gray-50 font-sans text-gray-800 flex h-screen overflow-hidden">
 
     <aside id="sidebar" class="w-64 bg-slate-900 text-white flex flex-col transition-all duration-300 z-30 flex-shrink-0 absolute lg:relative h-full -ml-64 lg:ml-0 shadow-2xl lg:shadow-none">
-        <!-- Header Sidebar dengan Logo Full (Bisa diklik ke Dashboard) -->
+        <!-- Header Sidebar dengan Logo Full (Format .png) -->
         <div class="p-5 border-b border-slate-800 flex justify-center items-center cursor-pointer hover:opacity-80 transition" onclick="switchPage('dashboard')" title="Kembali ke Dashboard">
             <img src="Logo Full.png" alt="Logo SIMPANSE" class="w-full h-auto object-contain">
         </div>
@@ -83,12 +83,14 @@
             </div>
         </header>
         
-        <div class="p-4 lg:p-6 flex-1 overflow-y-auto h-full relative custom-scrollbar" id="main-scroll-area">
+        <!-- MAIN SCROLL AREA DENGAN FLEX-COL AGAR FOOTER TERDORONG -->
+        <div class="p-4 lg:p-6 flex-1 overflow-y-auto h-full relative custom-scrollbar flex flex-col" id="main-scroll-area">
             
-            <div id="page-dashboard" class="page-content active flex-col min-h-full pb-4">
+            <!-- HALAMAN: DASHBOARD -->
+            <div id="page-dashboard" class="page-content active flex-col shrink-0 min-h-full pb-4">
                 
                 <!-- 1. GLOBAL METRICS -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 shrink-0">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div class="bg-gradient-to-r from-indigo-800 to-indigo-600 p-4 rounded-xl text-white shadow-md flex justify-between items-center relative overflow-hidden border border-indigo-500">
                         <i class="fas fa-globe absolute -right-4 -bottom-4 text-6xl opacity-10"></i>
                         <div>
@@ -107,8 +109,8 @@
                     </div>
                 </div>
 
-                <!-- 2. FILTER AREA -->
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex flex-wrap gap-4 items-end shrink-0">
+                <!-- Filter Area -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex flex-wrap gap-4 items-end">
                     <div>
                         <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wider">Tanggal Data</label>
                         <select id="dash-tgl" class="border border-gray-300 p-2 rounded-lg text-sm w-48 focus:ring-2 focus:ring-orange-400 outline-none bg-slate-50">
@@ -128,75 +130,75 @@
                     </button>
                 </div>
                 
-                <!-- 3. FILTERED SCORECARDS & QUOTE -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 shrink-0">
-                    <div class="bg-gradient-to-br from-orange-500 to-orange-600 p-5 rounded-2xl text-white shadow-md relative overflow-hidden">
-                        <i class="fas fa-bug absolute -right-4 -bottom-4 text-6xl opacity-20"></i>
-                        <p class="text-orange-100 text-[10px] font-bold uppercase tracking-wider mb-1">Total (Filter)</p>
-                        <h3 id="dash-total" class="text-3xl font-black">0</h3>
+                <!-- 2. MAIN DASHBOARD CONTENT (Layout Diperluas Full Width) -->
+                <div class="flex flex-col gap-4 mb-4 shrink-0">
+                    
+                    <!-- Scorecards Filtered & Quote -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div class="bg-gradient-to-br from-orange-500 to-orange-600 p-5 rounded-2xl text-white shadow-md relative overflow-hidden">
+                            <i class="fas fa-bug absolute -right-4 -bottom-4 text-6xl opacity-20"></i>
+                            <p class="text-orange-100 text-[10px] font-bold uppercase tracking-wider mb-1">Total (Filter)</p>
+                            <h3 id="dash-total" class="text-3xl font-black">0</h3>
+                        </div>
+                        <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-5 rounded-2xl text-white shadow-md relative overflow-hidden">
+                            <i class="fas fa-check-double absolute -right-4 -bottom-4 text-6xl opacity-20"></i>
+                            <p class="text-emerald-100 text-[10px] font-bold uppercase tracking-wider mb-1">Tindak Lanjut</p>
+                            <h3 id="dash-selesai" class="text-3xl font-black flex items-end gap-1">0 <span class="text-[16px] font-bold opacity-80 mb-1">(0%)</span></h3>
+                        </div>
+                        
+                        <div class="bg-slate-800 p-4 rounded-2xl text-white shadow-md flex flex-col justify-center border border-slate-700">
+                            <i class="fas fa-quote-left text-orange-400 text-sm mb-1 opacity-80"></i>
+                            <p id="quote-text" class="text-[11px] font-medium text-slate-300 italic leading-snug">"Memuat pemikiran..."</p>
+                            <p id="quote-author" class="text-[10px] text-orange-400 font-bold mt-1 text-right">- Admin</p>
+                        </div>
                     </div>
-                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-5 rounded-2xl text-white shadow-md relative overflow-hidden">
-                        <i class="fas fa-check-double absolute -right-4 -bottom-4 text-6xl opacity-20"></i>
-                        <p class="text-emerald-100 text-[10px] font-bold uppercase tracking-wider mb-1">Tindak Lanjut</p>
-                        <h3 id="dash-selesai" class="text-3xl font-black flex items-end gap-1">0 <span class="text-[16px] font-bold opacity-80 mb-1">(0%)</span></h3>
+
+                    <!-- Bar Chart & Scatter Chart Berdampingan -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <!-- Bar Chart -->
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[350px]">
+                            <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 border-b pb-2"><i class="fas fa-align-left text-orange-500 mr-2"></i>Progress per PML</h3>
+                            <div class="relative flex-1 min-h-0 w-full">
+                                <canvas id="dash-bar-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Scatter Chart -->
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[350px]">
+                            <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-2 border-b pb-2"><i class="fas fa-crosshairs text-blue-500 mr-2"></i>Kuadran Produktivitas</h3>
+                            
+                            <!-- Legenda Custom Kuadran -->
+                            <div class="flex flex-wrap gap-2 mb-2 justify-center text-[9px] font-bold text-gray-600 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                                <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-sm"></span> Hebat (Beban ↑, Cepat)</div>
+                                <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-sm"></span> Cepat (Beban ↓, Cepat)</div>
+                                <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm"></span> Kritis (Beban ↑, Lambat)</div>
+                                <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm"></span> Lambat (Beban ↓, Lambat)</div>
+                            </div>
+                            <div class="relative flex-1 min-h-0 w-full">
+                                <canvas id="dash-scatter-chart"></canvas>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="bg-slate-800 p-4 rounded-2xl text-white shadow-md flex flex-col justify-center border border-slate-700">
-                        <i class="fas fa-quote-left text-orange-400 text-sm mb-1 opacity-80"></i>
-                        <p id="quote-text" class="text-[11px] font-medium text-slate-300 italic leading-snug">"Memuat pemikiran..."</p>
-                        <p id="quote-author" class="text-[10px] text-orange-400 font-bold mt-1 text-right">- Admin</p>
-                    </div>
-                </div>
+                    <!-- Area Toggle Pivot di Bawah -->
+                    <div class="mt-2 w-full">
+                        <button onclick="togglePivot()" id="btn-toggle-pivot" class="bg-white border-2 border-slate-200 text-slate-700 hover:border-orange-400 hover:text-orange-600 p-3 rounded-xl font-bold shadow-sm transition flex items-center justify-center gap-2 text-sm w-full">
+                            <i class="fas fa-table"></i> Tampilkan Tabel Analisis Detail <i class="fas fa-chevron-down ml-1"></i>
+                        </button>
 
-                <!-- 4. CHARTS (Side by side grid for compactness) -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 min-h-[300px]">
-                    <!-- Bar Chart -->
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[300px] lg:h-full">
-                        <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 border-b pb-2"><i class="fas fa-align-left text-orange-500 mr-2"></i>Progress per PML</h3>
-                        <div class="relative flex-1 min-h-0 w-full">
-                            <canvas id="dash-bar-chart"></canvas>
-                        </div>
-                    </div>
-
-                    <!-- Scatter Chart -->
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[300px] lg:h-full">
-                        <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-2 border-b pb-2"><i class="fas fa-crosshairs text-blue-500 mr-2"></i>Kuadran Produktivitas</h3>
-                        
-                        <!-- Legenda Custom Kuadran -->
-                        <div class="flex flex-wrap gap-2 mb-2 justify-center text-[9px] font-bold text-gray-600 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
-                            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-sm"></span> Hebat</div>
-                            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-sm"></span> Cepat</div>
-                            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm"></span> Kritis</div>
-                            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm"></span> Lambat</div>
-                        </div>
-                        <div class="relative flex-1 min-h-0 w-full">
-                            <canvas id="dash-scatter-chart"></canvas>
+                        <!-- Area Tabel Pivot -->
+                        <div id="pivot-section" class="hidden opacity-0 transition-opacity duration-500 flex-1 flex flex-col mt-4">
+                            <!-- Pivot diubah menjadi Grid 3 Kolom agar sejajar -->
+                            <div id="dash-container" class="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[400px]">
+                                <!-- Tabel Pivot dirender disini oleh JS -->
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- 5. TOGGLE BUTTON & PIVOT SECTION -->
-                <div class="shrink-0 mt-4">
-                    <button onclick="togglePivot()" id="btn-toggle-pivot" class="bg-white border-2 border-slate-200 text-slate-700 hover:border-orange-400 hover:text-orange-600 p-3 rounded-xl font-bold shadow-sm transition flex items-center justify-center gap-2 text-sm w-full">
-                        <i class="fas fa-table"></i> Tampilkan Tabel Analisis Detail <i class="fas fa-chevron-down ml-1"></i>
-                    </button>
-
-                    <div id="pivot-section" class="hidden opacity-0 transition-opacity duration-500 mt-4 flex-col gap-4">
-                        <div id="dash-container" class="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[500px]">
-                            <!-- Tabel Pivot dirender disini -->
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 6. FOOTER -->
-                <footer class="mt-8 pt-4 border-t border-gray-200 text-center shrink-0">
-                    <p class="text-[10px] text-gray-500 font-medium">© 2026 - Tim Pengolahan dan Teknologi Informasi (SE2026)</p>
-                    <p class="text-[10px] text-gray-400 font-bold">BPS Kabupaten Samosir</p>
-                </footer>
             </div>
 
             <!-- HALAMAN: TABEL DATA -->
-            <div id="page-data" class="page-content hidden flex-col h-full">
+            <div id="page-data" class="page-content hidden flex-col shrink-0 min-h-full pb-4">
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex flex-wrap justify-between items-end gap-4 shrink-0">
                     <div class="flex flex-wrap gap-4 items-end w-full lg:w-auto">
                         <div>
@@ -252,7 +254,7 @@
                         </table>
                     </div>
                     
-                    <!-- AREA PAGINATION -->
+                    <!-- AREA PAGINATION (Paginasi Data di Klien) -->
                     <div id="pagination-container" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex flex-wrap items-center justify-between shrink-0 gap-4">
                         <div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider">
                             <span>Tampilkan:</span>
@@ -277,8 +279,8 @@
             </div>
 
             <!-- HALAMAN: SYNC ANOMALI -->
-            <div id="page-sync" class="page-content hidden h-full">
-                <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden mt-6">
+            <div id="page-sync" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="max-w-3xl mx-auto w-full bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden mt-6 shrink-0">
                     <div class="bg-slate-800 p-6 text-white text-center border-b-4 border-orange-500">
                         <i class="fas fa-sync-alt text-4xl mb-3 text-orange-400"></i>
                         <h2 class="text-2xl font-bold">Sinkronisasi Anomali Lintas Tanggal</h2>
@@ -358,6 +360,13 @@
                     </div>
                 </div>
             </div>
+
+            <!-- FOOTER SEKARANG DIDALAM SCROLL AREA, MENCEGAH TABRAKAN -->
+            <footer class="mt-auto pt-8 pb-4 text-center shrink-0 w-full">
+                <p class="text-[10px] text-gray-500 font-medium">© 2026 - Tim Pengolahan dan Teknologi Informasi (SE2026)</p>
+                <p class="text-[10px] text-gray-400 font-bold">BPS Kabupaten Samosir</p>
+            </footer>
+
         </div>
     </main>
 
@@ -535,9 +544,9 @@
 
             if (isPivotVisible) {
                 container.innerHTML = `
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-full skeleton"></div>
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-full skeleton"></div>
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-full skeleton"></div>`;
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-full skeleton shrink-0"></div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-full skeleton shrink-0"></div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-full skeleton shrink-0"></div>`;
             }
             
             try {
@@ -659,14 +668,15 @@
                     }
                 });
 
+                // Render Pivot Tabel ke dalam 3 kolom yang sejajar
                 container.innerHTML = `
                     ${renderTabelDash('Kecamatan', data.kec, ['Kecamatan', 'Jml', '%'])}
                     ${renderTabelDash('PML', data.pml, ['PML', 'Jml', '%'])}
-                    ${renderTabelDash('Struktur PML & PCL', data.pmlPcl, ['PML', 'PCL', 'Jml', '%'])}
+                    ${renderTabelDash('Struktur PML & PCL', data.pmlPcl, ['PML', 'PCL', 'Jml', 'Progress'])}
                 `;
 
             } catch (error) {
-                container.innerHTML = `<div class="p-10 text-center text-red-500 font-bold bg-white rounded-xl border">Gagal memuat Dashboard: Server Sibuk.</div>`;
+                container.innerHTML = `<div class="p-10 text-center text-red-500 font-bold bg-white rounded-xl border col-span-3">Gagal memuat Dashboard: Server Sibuk.</div>`;
             }
         }
 
@@ -856,11 +866,11 @@
                 const result = await response.json();
 
                 if (result.status === "sukses") {
-                    // Simpan data mentah ke memori lokal
+                    // Simpan data mentah ke memori lokal browser
                     currentTableData = result.data;
                     currentTglBanding = tglBanding;
-                    currentPage = 1; // Reset ke halaman 1 setiap kali tarik data baru
-                    renderTabelPaginated(); // Panggil render pagination
+                    currentPage = 1; // Reset ke halaman 1
+                    renderTabelPaginated(); // Panggil render tabel
                 }
                 else throw new Error(result.pesan);
             } catch (error) {
@@ -877,17 +887,17 @@
             tbody.innerHTML = '';
             
             if(currentTableData.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="p-10 text-center text-slate-500 font-medium">Luar Biasa! Tidak ada temuan anomali pada filter ini.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" class="p-10 text-center text-slate-500 font-medium">Luar Biasa! Tidak ada temuan sisa pekerjaan (Anomali Belum Ditindaklanjuti) pada filter ini.</td></tr>';
                 updatePaginationUI();
                 return;
             }
 
-            // Hitung Index untuk pemotongan data (dengan konversi Number yang aman)
+            // Hitung Index untuk pemotongan data (dengan casting ke Number)
             let limit = itemsPerPage === 'all' ? currentTableData.length : Number(itemsPerPage);
             let startIndex = (currentPage - 1) * limit;
             let endIndex = itemsPerPage === 'all' ? currentTableData.length : startIndex + limit;
             
-            // Potong data sesuai halaman aktif
+            // Potong data sesuai halaman aktif (sangat cepat untuk di-render)
             const paginatedData = currentTableData.slice(startIndex, endIndex);
 
             paginatedData.forEach((row) => {
@@ -934,7 +944,6 @@
             updatePaginationUI();
         }
 
-        // FUNGSI BARU: Update Kontrol Pagination (Tombol & Info)
         function updatePaginationUI() {
             const totalItems = currentTableData.length;
             const paginationContainer = document.getElementById('pagination-container');
@@ -962,19 +971,16 @@
             pageInfo.innerHTML = `Menampilkan <span class="text-slate-800 font-black mx-1">${startItem}-${endItem}</span> dari <span class="text-slate-800 font-black mx-1">${totalItems}</span> Data`;
         }
 
-        // FUNGSI BARU: Pindah Halaman
         function changePage(delta) {
             currentPage += delta;
             renderTabelPaginated();
-            // Scroll otomatis ke atas tabel agar user tidak perlu scroll manual setiap pindah halaman
             document.getElementById('tabel-body').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // FUNGSI BARU: Ubah Jumlah Baris per Halaman
         function changeItemsPerPage() {
             const select = document.getElementById('items-per-page').value;
             itemsPerPage = select === 'all' ? 'all' : Number(select);
-            currentPage = 1; // Kembali ke halaman pertama setiap kali mengganti limit
+            currentPage = 1; 
             renderTabelPaginated();
         }
 
