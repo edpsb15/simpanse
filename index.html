@@ -146,10 +146,10 @@
                     </div>
                 </div>
 
-                <!-- 4. CHARTS (Horizontal Stack) -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4 shrink-0">
+                <!-- 4. CHARTS (3 Columns Row) -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-[350px]">
                     <!-- Bar Chart -->
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[350px]">
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[350px] lg:h-full">
                         <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 border-b pb-2"><i class="fas fa-align-left text-orange-500 mr-2"></i>Progress per PML</h3>
                         <div class="relative flex-1 min-h-0 w-full">
                             <canvas id="dash-bar-chart"></canvas>
@@ -157,9 +157,11 @@
                     </div>
 
                     <!-- Scatter Chart -->
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[350px]">
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[350px] lg:h-full">
                         <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-2 border-b pb-2"><i class="fas fa-crosshairs text-blue-500 mr-2"></i>Kuadran Produktivitas</h3>
-                        <div class="flex flex-wrap gap-2 mb-1 justify-center text-[9px] font-bold text-gray-600 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                        
+                        <!-- Legenda Custom Kuadran -->
+                        <div class="flex flex-wrap gap-2 mb-2 justify-center text-[9px] font-bold text-gray-600 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
                             <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-sm"></span> Hebat</div>
                             <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-sm"></span> Cepat</div>
                             <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm"></span> Kritis</div>
@@ -169,27 +171,25 @@
                             <canvas id="dash-scatter-chart"></canvas>
                         </div>
                     </div>
-                </div>
 
-                <!-- 5. ANOMALY DISTRIBUTION CHART -->
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[280px] mb-4 shrink-0">
-                    <div class="flex flex-wrap items-center justify-between mb-2 border-b pb-2 gap-2">
-                        <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider"><i class="fas fa-chart-pie text-purple-500 mr-2"></i>Sebaran Jenis Anomali</h3>
-                        <!-- Tab Selector -->
-                        <div class="flex bg-slate-100 rounded-lg p-1 shadow-inner">
-                            <button id="tab-anomali-keluarga" onclick="switchAnomaliTab('keluarga')" class="px-3 py-1 text-[10px] font-bold rounded-md bg-white shadow-sm text-purple-700 transition">Keluarga</button>
-                            <button id="tab-anomali-usaha" onclick="switchAnomaliTab('usaha')" class="px-3 py-1 text-[10px] font-bold rounded-md text-slate-500 hover:text-slate-700 transition">Usaha</button>
+                    <!-- ANOMALY DISTRIBUTION CHART -->
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[350px] lg:h-full shrink-0">
+                        <div class="flex flex-wrap items-center justify-between mb-2 border-b pb-2 gap-2">
+                            <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider"><i class="fas fa-chart-pie text-purple-500 mr-2"></i>Sebaran Anomali</h3>
+                            <!-- Tab Selector -->
+                            <div class="flex bg-slate-100 rounded-lg p-1 shadow-inner">
+                                <button id="tab-anomali-keluarga" onclick="switchAnomaliTab('keluarga')" class="px-3 py-1 text-[10px] font-bold rounded-md bg-white shadow-sm text-purple-700 transition">Keluarga</button>
+                                <button id="tab-anomali-usaha" onclick="switchAnomaliTab('usaha')" class="px-3 py-1 text-[10px] font-bold rounded-md text-slate-500 hover:text-slate-700 transition">Usaha</button>
+                            </div>
+                        </div>
+                        <div class="relative flex-1 min-h-0 w-full">
+                            <canvas id="dash-anomali-chart"></canvas>
                         </div>
                     </div>
-                    <div class="relative flex-1 min-h-0 w-full">
-                        <canvas id="dash-anomali-chart"></canvas>
-                    </div>
                 </div>
 
-                <!-- 6. TOGGLE BUTTON & PIVOT SECTION -->
-                <div class="shrink-0 mt-2">
-                    <button onclick="togglePivot()" id="btn-toggle-pivot" class="bg-white border-2 border-slate-200 text-slate-700 hover:border-orange-400 hover:text-orange-600 p-3 rounded-xl font-bold shadow-sm transition flex items-center justify-center gap-2 text-sm w-full">
-                        <i class="fas fa-table"></i> Tampilkan Tabel Analisis Detail <i class="fas fa-chevron-down ml-1"></i>
+                <!-- 5. TOGGLE BUTTON & PIVOT SECTION -->
+                <div class="shrink-0 mt-4">
                     </button>
 
                     <div id="pivot-section" class="hidden opacity-0 transition-opacity duration-500 mt-4 flex-col gap-4">
