@@ -190,6 +190,8 @@
 
                 <!-- 5. TOGGLE BUTTON & PIVOT SECTION -->
                 <div class="shrink-0 mt-4">
+                    <button onclick="togglePivot()" id="btn-toggle-pivot" class="bg-white border-2 border-slate-200 text-slate-700 hover:border-orange-400 hover:text-orange-600 p-3 rounded-xl font-bold shadow-sm transition flex items-center justify-center gap-2 text-sm w-full">
+                        <i class="fas fa-table"></i> Tampilkan Tabel Analisis Detail <i class="fas fa-chevron-down ml-1"></i>
                     </button>
 
                     <div id="pivot-section" class="hidden opacity-0 transition-opacity duration-500 mt-4 flex-col gap-4">
@@ -778,11 +780,11 @@
                 container.innerHTML = `
                     ${renderTabelDash('Kecamatan', data.kec || {}, ['Kecamatan', 'Jml', '%'])}
                     ${renderTabelDash('PML', data.pml || {}, ['PML', 'Jml', '%'])}
-                    ${renderTabelDash('Struktur PML & PCL', data.pmlPcl || {}, ['PML', 'PCL', 'Jml', '%'])}
+                    ${renderTabelPclGrouped('Struktur PML & PCL', data.pmlPcl || {})}
                 `;
 
             } catch (error) {
-                showToast("Gagal memuat Dashboard: " + error.message, true);
+                container.innerHTML = `<div class="p-10 text-center text-red-500 font-bold bg-white rounded-xl border">Gagal memuat Dashboard: Server Sibuk atau Error Struktur.</div>`;
             }
         }
 
@@ -793,16 +795,21 @@
             
             if (isPivotVisible) {
                 pivot.classList.remove('hidden');
+                pivot.classList.add('flex'); // Memaksa layout flex agar muncul
                 setTimeout(() => {
                     pivot.classList.remove('opacity-0');
-                    document.getElementById('main-scroll-area').scrollTo({top: pivot.offsetTop - 20, behavior: 'smooth'});
+                    // Perbaikan arah scroll agar menyorot tepat ke area tabel
+                    pivot.scrollIntoView({ behavior: 'smooth', block: 'end' });
                 }, 50);
                 btn.innerHTML = `<i class="fas fa-table"></i> Sembunyikan Tabel Pivot <i class="fas fa-chevron-up ml-1"></i>`;
                 btn.classList.replace('text-slate-700', 'text-orange-600');
                 btn.classList.add('border-orange-400');
             } else {
                 pivot.classList.add('opacity-0');
-                setTimeout(() => pivot.classList.add('hidden'), 500);
+                setTimeout(() => {
+                    pivot.classList.add('hidden');
+                    pivot.classList.remove('flex'); // Sembunyikan tuntas
+                }, 500);
                 btn.innerHTML = `<i class="fas fa-table"></i> Tampilkan Tabel Analisis Detail <i class="fas fa-chevron-down ml-1"></i>`;
                 btn.classList.replace('text-orange-600', 'text-slate-700');
                 btn.classList.remove('border-orange-400');
@@ -833,7 +840,7 @@
             }).join('');
             
             return `
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col h-full">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col h-full overflow-hidden">
                 <div class="p-3 border-b bg-slate-50 rounded-t-xl shrink-0">
                     <h3 class="font-bold text-slate-700 text-xs uppercase"><i class="fas fa-list text-orange-400 mr-2"></i>${title}</h3>
                 </div>
@@ -841,10 +848,80 @@
                     <table class="w-full text-left">
                         <thead class="sticky top-0 bg-white shadow-sm z-10">
                             <tr class="text-slate-400 text-[9px] uppercase tracking-wider border-b">
-                                ${headers.map(h => `<th class="p-2">${h}</th>`).join('')}
+                                ${headers.map(h => `<th class="p-2 bg-white">${h}</th>`).join('')}
                             </tr>
                         </thead>
                         <tbody>${rows}</tbody>
+                    </table>
+                </div>
+            </div>`;
+        }
+
+        // FUNGSI BARU: Render Khusus Tabel PCL dengan Format Grouping per PML
+        function renderTabelPclGrouped(title, data) {
+            // 1. Group Data Berdasarkan PML
+            let grouped = {};
+            for (let key in data) {
+                let parts = key.split('|||');
+                let pml = parts[0];
+                let pcl = parts[1] || "-";
+                if (!grouped[pml]) grouped[pml] = [];
+                grouped[pml].push({ pcl: pcl, total: data[key].total, selesai: data[key].selesai });
+            }
+
+            // 2. Urutkan Nama PML Sesuai Abjad
+            let sortedPmlNames = Object.keys(grouped).sort();
+
+            // 3. Array Warna Pastel Sangat Soft (Kecerahan 50 di Tailwind)
+            const softColors = ['bg-blue-50', 'bg-emerald-50', 'bg-amber-50', 'bg-purple-50', 'bg-rose-50', 'bg-cyan-50', 'bg-indigo-50', 'bg-orange-50', 'bg-teal-50', 'bg-sky-50'];
+
+            let rowsHTML = '';
+            sortedPmlNames.forEach((pml, index) => {
+                // Berganti warna secara otomatis untuk setiap PML
+                let colorClass = softColors[index % softColors.length];
+                
+                // Urutkan PCL berdasarkan jumlah anomali terbanyak di dalam grup PML ini
+                let pclArray = grouped[pml].sort((a, b) => b.total - a.total);
+                
+                // Tambahkan Baris Header PML (Lebar Penuh)
+                rowsHTML += `<tr class="${colorClass} border-b border-gray-100/50">
+                    <td colspan="3" class="p-2 font-black text-slate-700 text-[11px] tracking-wide uppercase"><i class="fas fa-user-tie text-slate-400 mr-2"></i>${pml}</td>
+                </tr>`;
+
+                // Tambahkan Baris Data PCL di Bawahnya
+                pclArray.forEach(item => {
+                    let persen = item.total > 0 ? Math.round((item.selesai/item.total)*100) : 0;
+                    let progressUI = `
+                    <div class="flex items-center gap-1.5 w-full min-w-[60px]">
+                        <div class="w-full bg-slate-200 rounded-full h-1.5 hidden sm:block">
+                            <div class="bg-emerald-500 h-1.5 rounded-full" style="width: ${persen}%"></div>
+                        </div>
+                        <span class="text-[9px] font-black text-slate-600 w-6 text-right">${persen}%</span>
+                    </div>`;
+
+                    rowsHTML += `<tr class="border-b hover:bg-slate-50 transition text-[10px]">
+                        <td class="p-2 pl-6 whitespace-normal text-slate-600 border-l-[3px] border-slate-100"><i class="fas fa-angle-right text-slate-300 mr-1.5"></i>${item.pcl}</td>
+                        <td class="p-2 font-bold text-orange-600 text-center w-20">${item.total}</td>
+                        <td class="p-2 w-32">${progressUI}</td>
+                    </tr>`;
+                });
+            });
+            
+            return `
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col h-full overflow-hidden">
+                <div class="p-3 border-b bg-slate-50 rounded-t-xl shrink-0">
+                    <h3 class="font-bold text-slate-700 text-xs uppercase"><i class="fas fa-sitemap text-blue-500 mr-2"></i>${title}</h3>
+                </div>
+                <div class="overflow-y-auto flex-1 p-0 custom-scrollbar relative">
+                    <table class="w-full text-left">
+                        <thead class="sticky top-0 bg-white shadow-sm z-10">
+                            <tr class="text-slate-400 text-[9px] uppercase tracking-wider border-b">
+                                <th class="p-2 bg-white">Nama Petugas</th>
+                                <th class="p-2 bg-white text-center">Beban</th>
+                                <th class="p-2 bg-white">Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rowsHTML}</tbody>
                     </table>
                 </div>
             </div>`;
