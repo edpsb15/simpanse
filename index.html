@@ -9,6 +9,8 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js DataLabels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -105,51 +107,52 @@
                     </div>
                 </div>
 
-                <!-- 2. FILTER AREA -->
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex flex-wrap gap-4 items-end shrink-0">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wider">Tanggal Data</label>
-                        <select id="dash-tgl" class="border border-gray-300 p-2 rounded-lg text-sm w-48 focus:ring-2 focus:ring-orange-400 outline-none bg-slate-50">
-                            <option value="">Memuat...</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wider">Jenis Anomali</label>
-                        <select id="dash-tipe" class="border border-gray-300 p-2 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 outline-none bg-slate-50">
-                            <option value="Keluarga">Keluarga</option>
-                            <option value="Usaha">Usaha</option>
-                            <option value="Keluarga+Usaha" selected>Keluarga + Usaha</option>
-                        </select>
-                    </div>
-                    <button onclick="tarikDashboard()" class="bg-slate-800 text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-slate-700 shadow-sm transition h-[38px] flex items-center gap-2">
-                        <i class="fas fa-play text-orange-400"></i> Jalankan Filter
-                    </button>
-                </div>
-                
-                <!-- 3. FILTERED SCORECARDS & QUOTE -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 shrink-0">
-                    <div class="bg-gradient-to-br from-orange-500 to-orange-600 p-5 rounded-2xl text-white shadow-md relative overflow-hidden">
-                        <i class="fas fa-bug absolute -right-4 -bottom-4 text-6xl opacity-20"></i>
-                        <p class="text-orange-100 text-[10px] font-bold uppercase tracking-wider mb-1">Total (Filter)</p>
-                        <h3 id="dash-total" class="text-3xl font-black">0</h3>
-                    </div>
-                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-5 rounded-2xl text-white shadow-md relative overflow-hidden">
-                        <i class="fas fa-check-double absolute -right-4 -bottom-4 text-6xl opacity-20"></i>
-                        <p class="text-emerald-100 text-[10px] font-bold uppercase tracking-wider mb-1">Tindak Lanjut</p>
-                        <h3 id="dash-selesai" class="text-3xl font-black flex items-end gap-1">0 <span class="text-[16px] font-bold opacity-80 mb-1">(0%)</span></h3>
-                    </div>
+                <!-- 2. FILTER AREA & SCORECARDS -->
+                <div class="flex flex-col lg:flex-row gap-4 mb-4 shrink-0">
                     
-                    <div class="bg-slate-800 p-4 rounded-2xl text-white shadow-md flex flex-col justify-center border border-slate-700">
-                        <i class="fas fa-quote-left text-orange-400 text-sm mb-1 opacity-80"></i>
-                        <p id="quote-text" class="text-[11px] font-medium text-slate-300 italic leading-snug">"Memuat pemikiran..."</p>
-                        <p id="quote-author" class="text-[10px] text-orange-400 font-bold mt-1 text-right">- Admin</p>
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-wrap gap-4 items-end shrink-0 w-full lg:w-auto">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wider">Tanggal Data</label>
+                            <select id="dash-tgl" class="border border-gray-300 p-2 rounded-lg text-sm w-48 focus:ring-2 focus:ring-orange-400 outline-none bg-slate-50">
+                                <option value="">Memuat...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 mb-1 uppercase tracking-wider">Jenis Anomali</label>
+                            <select id="dash-tipe" class="border border-gray-300 p-2 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 outline-none bg-slate-50">
+                                <option value="Keluarga">Keluarga</option>
+                                <option value="Usaha">Usaha</option>
+                                <option value="Keluarga+Usaha" selected>Keluarga + Usaha</option>
+                            </select>
+                        </div>
+                        <button onclick="tarikDashboard()" class="bg-slate-800 text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-slate-700 shadow-sm transition h-[38px] flex items-center gap-2">
+                            <i class="fas fa-play text-orange-400"></i> Jalankan Filter
+                        </button>
+                    </div>
+
+                    <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-gradient-to-br from-orange-500 to-orange-600 p-4 rounded-xl text-white shadow-md relative overflow-hidden flex flex-col justify-center">
+                            <i class="fas fa-bug absolute -right-2 -bottom-4 text-5xl opacity-20"></i>
+                            <p class="text-orange-100 text-[10px] font-bold uppercase tracking-wider mb-1">Total (Filter)</p>
+                            <h3 id="dash-total" class="text-3xl font-black leading-none">0</h3>
+                        </div>
+                        <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 p-4 rounded-xl text-white shadow-md relative overflow-hidden flex flex-col justify-center">
+                            <i class="fas fa-check-double absolute -right-2 -bottom-4 text-5xl opacity-20"></i>
+                            <p class="text-emerald-100 text-[10px] font-bold uppercase tracking-wider mb-1">Tindak Lanjut</p>
+                            <h3 id="dash-selesai" class="text-3xl font-black flex items-end gap-1 leading-none">0 <span class="text-[14px] font-bold opacity-80 mb-0.5">(0%)</span></h3>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-xl text-white shadow-md flex flex-col justify-center border border-slate-700">
+                            <i class="fas fa-quote-left text-orange-400 text-xs mb-1 opacity-80"></i>
+                            <p id="quote-text" class="text-[11px] font-medium text-slate-300 italic leading-snug">"Memuat pemikiran..."</p>
+                            <p id="quote-author" class="text-[10px] text-orange-400 font-bold mt-1 text-right">- Admin</p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 4. CHARTS (3 Columns Row) -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-[350px]">
+                <!-- 3. CHARTS (3 Columns Row) -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4 shrink-0 h-[500px]">
                     <!-- Bar Chart -->
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[350px] lg:h-full">
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col">
                         <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 border-b pb-2"><i class="fas fa-align-left text-orange-500 mr-2"></i>Progress per PML</h3>
                         <div class="relative flex-1 min-h-0 w-full">
                             <canvas id="dash-bar-chart"></canvas>
@@ -157,13 +160,12 @@
                     </div>
 
                     <!-- Scatter Chart -->
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[350px] lg:h-full">
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col">
                         <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-2 border-b pb-2"><i class="fas fa-crosshairs text-blue-500 mr-2"></i>Kuadran Produktivitas</h3>
                         
-                        <!-- Legenda Custom Kuadran -->
                         <div class="flex flex-wrap gap-2 mb-2 justify-center text-[9px] font-bold text-gray-600 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
                             <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-sm"></span> Hebat</div>
-                            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-sm"></span> Cepat</div>
+                            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm"></span> Cepat</div>
                             <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm"></span> Kritis</div>
                             <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm"></span> Lambat</div>
                         </div>
@@ -173,10 +175,9 @@
                     </div>
 
                     <!-- ANOMALY DISTRIBUTION CHART -->
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[350px] lg:h-full shrink-0">
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col">
                         <div class="flex flex-wrap items-center justify-between mb-2 border-b pb-2 gap-2">
                             <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider"><i class="fas fa-chart-pie text-purple-500 mr-2"></i>Sebaran Anomali</h3>
-                            <!-- Tab Selector -->
                             <div class="flex bg-slate-100 rounded-lg p-1 shadow-inner">
                                 <button id="tab-anomali-keluarga" onclick="switchAnomaliTab('keluarga')" class="px-3 py-1 text-[10px] font-bold rounded-md bg-white shadow-sm text-purple-700 transition">Keluarga</button>
                                 <button id="tab-anomali-usaha" onclick="switchAnomaliTab('usaha')" class="px-3 py-1 text-[10px] font-bold rounded-md text-slate-500 hover:text-slate-700 transition">Usaha</button>
@@ -188,8 +189,8 @@
                     </div>
                 </div>
 
-                <!-- 5. TOGGLE BUTTON & PIVOT SECTION -->
-                <div class="shrink-0 mt-4">
+                <!-- 4. TOGGLE BUTTON & PIVOT SECTION -->
+                <div class="shrink-0">
                     <button onclick="togglePivot()" id="btn-toggle-pivot" class="bg-white border-2 border-slate-200 text-slate-700 hover:border-orange-400 hover:text-orange-600 p-3 rounded-xl font-bold shadow-sm transition flex items-center justify-center gap-2 text-sm w-full">
                         <i class="fas fa-table"></i> Tampilkan Tabel Analisis Detail <i class="fas fa-chevron-down ml-1"></i>
                     </button>
@@ -377,6 +378,9 @@
     </main>
 
     <script>
+        // Register the DataLabels plugin for all charts globally
+        Chart.register(ChartDataLabels);
+
         const API_URL = "https://script.google.com/macros/s/AKfycbxLgpQJ5jJbr8NvRTQD0DyuW_oRfVGlf8wOH2nFQCS31QaaLJnDBoTRek68fHZj5k-0Kg/exec";
         
         let currentMode = 'dashboard';
@@ -386,7 +390,6 @@
         let anomaliChart = null;
         let isPivotVisible = false;
         
-        // Cache data Anomali dari Backend
         let anomaliDataCache = { keluarga: {}, usaha: {} };
         
         let currentTableData = [];
@@ -498,7 +501,7 @@
                     
                     let p = d.totalUnik > 0 ? Math.round((d.totalSelesaiUnik/d.totalUnik)*100) : 0;
                     document.getElementById('dash-global-selesai').innerHTML = 
-                        `${d.totalSelesaiUnik.toLocaleString('id-ID')} <span class="text-[16px] font-bold opacity-80 mb-1">(${p}%)</span>`;
+                        `${d.totalSelesaiUnik.toLocaleString('id-ID')} <span class="text-[14px] font-bold opacity-80 mb-0.5">(${p}%)</span>`;
                 }
             } catch (error) {
                 console.error("Gagal memuat Global Data");
@@ -570,29 +573,21 @@
             if(window.innerWidth < 1024) toggleSidebar(); 
         }
 
-        // FUNGSI BARU: Render/Switch Tab Anomali Chart (Keluarga vs Usaha)
         function switchAnomaliTab(tab) {
-            // Styling tombol
             document.getElementById('tab-anomali-keluarga').className = tab === 'keluarga' ? 'px-3 py-1 text-[10px] font-bold rounded-md bg-white shadow-sm text-purple-700 transition' : 'px-3 py-1 text-[10px] font-bold rounded-md text-slate-500 hover:text-slate-700 transition';
             document.getElementById('tab-anomali-usaha').className = tab === 'usaha' ? 'px-3 py-1 text-[10px] font-bold rounded-md bg-white shadow-sm text-purple-700 transition' : 'px-3 py-1 text-[10px] font-bold rounded-md text-slate-500 hover:text-slate-700 transition';
             
-            // Pilih sumber data berdasarkan tab
             const dataObj = tab === 'keluarga' ? anomaliDataCache.keluarga : anomaliDataCache.usaha;
             
-            // Konversi ke array & urutkan berdasarkan Total terbanyak
             let anomaliArray = Object.entries(dataObj || {})
                 .map(([nama, val]) => ({ nama, total: val.total, selesai: val.selesai, belum: val.total - val.selesai }))
                 .sort((a, b) => b.total - a.total); 
             
             let anomaliMapping = {};
             
-            // Bikin Label Sumbu-Y Menggunakan EMOJI
             let shortLabels = anomaliArray.map((item, index) => {
-                // Cari emoji di dictionary, jika tidak ada gunakan tanda tanya unik
                 let emoji = anomalyEmojiMap[item.nama] || ("❓" + " ".repeat(index)); 
                 let labelKey = emoji;
-                
-                // Simpan nama asli untuk ditampilkan di Tooltip nanti
                 anomaliMapping[labelKey] = item.nama;
                 return labelKey;
             });
@@ -612,20 +607,35 @@
                     responsive: true, maintainAspectRatio: false,
                     indexAxis: 'y', 
                     scales: {
-                        x: { stacked: true, grid: { color: '#f1f5f9' }, ticks: {font: {size: 9}} },
-                        // PERBESAR UKURAN FONT Y-Axis AGAR EMOJI TERLIHAT JELAS
-                        y: { stacked: true, grid: { display: false }, ticks: { font: { size: 15 }, autoSkip: false } }
+                        x: { 
+                            stacked: true, 
+                            grid: { display: false }, // Hapus garis grid vertikal
+                            ticks: { display: false } // Hapus angka sumbu X (0, 100, dst)
+                        },
+                        y: { 
+                            stacked: true, 
+                            grid: { display: false }, 
+                            ticks: { font: { size: 14 }, autoSkip: false } 
+                        }
                     },
                     plugins: {
                         legend: { position: 'top', labels: { boxWidth: 10, font: {size: 10} } },
                         tooltip: {
                             callbacks: {
-                                // GANTI TITLE TOOLTIP MENJADI NAMA PANJANG
                                 title: (context) => {
                                     let label = context[0].label;
                                     return anomaliMapping[label] || label;
                                 }
                             }
+                        },
+                        datalabels: {
+                            color: '#ffffff',
+                            font: { size: 9, weight: 'bold' },
+                            // Hanya tampilkan label jika nilainya > 0 agar tidak bertumpuk di bar kosong
+                            display: function(context) {
+                                return context.dataset.data[context.dataIndex] > 0;
+                            },
+                            formatter: Math.round
                         }
                     }
                 }
@@ -661,13 +671,17 @@
                 
                 document.getElementById('dash-total').innerText = data.summary.total.toLocaleString('id-ID');
                 let persen = data.summary.total > 0 ? Math.round((data.summary.selesai / data.summary.total) * 100) : 0;
-                document.getElementById('dash-selesai').innerHTML = `${data.summary.selesai.toLocaleString('id-ID')} <span class="text-[16px] font-bold opacity-80 mb-1">(${persen}%)</span>`;
+                document.getElementById('dash-selesai').innerHTML = `${data.summary.selesai.toLocaleString('id-ID')} <span class="text-[14px] font-bold opacity-80 mb-0.5">(${persen}%)</span>`;
 
                 let pmlArray = Object.entries(data.pml || {})
                     .map(([nama, val]) => ({ nama, total: val.total, selesai: val.selesai, belum: val.total - val.selesai }))
                     .sort((a, b) => b.total - a.total); 
                 
                 let labelPml = pmlArray.map(item => item.nama);
+                
+                // Menghitung persentase untuk 100% Stacked Chart
+                let tuntasPct = pmlArray.map(v => v.total > 0 ? (v.selesai / v.total * 100) : 0);
+                let belumPct = pmlArray.map(v => v.total > 0 ? (v.belum / v.total * 100) : 0);
                 
                 if (barChart) barChart.destroy();
                 const ctxBar = document.getElementById('dash-bar-chart').getContext('2d');
@@ -676,30 +690,57 @@
                     data: {
                         labels: labelPml,
                         datasets: [
-                            { label: 'Tuntas', data: pmlArray.map(v => v.selesai), backgroundColor: '#22c55e', barPercentage: 0.7 },
-                            { label: 'Belum', data: pmlArray.map(v => v.belum), backgroundColor: '#f97316', barPercentage: 0.7 }
+                            { label: 'Tuntas', data: tuntasPct, backgroundColor: '#22c55e', barPercentage: 0.7 },
+                            { label: 'Belum', data: belumPct, backgroundColor: '#f97316', barPercentage: 0.7 }
                         ]
                     },
                     options: { 
                         responsive: true, maintainAspectRatio: false,
                         indexAxis: 'y', 
                         scales: {
-                            x: { stacked: true, grid: { color: '#f1f5f9' }, title: { display: true, text: 'Jumlah Anomali', font: {size: 10} }, ticks: {font: {size: 9}} },
-                            y: { stacked: true, grid: { display: false }, ticks: { font: { size: 9 }, autoSkip: false } }
+                            x: { 
+                                stacked: true, 
+                                max: 100, // Memaksa rentang X menjadi exactly 100%
+                                grid: { display: false }, 
+                                title: { display: false }, 
+                                ticks: { display: false } 
+                            },
+                            y: { 
+                                stacked: true, 
+                                grid: { display: false }, 
+                                ticks: { font: { size: 9 }, autoSkip: false } 
+                            }
                         },
                         plugins: {
                             legend: { position: 'top', labels: { boxWidth: 10, font: {size: 10} } },
                             tooltip: {
                                 callbacks: {
+                                    label: (context) => {
+                                        // Mengambil angka mentah untuk Tooltip (bukan persennya)
+                                        let dataIdx = context.dataIndex;
+                                        let isTuntas = context.datasetIndex === 0;
+                                        let rawVal = isTuntas ? pmlArray[dataIdx].selesai : pmlArray[dataIdx].belum;
+                                        let pct = Math.round(context.raw);
+                                        return `${context.dataset.label}: ${rawVal} (${pct}%)`;
+                                    },
                                     afterBody: (context) => {
-                                        let total = context[0].raw;
-                                        if (context.length > 1) { total = context[0].raw + context[1].raw; }
-                                        else {
-                                            const dataIdx = context[0].dataIndex;
-                                            total = pmlArray[dataIdx].total;
-                                        }
+                                        let dataIdx = context[0].dataIndex;
+                                        let total = pmlArray[dataIdx].total;
                                         return `\nTotal Beban: ${total}`;
                                     }
+                                }
+                            },
+                            datalabels: {
+                                color: '#ffffff',
+                                font: { size: 8, weight: 'bold' },
+                                display: function(context) {
+                                    return context.dataset.data[context.dataIndex] > 0;
+                                },
+                                formatter: (value, context) => {
+                                    // Menampilkan Angka Mentah (Raw Data) ke dalam grafik persentase
+                                    let dataIdx = context.dataIndex;
+                                    let rawVal = context.datasetIndex === 0 ? pmlArray[dataIdx].selesai : pmlArray[dataIdx].belum;
+                                    return rawVal; 
                                 }
                             }
                         }
@@ -715,7 +756,7 @@
 
                 const getQuadrantColor = (x, y) => {
                     if (x >= rataTotal && y >= 50) return '#3b82f6'; 
-                    if (x < rataTotal && y >= 50) return '#22c55e'; 
+                    if (x < rataTotal && y >= 50) return '#10b981'; 
                     if (x >= rataTotal && y < 50) return '#ef4444'; 
                     return '#f59e0b'; 
                 };
@@ -760,7 +801,9 @@
                             legend: { display: false }, 
                             tooltip: {
                                 callbacks: { label: (ctx) => `${ctx.raw.pml}: Beban ${ctx.raw.x}, Tuntas ${ctx.raw.y}%` }
-                            }
+                            },
+                            // Sembunyikan DataLabels khusus untuk grafik Kuadran agar tidak penuh
+                            datalabels: { display: false }
                         },
                         scales: {
                             x: { title: { display: true, text: 'Total Beban', font: {size: 10} }, grid: { color: '#f8fafc' }, ticks: {font:{size:9}} },
@@ -769,11 +812,9 @@
                     }
                 });
 
-                // Simpan data anomali ke cache global
                 anomaliDataCache.keluarga = data.jenisAnomaliKeluarga || {};
                 anomaliDataCache.usaha = data.jenisAnomaliUsaha || {};
                 
-                // Pilih tab awal otomatis
                 if(tipe === "Usaha") switchAnomaliTab('usaha');
                 else switchAnomaliTab('keluarga');
 
@@ -784,7 +825,7 @@
                 `;
 
             } catch (error) {
-                container.innerHTML = `<div class="p-10 text-center text-red-500 font-bold bg-white rounded-xl border">Gagal memuat Dashboard: Server Sibuk atau Error Struktur.</div>`;
+                container.innerHTML = `<div class="col-span-1 lg:col-span-3 p-10 text-center text-red-500 font-bold bg-white rounded-xl border">Gagal memuat Dashboard: Server Sibuk atau Error Struktur.</div>`;
             }
         }
 
@@ -795,10 +836,9 @@
             
             if (isPivotVisible) {
                 pivot.classList.remove('hidden');
-                pivot.classList.add('flex'); // Memaksa layout flex agar muncul
+                pivot.classList.add('flex');
                 setTimeout(() => {
                     pivot.classList.remove('opacity-0');
-                    // Perbaikan arah scroll agar menyorot tepat ke area tabel
                     pivot.scrollIntoView({ behavior: 'smooth', block: 'end' });
                 }, 50);
                 btn.innerHTML = `<i class="fas fa-table"></i> Sembunyikan Tabel Pivot <i class="fas fa-chevron-up ml-1"></i>`;
@@ -808,7 +848,7 @@
                 pivot.classList.add('opacity-0');
                 setTimeout(() => {
                     pivot.classList.add('hidden');
-                    pivot.classList.remove('flex'); // Sembunyikan tuntas
+                    pivot.classList.remove('flex'); 
                 }, 500);
                 btn.innerHTML = `<i class="fas fa-table"></i> Tampilkan Tabel Analisis Detail <i class="fas fa-chevron-down ml-1"></i>`;
                 btn.classList.replace('text-orange-600', 'text-slate-700');
@@ -857,9 +897,7 @@
             </div>`;
         }
 
-        // FUNGSI BARU: Render Khusus Tabel PCL dengan Format Grouping per PML
         function renderTabelPclGrouped(title, data) {
-            // 1. Group Data Berdasarkan PML
             let grouped = {};
             for (let key in data) {
                 let parts = key.split('|||');
@@ -869,26 +907,18 @@
                 grouped[pml].push({ pcl: pcl, total: data[key].total, selesai: data[key].selesai });
             }
 
-            // 2. Urutkan Nama PML Sesuai Abjad
             let sortedPmlNames = Object.keys(grouped).sort();
-
-            // 3. Array Warna Pastel Sangat Soft (Kecerahan 50 di Tailwind)
-            const softColors = ['bg-blue-50', 'bg-emerald-50', 'bg-amber-50', 'bg-purple-50', 'bg-rose-50', 'bg-cyan-50', 'bg-indigo-50', 'bg-orange-50', 'bg-teal-50', 'bg-sky-50'];
+            const softColors = ['bg-blue-50/50', 'bg-emerald-50/50', 'bg-amber-50/50', 'bg-purple-50/50', 'bg-rose-50/50', 'bg-cyan-50/50', 'bg-indigo-50/50', 'bg-orange-50/50', 'bg-teal-50/50', 'bg-sky-50/50'];
 
             let rowsHTML = '';
             sortedPmlNames.forEach((pml, index) => {
-                // Berganti warna secara otomatis untuk setiap PML
                 let colorClass = softColors[index % softColors.length];
-                
-                // Urutkan PCL berdasarkan jumlah anomali terbanyak di dalam grup PML ini
                 let pclArray = grouped[pml].sort((a, b) => b.total - a.total);
                 
-                // Tambahkan Baris Header PML (Lebar Penuh)
                 rowsHTML += `<tr class="${colorClass} border-b border-gray-100/50">
-                    <td colspan="3" class="p-2 font-black text-slate-700 text-[11px] tracking-wide uppercase"><i class="fas fa-user-tie text-slate-400 mr-2"></i>${pml}</td>
+                    <td colspan="3" class="p-2 font-black text-slate-700 text-[11px] tracking-wide uppercase sticky left-0"><i class="fas fa-user-tie text-slate-400 mr-2"></i>${pml}</td>
                 </tr>`;
 
-                // Tambahkan Baris Data PCL di Bawahnya
                 pclArray.forEach(item => {
                     let persen = item.total > 0 ? Math.round((item.selesai/item.total)*100) : 0;
                     let progressUI = `
@@ -899,8 +929,8 @@
                         <span class="text-[9px] font-black text-slate-600 w-6 text-right">${persen}%</span>
                     </div>`;
 
-                    rowsHTML += `<tr class="border-b hover:bg-slate-50 transition text-[10px]">
-                        <td class="p-2 pl-6 whitespace-normal text-slate-600 border-l-[3px] border-slate-100"><i class="fas fa-angle-right text-slate-300 mr-1.5"></i>${item.pcl}</td>
+                    rowsHTML += `<tr class="${colorClass} border-b hover:brightness-95 transition text-[10px]">
+                        <td class="p-2 pl-6 whitespace-normal text-slate-600 border-l-[3px] border-slate-200"><i class="fas fa-angle-right text-slate-400 mr-1.5"></i>${item.pcl}</td>
                         <td class="p-2 font-bold text-orange-600 text-center w-20">${item.total}</td>
                         <td class="p-2 w-32">${progressUI}</td>
                     </tr>`;
