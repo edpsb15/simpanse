@@ -819,8 +819,8 @@
                 else switchAnomaliTab('keluarga');
 
                 container.innerHTML = `
-                    ${renderTabelDash('Kecamatan', data.kec || {}, ['Kecamatan', 'Jml', '%'])}
-                    ${renderTabelDash('PML', data.pml || {}, ['PML', 'Jml', '%'])}
+                    ${renderTabelDash('Kecamatan', data.kec || {}, ['Kecamatan', 'Beban', 'Tuntas', 'Belum'])}
+                    ${renderTabelDash('PML', data.pml || {}, ['PML', 'Beban', 'Tuntas', 'Belum'])}
                     ${renderTabelPclGrouped('Struktur PML & PCL', data.pmlPcl || {})}
                 `;
 
@@ -863,19 +863,16 @@
                 .map(([k, v]) => {
                 let cols = k.includes('|||') ? k.split('|||') : [k];
                 let persen = v.total > 0 ? Math.round((v.selesai/v.total)*100) : 0;
+                let belum = v.total - v.selesai;
                 
-                let progressUI = `
-                <div class="flex items-center gap-1.5 w-full min-w-[60px]">
-                    <div class="w-full bg-slate-200 rounded-full h-1.5 hidden sm:block">
-                        <div class="bg-emerald-500 h-1.5 rounded-full" style="width: ${persen}%"></div>
-                    </div>
-                    <span class="text-[9px] font-black text-slate-600 w-6 text-right">${persen}%</span>
-                </div>`;
+                // Logika Highlight Warna Pastel
+                let bgColor = persen >= 80 ? 'bg-emerald-50 hover:bg-emerald-100' : 'bg-red-50 hover:bg-red-100';
 
-                return `<tr class="border-b hover:bg-slate-50 transition text-[10px]">
-                    ${cols.map(c => `<td class="p-2 whitespace-normal line-clamp-1" title="${c}">${c}</td>`).join('')}
-                    <td class="p-2 font-bold text-orange-600 text-center">${v.total}</td>
-                    <td class="p-2">${progressUI}</td>
+                return `<tr class="border-b transition text-[10px] ${bgColor}">
+                    ${cols.map(c => `<td class="p-2 whitespace-normal line-clamp-1 text-slate-700 font-medium" title="${c}">${c}</td>`).join('')}
+                    <td class="p-2 font-bold text-slate-700 text-center">${v.total}</td>
+                    <td class="p-2 font-bold text-emerald-600 text-center">${v.selesai}</td>
+                    <td class="p-2 font-bold text-red-500 text-center">${belum}</td>
                 </tr>`;
             }).join('');
             
@@ -888,7 +885,7 @@
                     <table class="w-full text-left">
                         <thead class="sticky top-0 bg-white shadow-sm z-10">
                             <tr class="text-slate-400 text-[9px] uppercase tracking-wider border-b">
-                                ${headers.map(h => `<th class="p-2 bg-white">${h}</th>`).join('')}
+                                ${headers.map((h, i) => `<th class="p-2 bg-white ${i > 0 ? 'text-center' : ''}">${h}</th>`).join('')}
                             </tr>
                         </thead>
                         <tbody>${rows}</tbody>
@@ -908,31 +905,28 @@
             }
 
             let sortedPmlNames = Object.keys(grouped).sort();
-            const softColors = ['bg-blue-50/50', 'bg-emerald-50/50', 'bg-amber-50/50', 'bg-purple-50/50', 'bg-rose-50/50', 'bg-cyan-50/50', 'bg-indigo-50/50', 'bg-orange-50/50', 'bg-teal-50/50', 'bg-sky-50/50'];
-
             let rowsHTML = '';
-            sortedPmlNames.forEach((pml, index) => {
-                let colorClass = softColors[index % softColors.length];
+            
+            sortedPmlNames.forEach((pml) => {
                 let pclArray = grouped[pml].sort((a, b) => b.total - a.total);
                 
-                rowsHTML += `<tr class="${colorClass} border-b border-gray-100/50">
-                    <td colspan="3" class="p-2 font-black text-slate-700 text-[11px] tracking-wide uppercase sticky left-0"><i class="fas fa-user-tie text-slate-400 mr-2"></i>${pml}</td>
+                // Header PML menggunakan warna netral agar mencolok sebagai pemisah grup
+                rowsHTML += `<tr class="bg-slate-100 border-b border-gray-200">
+                    <td colspan="4" class="p-2 font-black text-slate-700 text-[11px] tracking-wide uppercase sticky left-0"><i class="fas fa-user-tie text-slate-400 mr-2"></i>${pml}</td>
                 </tr>`;
 
                 pclArray.forEach(item => {
                     let persen = item.total > 0 ? Math.round((item.selesai/item.total)*100) : 0;
-                    let progressUI = `
-                    <div class="flex items-center gap-1.5 w-full min-w-[60px]">
-                        <div class="w-full bg-slate-200 rounded-full h-1.5 hidden sm:block">
-                            <div class="bg-emerald-500 h-1.5 rounded-full" style="width: ${persen}%"></div>
-                        </div>
-                        <span class="text-[9px] font-black text-slate-600 w-6 text-right">${persen}%</span>
-                    </div>`;
+                    let belum = item.total - item.selesai;
+                    
+                    // Logika Highlight Warna Pastel
+                    let bgColor = persen >= 80 ? 'bg-emerald-50 hover:bg-emerald-100' : 'bg-red-50 hover:bg-red-100';
 
-                    rowsHTML += `<tr class="${colorClass} border-b hover:brightness-95 transition text-[10px]">
-                        <td class="p-2 pl-6 whitespace-normal text-slate-600 border-l-[3px] border-slate-200"><i class="fas fa-angle-right text-slate-400 mr-1.5"></i>${item.pcl}</td>
-                        <td class="p-2 font-bold text-orange-600 text-center w-20">${item.total}</td>
-                        <td class="p-2 w-32">${progressUI}</td>
+                    rowsHTML += `<tr class="${bgColor} border-b transition text-[10px]">
+                        <td class="p-2 pl-6 whitespace-normal text-slate-700 font-medium border-l-[3px] border-slate-300"><i class="fas fa-angle-right text-slate-400 mr-1.5"></i>${item.pcl}</td>
+                        <td class="p-2 font-bold text-slate-700 text-center w-16">${item.total}</td>
+                        <td class="p-2 font-bold text-emerald-600 text-center w-16">${item.selesai}</td>
+                        <td class="p-2 font-bold text-red-500 text-center w-16">${belum}</td>
                     </tr>`;
                 });
             });
@@ -948,7 +942,8 @@
                             <tr class="text-slate-400 text-[9px] uppercase tracking-wider border-b">
                                 <th class="p-2 bg-white">Nama Petugas</th>
                                 <th class="p-2 bg-white text-center">Beban</th>
-                                <th class="p-2 bg-white">Progress</th>
+                                <th class="p-2 bg-white text-center">Tuntas</th>
+                                <th class="p-2 bg-white text-center">Belum</th>
                             </tr>
                         </thead>
                         <tbody>${rowsHTML}</tbody>
