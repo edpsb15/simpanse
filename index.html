@@ -55,6 +55,24 @@
             
             <hr class="border-slate-800 my-2">
             
+            <!-- MENU ANOMALI KHUSUS -->
+            <div>
+                <button onclick="toggleAnomaliMenu()" class="w-full flex items-center justify-between p-3 text-left rounded-lg text-slate-400 hover:bg-slate-800 transition font-bold text-xs uppercase tracking-wider">
+                    <span><i class="fas fa-exclamation-triangle w-6 text-yellow-500"></i> Anomali Khusus</span>
+                    <i id="anomali-icon" class="fas fa-chevron-right text-[10px] transition-transform"></i>
+                </button>
+                <div id="anomali-menu" class="dropdown-menu flex flex-col pl-9 pr-2 mt-1 space-y-1 h-0 overflow-hidden">
+                    <button onclick="switchPage('luas0')" id="nav-luas0" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">
+                        <i class="fas fa-caret-right w-4 opacity-50"></i> Usaha Luas 0
+                    </button>
+                    <button onclick="switchPage('tdkditemukan')" id="nav-tdkditemukan" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">
+                        <i class="fas fa-caret-right w-4 opacity-50"></i> Tidak Ditemukan (U)
+                    </button>
+                </div>
+            </div>
+
+            <hr class="border-slate-800 my-2">
+
             <div>
                 <button onclick="toggleKonfig()" class="w-full flex items-center justify-between p-3 text-left rounded-lg text-slate-400 hover:bg-slate-800 transition font-bold text-xs uppercase tracking-wider">
                     <span><i class="fas fa-cogs w-6"></i> Konfigurasi</span>
@@ -62,7 +80,7 @@
                 </button>
                 <div id="konfig-menu" class="dropdown-menu flex flex-col pl-9 pr-2 mt-1 space-y-1 h-0 overflow-hidden">
                     <button onclick="switchPage('sync')" id="nav-sync" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">
-                        <i class="fas fa-sync-alt w-5 text-xs"></i> Sync Anomali
+                        <i class="fas fa-sync-alt w-5 text-xs opacity-50"></i> Sync Anomali
                     </button>
                 </div>
             </div>
@@ -85,6 +103,7 @@
         
         <div class="p-4 lg:p-6 flex-1 overflow-y-auto h-full relative custom-scrollbar flex flex-col" id="main-scroll-area">
             
+            <!-- HALAMAN: DASHBOARD -->
             <div id="page-dashboard" class="page-content active flex-col shrink-0 min-h-full">
                 
                 <!-- 1. GLOBAL METRICS -->
@@ -151,7 +170,7 @@
 
                 <!-- 3. CHARTS (3 Columns Row) -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4 shrink-0 h-[500px]">
-                    <!-- Bar Chart -->
+                    <!-- Bar Chart (100% Stacked) -->
                     <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col">
                         <h3 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-3 border-b pb-2"><i class="fas fa-align-left text-orange-500 mr-2"></i>Progress per PML</h3>
                         <div class="relative flex-1 min-h-0 w-full">
@@ -190,14 +209,14 @@
                 </div>
 
                 <!-- 4. TOGGLE BUTTON & PIVOT SECTION -->
-                <div class="shrink-0">
+                <div class="shrink-0 relative">
                     <button onclick="togglePivot()" id="btn-toggle-pivot" class="bg-white border-2 border-slate-200 text-slate-700 hover:border-orange-400 hover:text-orange-600 p-3 rounded-xl font-bold shadow-sm transition flex items-center justify-center gap-2 text-sm w-full">
                         <i class="fas fa-table"></i> Tampilkan Tabel Analisis Detail <i class="fas fa-chevron-down ml-1"></i>
                     </button>
 
                     <div id="pivot-section" class="hidden opacity-0 transition-opacity duration-500 mt-4 flex-col gap-4">
-                        <div id="dash-container" class="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[400px]">
-                            <!-- Tabel Pivot dirender disini (Format 3 Kolom) -->
+                        <div id="dash-container" class="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[500px]">
+                            <!-- Tabel Pivot (Kecamatan, PML, PCL) -->
                         </div>
                     </div>
                 </div>
@@ -208,7 +227,7 @@
                 </footer>
             </div>
 
-            <!-- HALAMAN: TABEL DATA -->
+            <!-- HALAMAN: TABEL DATA UTAMA (Keluarga & Usaha) -->
             <div id="page-data" class="page-content hidden flex-col shrink-0 min-h-full">
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-4 flex flex-wrap justify-between items-end gap-4 shrink-0">
                     <div class="flex flex-wrap gap-4 items-end w-full lg:w-auto">
@@ -228,7 +247,7 @@
 
                         <div>
                             <label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML <span class="text-red-500">*</span></label>
-                            <select id="input-pml" onchange="renderDropdownPcl()" class="border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-orange-400 outline-none w-full min-w-[150px] bg-slate-50">
+                            <select id="input-pml" onchange="renderDropdownPcl('utama')" class="border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-orange-400 outline-none w-full min-w-[150px] bg-slate-50">
                                 <option value="">Memuat data...</option>
                             </select>
                         </div>
@@ -238,11 +257,11 @@
                                 <option value="">Pilih PML dahulu</option>
                             </select>
                         </div>
-                        <button onclick="tarikData()" id="btn-tarik" class="bg-slate-800 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-slate-700 transition shadow-sm flex items-center h-[38px]">
+                        <button onclick="tarikDataUtama()" id="btn-tarik" class="bg-slate-800 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-slate-700 transition shadow-sm flex items-center h-[38px]">
                             <i class="fas fa-sync-alt text-orange-400 mr-2"></i> Tarik Data
                         </button>
                     </div>
-                    <div id="status-text" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg"><i class="fas fa-spinner fa-spin mr-1"></i> Menyimpan...</div>
+                    <div id="status-text-utama" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg">...</div>
                 </div>
                 
                 <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
@@ -250,7 +269,7 @@
                         <table class="w-full text-left text-sm whitespace-nowrap">
                             <thead class="bg-slate-50 sticky top-0 z-10 shadow-sm">
                                 <tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200">
-                                    <th class="p-4 w-1/4 whitespace-normal font-bold" id="th-nama">Nama</th>
+                                    <th class="p-4 w-1/4 whitespace-normal font-bold" id="th-nama-utama">Nama</th>
                                     <th class="p-4 w-64 font-bold">Anomali</th>
                                     <th class="p-4 text-center font-bold">Fasih</th>
                                     <th class="p-4 font-bold">PML</th>
@@ -259,37 +278,164 @@
                                     <th class="p-4 min-w-[300px] font-bold">Catatan</th>
                                 </tr>
                             </thead>
-                            <tbody id="tabel-body" class="divide-y divide-gray-100 text-gray-700">
+                            <tbody id="tabel-body-utama" class="divide-y divide-gray-100 text-gray-700">
                                 <tr><td colspan="7" class="p-10 text-center text-gray-400"><i class="fas fa-table-list text-4xl mb-3 block opacity-50"></i>Silakan tentukan filter lalu tekan "Tarik Data"</td></tr>
                             </tbody>
                         </table>
                     </div>
                     
-                    <div id="pagination-container" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex flex-wrap items-center justify-between shrink-0 gap-4">
+                    <div id="pagination-container-utama" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex flex-wrap items-center justify-between shrink-0 gap-4">
                         <div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider">
                             <span>Tampilkan:</span>
-                            <select id="items-per-page" onchange="changeItemsPerPage()" class="border border-gray-300 rounded p-1.5 focus:ring-orange-400 outline-none bg-white text-slate-700 cursor-pointer shadow-sm">
+                            <select id="items-per-page-utama" onchange="changeItemsPerPage('utama')" class="border border-gray-300 rounded p-1.5 focus:ring-orange-400 outline-none bg-white text-slate-700 cursor-pointer shadow-sm">
                                 <option value="5">5 Baris</option>
                                 <option value="10" selected>10 Baris</option>
                                 <option value="25">25 Baris</option>
                                 <option value="all">Semua</option>
                             </select>
                         </div>
-                        <div id="page-info" class="text-xs font-bold text-slate-500">Menampilkan 0 dari 0</div>
+                        <div id="page-info-utama" class="text-xs font-bold text-slate-500">Menampilkan 0 dari 0</div>
                         <div class="flex items-center gap-2">
-                            <button id="btn-prev-page" onclick="changePage(-1)" class="px-4 py-2 border border-gray-300 bg-white rounded-lg hover:bg-gray-50 hover:text-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition text-xs font-bold text-slate-600 shadow-sm flex items-center">
-                                <i class="fas fa-chevron-left mr-1.5"></i> Prev
-                            </button>
-                            <button id="btn-next-page" onclick="changePage(1)" class="px-4 py-2 border border-gray-300 bg-white rounded-lg hover:bg-gray-50 hover:text-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition text-xs font-bold text-slate-600 shadow-sm flex items-center">
-                                Next <i class="fas fa-chevron-right ml-1.5"></i>
-                            </button>
+                            <button onclick="changePage('utama', -1)" id="btn-prev-utama" class="px-4 py-2 border border-gray-300 bg-white rounded-lg hover:bg-gray-50 disabled:opacity-50 transition text-xs font-bold">Prev</button>
+                            <button onclick="changePage('utama', 1)" id="btn-next-utama" class="px-4 py-2 border border-gray-300 bg-white rounded-lg hover:bg-gray-50 disabled:opacity-50 transition text-xs font-bold">Next</button>
                         </div>
                     </div>
                 </div>
-                <footer class="mt-auto pt-8 pb-4 text-center shrink-0 w-full">
-                    <p class="text-[10px] text-gray-500 font-medium">© 2026 - Tim Pengolahan dan Teknologi Informasi (SE2026)</p>
-                    <p class="text-[10px] text-gray-400 font-bold">BPS Kabupaten Samosir</p>
-                </footer>
+            </div>
+
+            <!-- HALAMAN: ANOMALI KHUSUS - LUAS 0 -->
+            <div id="page-luas0" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-expand-arrows-alt text-blue-500 mr-2"></i>Usaha Tetap tanpa Penguasaan Tanah</h2>
+                        <p class="text-sm text-slate-600 mb-2 md:mb-0">Status Tempat = Tetap (01-09), tetapi luas lahan yang digunakan = 0.</p>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100 w-full md:w-auto">
+                        <div>
+                            <label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML <span class="text-red-500">*</span></label>
+                            <select id="input-pml-luas0" onchange="renderDropdownPcl('luas0')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[140px] bg-white">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Opsional)</label>
+                            <select id="input-pcl-luas0" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[140px] bg-white" disabled>
+                                <option value="">Pilih PML dahulu</option>
+                            </select>
+                        </div>
+                        <button onclick="tarikDataAnomaliKhusus('luas0')" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition shadow-sm flex items-center h-[38px]">
+                            <i class="fas fa-search mr-2"></i> Tampilkan
+                        </button>
+                    </div>
+                    <div id="status-text-luas0" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg w-full md:w-auto text-center">...</div>
+                </div>
+                
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative">
+                        <table class="w-full text-left text-sm whitespace-nowrap">
+                            <thead class="bg-slate-50 sticky top-0 z-10 shadow-sm">
+                                <tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200">
+                                    <th class="p-4 w-1/4 font-bold whitespace-normal">Nama Usaha</th>
+                                    <th class="p-4 font-bold">Lokasi Usaha</th>
+                                    <th class="p-4 font-bold">PML / PCL</th>
+                                    <th class="p-4 text-center font-bold">Fasih</th>
+                                    <th class="p-4 font-bold">Tindak Lanjut</th>
+                                    <th class="p-4 min-w-[250px] font-bold">Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabel-body-luas0" class="divide-y divide-gray-100 text-gray-700">
+                                <tr><td colspan="6" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan filter lalu tekan "Tampilkan"</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Paginator Luas 0 -->
+                    <div id="pagination-container-luas0" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex flex-wrap items-center justify-between shrink-0 gap-4">
+                        <div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                            <span>Tampilkan:</span>
+                            <select id="items-per-page-luas0" onchange="changeItemsPerPage('luas0')" class="border border-gray-300 rounded p-1.5 focus:ring-blue-400 outline-none bg-white text-slate-700 cursor-pointer shadow-sm">
+                                <option value="5">5 Baris</option>
+                                <option value="10" selected>10 Baris</option>
+                                <option value="25">25 Baris</option>
+                                <option value="all">Semua</option>
+                            </select>
+                        </div>
+                        <div id="page-info-luas0" class="text-xs font-bold text-slate-500">Menampilkan 0 dari 0</div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="changePage('luas0', -1)" id="btn-prev-luas0" class="px-4 py-2 border border-gray-300 bg-white rounded-lg hover:bg-gray-50 disabled:opacity-50 transition text-xs font-bold">Prev</button>
+                            <button onclick="changePage('luas0', 1)" id="btn-next-luas0" class="px-4 py-2 border border-gray-300 bg-white rounded-lg hover:bg-gray-50 disabled:opacity-50 transition text-xs font-bold">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HALAMAN: ANOMALI KHUSUS - TIDAK DITEMUKAN -->
+            <div id="page-tdkditemukan" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-store-slash text-red-500 mr-2"></i>Usaha Tidak Ditemukan, Tutup, Ganda</h2>
+                        <p class="text-sm text-slate-600 mb-2 md:mb-0">Usaha dengan Status Keberadaan berkode 0, 3, dan 4.</p>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100 w-full md:w-auto">
+                        <div>
+                            <label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML <span class="text-red-500">*</span></label>
+                            <select id="input-pml-tdkditemukan" onchange="renderDropdownPcl('tdkditemukan')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[140px] bg-white">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Opsional)</label>
+                            <select id="input-pcl-tdkditemukan" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[140px] bg-white" disabled>
+                                <option value="">Pilih PML dahulu</option>
+                            </select>
+                        </div>
+                        <button onclick="tarikDataAnomaliKhusus('tdkditemukan')" class="bg-red-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-red-700 transition shadow-sm flex items-center h-[38px]">
+                            <i class="fas fa-search mr-2"></i> Tampilkan
+                        </button>
+                    </div>
+                    <div id="status-text-tdkditemukan" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg w-full md:w-auto text-center">...</div>
+                </div>
+                
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative">
+                        <table class="w-full text-left text-sm whitespace-nowrap">
+                            <thead class="bg-slate-50 sticky top-0 z-10 shadow-sm">
+                                <tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200">
+                                    <th class="p-4 w-1/4 font-bold whitespace-normal">Nama Usaha</th>
+                                    <th class="p-4 font-bold">Keberadaan</th>
+                                    <th class="p-4 font-bold text-red-600">Catatan Error</th>
+                                    <th class="p-4 font-bold">PML / PCL</th>
+                                    <th class="p-4 text-center font-bold">Fasih</th>
+                                    <th class="p-4 font-bold">Tindak Lanjut</th>
+                                    <th class="p-4 min-w-[250px] font-bold">Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabel-body-tdkditemukan" class="divide-y divide-gray-100 text-gray-700">
+                                <tr><td colspan="7" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan filter lalu tekan "Tampilkan"</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Paginator Tdk Ditemukan -->
+                    <div id="pagination-container-tdkditemukan" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex flex-wrap items-center justify-between shrink-0 gap-4">
+                        <div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                            <span>Tampilkan:</span>
+                            <select id="items-per-page-tdkditemukan" onchange="changeItemsPerPage('tdkditemukan')" class="border border-gray-300 rounded p-1.5 focus:ring-red-400 outline-none bg-white text-slate-700 cursor-pointer shadow-sm">
+                                <option value="5">5 Baris</option>
+                                <option value="10" selected>10 Baris</option>
+                                <option value="25">25 Baris</option>
+                                <option value="all">Semua</option>
+                            </select>
+                        </div>
+                        <div id="page-info-tdkditemukan" class="text-xs font-bold text-slate-500">Menampilkan 0 dari 0</div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="changePage('tdkditemukan', -1)" id="btn-prev-tdkditemukan" class="px-4 py-2 border border-gray-300 bg-white rounded-lg hover:bg-gray-50 disabled:opacity-50 transition text-xs font-bold">Prev</button>
+                            <button onclick="changePage('tdkditemukan', 1)" id="btn-next-tdkditemukan" class="px-4 py-2 border border-gray-300 bg-white rounded-lg hover:bg-gray-50 disabled:opacity-50 transition text-xs font-bold">Next</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- HALAMAN: SYNC ANOMALI -->
@@ -300,7 +446,6 @@
                         <h2 class="text-2xl font-bold">Sinkronisasi Anomali Lintas Tanggal</h2>
                         <p class="text-slate-300 text-sm mt-2">Gunakan fitur ini untuk menyalin status Pengerjaan dan Catatan dari data masa lalu (Base) ke data terbaru (Target) secara otomatis.</p>
                     </div>
-                    
                     <div class="p-6 md:p-8 space-y-6">
                         <div>
                             <label class="block font-bold text-slate-700 mb-3 uppercase text-xs tracking-wider border-b pb-2">1. Pilih Jenis Data</label>
@@ -319,105 +464,67 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
                                 <label class="block font-bold text-blue-800 mb-2 uppercase text-xs tracking-wider"><i class="fas fa-database mr-1"></i>Tanggal Base (Sumber)</label>
-                                <p class="text-[10px] text-blue-600 mb-2 leading-tight">Data referensi yang sudah dikerjakan/dikonfirmasi.</p>
-                                <select id="sync-base-tgl" class="w-full border border-blue-200 p-2.5 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 outline-none bg-white">
-                                    <option value="">Memuat...</option>
-                                </select>
+                                <select id="sync-base-tgl" class="w-full border border-blue-200 p-2.5 rounded-lg text-sm outline-none bg-white"><option value="">Memuat...</option></select>
                             </div>
-                            
                             <div class="bg-orange-50 p-4 rounded-xl border border-orange-100">
                                 <label class="block font-bold text-orange-800 mb-2 uppercase text-xs tracking-wider"><i class="fas fa-bullseye mr-1"></i>Tanggal Target (Tujuan)</label>
-                                <p class="text-[10px] text-orange-600 mb-2 leading-tight">Data baru yang masih kosong/belum dikonfirmasi.</p>
-                                <select id="sync-target-tgl" class="w-full border border-orange-200 p-2.5 rounded-lg text-sm focus:ring-2 focus:ring-orange-400 outline-none bg-white">
-                                    <option value="">Memuat...</option>
-                                </select>
+                                <select id="sync-target-tgl" class="w-full border border-orange-200 p-2.5 rounded-lg text-sm outline-none bg-white"><option value="">Memuat...</option></select>
                             </div>
-                        </div>
-
-                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded flex gap-3 text-yellow-800 text-sm">
-                            <i class="fas fa-info-circle text-yellow-500 mt-0.5"></i>
-                            <p>Sistem hanya akan menyalin status untuk <b>ID + Nama + Anomali</b> yang 100% identik. Data target yang sudah memiliki status (bukan "Belum Konfirmasi") tidak akan ditimpa.</p>
                         </div>
 
                         <div class="text-center pt-4 border-t">
-                            <button onclick="cekSync()" id="btn-cek-sync" class="bg-slate-800 text-white px-8 py-3 rounded-full font-bold hover:bg-slate-700 shadow-md transition flex items-center justify-center gap-2 mx-auto w-full md:w-auto">
+                            <button onclick="cekSync()" id="btn-cek-sync" class="bg-slate-800 text-white px-8 py-3 rounded-full font-bold hover:bg-slate-700 transition flex items-center justify-center gap-2 mx-auto w-full md:w-auto">
                                 <i class="fas fa-search"></i> Cek Data Eligible
                             </button>
                         </div>
                     </div>
                 </div>
-                <footer class="mt-auto pt-8 pb-4 text-center shrink-0 w-full">
-                    <p class="text-[10px] text-gray-500 font-medium">© 2026 - Tim Pengolahan dan Teknologi Informasi (SE2026)</p>
-                    <p class="text-[10px] text-gray-400 font-bold">BPS Kabupaten Samosir</p>
-                </footer>
             </div>
-
-            <!-- MODAL KONFIRMASI SYNC -->
+            
+            <!-- MODAL SYNC -->
             <div id="sync-modal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
                 <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 transform scale-95 transition-transform duration-300 overflow-hidden" id="sync-modal-content">
                     <div class="p-6 text-center">
-                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-exchange-alt text-2xl text-blue-600"></i>
-                        </div>
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-exchange-alt text-2xl text-blue-600"></i></div>
                         <h3 class="text-xl font-bold text-slate-800 mb-2">Konfirmasi Sinkronisasi</h3>
-                        <p class="text-sm text-slate-600 mb-6">Ditemukan <span id="sync-count" class="font-black text-xl text-orange-600 mx-1">0</span> baris data yang eligible untuk disalin dari Tanggal Base ke Tanggal <span id="sync-target-label" class="font-bold text-slate-800"></span>.</p>
-                        <p class="text-xs text-slate-500 mb-6 bg-slate-50 p-2 rounded border">Tindakan ini akan mengupdate kolom Pengerjaan dan Catatan secara otomatis. Lanjutkan?</p>
-                        
+                        <p class="text-sm text-slate-600 mb-6">Ditemukan <span id="sync-count" class="font-black text-xl text-orange-600 mx-1">0</span> baris data yang eligible untuk disalin ke Tanggal <span id="sync-target-label" class="font-bold text-slate-800"></span>.</p>
                         <div class="flex gap-3 justify-center">
-                            <button onclick="closeModalSync()" class="px-5 py-2.5 rounded-lg font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition flex-1">
-                                Tidak, Batal
-                            </button>
-                            <button onclick="jalankanSync()" id="btn-run-sync" class="px-5 py-2.5 rounded-lg font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md transition flex-1 flex items-center justify-center gap-2">
-                                <i class="fas fa-check"></i> Ya, Sinkronkan
-                            </button>
+                            <button onclick="closeModalSync()" class="px-5 py-2.5 rounded-lg font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 flex-1">Batal</button>
+                            <button onclick="jalankanSync()" id="btn-run-sync" class="px-5 py-2.5 rounded-lg font-bold text-white bg-blue-600 hover:bg-blue-700 flex-1">Ya, Sinkronkan</button>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </main>
 
     <script>
-        // Register the DataLabels plugin for all charts globally
+        // Register Chart DataLabels
         Chart.register(ChartDataLabels);
 
         const API_URL = "https://script.google.com/macros/s/AKfycbxLgpQJ5jJbr8NvRTQD0DyuW_oRfVGlf8wOH2nFQCS31QaaLJnDBoTRek68fHZj5k-0Kg/exec";
         
-        let currentMode = 'dashboard';
+        let currentMode = 'dashboard'; 
         let dataMitraGlobal = {}; 
-        let barChart = null;
-        let scatterChart = null;
-        let anomaliChart = null;
+        let barChart = null; let scatterChart = null; let anomaliChart = null;
         let isPivotVisible = false;
-        
         let anomaliDataCache = { keluarga: {}, usaha: {} };
         
-        let currentTableData = [];
-        let currentTglBanding = "";
-        let currentPage = 1;
-        let itemsPerPage = 10; 
+        // Paginator Configuration per context ('utama', 'luas0', 'tdkditemukan')
+        let pageState = {
+            utama: { data: [], tglBanding: "", current: 1, perPage: 10 },
+            luas0: { data: [], current: 1, perPage: 10 },
+            tdkditemukan: { data: [], current: 1, perPage: 10 }
+        };
 
-        const quotes = [
-            { text: "Setiap anomali mungkin merupakan hal yang acak; namun, jika Anda memiliki cukup data, Anda dapat mengetahui bahwa itu bukan kebetulan.", author: "Jim Simons" },
-            { text: "Anomali adalah pemberontak dalam kumpulan data Anda. Mereka mencoba menyembunyikan kebenaran, atau terkadang, mereka adalah satu-satunya kebenaran.", author: "Anonim" },
-            { text: "Anomali tidak berarti Salah, Anomali hanya butuh Kepastian.", author: "Admin" }
-        ];
-
-        // Dictionary Peta Emoji ke Nama Anomali Baku
         const anomalyEmojiMap = {
-            // Keluarga
-            "Status Cerai / Belum Kawin": "💔",
-            "Kepala Keluarga < 10 Th di Rumah Sendiri": "🧒",
-            "Semua Anggota Keluarga Disabilitas": "♿",
-            "Luas Lantai Ekstrem": "📐",
-            "Selisih Pendapatan Negatif": "📉",
-            "Listrik Rendah & Ada Barang Mewah": "💡",
+            "Status Cerai / Belum Kawin": "💔", "Kepala Keluarga < 10 Th di Rumah Sendiri": "🧒",
+            "Semua Anggota Keluarga Disabilitas": "♿", "Luas Lantai Ekstrem": "📐",
+            "Selisih Pendapatan Negatif": "📉", "Listrik Rendah & Ada Barang Mewah": "💡",
             "Jumlah Anggota Keluarga Ekstrem": "👨‍👩‍👧‍👦",
-            // Usaha
-            "Biaya Produksi Dominan": "🏭",
-            "Keuntungan Usaha": "📈",
-            "Penyertaan Modal Korporasi": "🤝",
-            "Data Keuangan MBG": "🧾",
+            "Biaya Produksi Dominan": "🏭", "Keuntungan Usaha": "📈",
+            "Penyertaan Modal Korporasi": "🤝", "Data Keuangan MBG": "🧾",
             "Hubungan Aset, Pekerja, dan Produksi Usaha": "⚖️",
             "Penggunaan Internet Pada Usaha Menengah dan Besar": "🌐",
             "Kepemilikan Laporan Keuangan Pada Usaha Menengah dan Besar": "📁",
@@ -432,80 +539,58 @@
             toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-circle' : 'fa-info-circle'} mr-2"></i> ${message}`;
             document.body.appendChild(toast);
             setTimeout(() => toast.classList.remove('translate-y-10', 'opacity-0'), 50);
-            setTimeout(() => {
-                toast.classList.add('translate-y-10', 'opacity-0');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            setTimeout(() => { toast.classList.add('translate-y-10', 'opacity-0'); setTimeout(() => toast.remove(), 300); }, 3000);
         }
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            if(window.innerWidth >= 1024) { 
-                sidebar.classList.toggle('lg:ml-0');
-                sidebar.classList.toggle('lg:-ml-64');
-            } else { 
-                sidebar.classList.toggle('-ml-64');
-            }
+            if(window.innerWidth >= 1024) { sidebar.classList.toggle('lg:ml-0'); sidebar.classList.toggle('lg:-ml-64'); } 
+            else { sidebar.classList.toggle('-ml-64'); }
         }
 
         function toggleKonfig() {
             const menu = document.getElementById('konfig-menu');
             const icon = document.getElementById('konfig-icon');
             if (menu.classList.contains('h-0')) {
-                menu.classList.remove('h-0', 'py-0');
-                menu.classList.add('h-auto', 'py-1', 'open');
-                icon.style.transform = 'rotate(90deg)';
+                menu.classList.remove('h-0', 'py-0'); menu.classList.add('h-auto', 'py-1', 'open'); icon.style.transform = 'rotate(90deg)';
             } else {
-                menu.classList.add('h-0', 'py-0');
-                menu.classList.remove('h-auto', 'py-1', 'open');
-                icon.style.transform = 'rotate(0deg)';
+                menu.classList.add('h-0', 'py-0'); menu.classList.remove('h-auto', 'py-1', 'open'); icon.style.transform = 'rotate(0deg)';
             }
         }
 
-        function putRandomQuote() {
-            const q = quotes[Math.floor(Math.random() * quotes.length)];
-            document.getElementById('quote-text').innerText = `"${q.text}"`;
-            document.getElementById('quote-author').innerText = `- ${q.author}`;
+        function toggleAnomaliMenu() {
+            const menu = document.getElementById('anomali-menu');
+            const icon = document.getElementById('anomali-icon');
+            if (menu.classList.contains('h-0')) {
+                menu.classList.remove('h-0', 'py-0'); menu.classList.add('h-auto', 'py-1', 'open'); icon.style.transform = 'rotate(90deg)';
+            } else {
+                menu.classList.add('h-0', 'py-0'); menu.classList.remove('h-auto', 'py-1', 'open'); icon.style.transform = 'rotate(0deg)';
+            }
         }
 
         async function muatDataMitra() {
             try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: "getMitra" })
-                });
+                const response = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "getMitra" }) });
                 const result = await response.json();
-                
                 if (result.status === "sukses") {
                     dataMitraGlobal = result.data;
-                    renderDropdownPml();
+                    renderSemuaDropdownPml();
                     renderDropdownTanggal(result.dates);
                 }
-            } catch (error) {
-                document.getElementById('input-pml').innerHTML = '<option value="">Gagal memuat data</option>';
-            }
+            } catch (error) { showToast("Gagal memuat Data Mitra", true); }
         }
 
         async function muatGlobalData() {
             try {
-                const res = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: "getGlobal" })
-                });
+                const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "getGlobal" }) });
                 const result = await res.json();
                 if (result.status === "sukses") {
                     const d = result.data;
                     document.getElementById('dash-global-total').innerText = d.totalUnik.toLocaleString('id-ID');
-                    
                     let p = d.totalUnik > 0 ? Math.round((d.totalSelesaiUnik/d.totalUnik)*100) : 0;
-                    document.getElementById('dash-global-selesai').innerHTML = 
-                        `${d.totalSelesaiUnik.toLocaleString('id-ID')} <span class="text-[14px] font-bold opacity-80 mb-0.5">(${p}%)</span>`;
+                    document.getElementById('dash-global-selesai').innerHTML = `${d.totalSelesaiUnik.toLocaleString('id-ID')} <span class="text-[14px] font-bold opacity-80 mb-0.5">(${p}%)</span>`;
                 }
-            } catch (error) {
-                console.error("Gagal memuat Global Data");
-            }
+            } catch (error) {}
         }
 
         function renderDropdownTanggal(dates) {
@@ -517,31 +602,31 @@
             document.getElementById('sync-target-tgl').innerHTML = options;
         }
 
-        function renderDropdownPml() {
-            const pmlSelect = document.getElementById('input-pml');
+        function renderSemuaDropdownPml() {
             const daftarPml = Object.keys(dataMitraGlobal).sort();
-            pmlSelect.innerHTML = '<option value="">-- Pilih PML --</option>' + 
-                                  daftarPml.map(p => `<option value="${p}">${p}</option>`).join('');
+            const options = '<option value="">-- Pilih PML --</option>' + daftarPml.map(p => `<option value="${p}">${p}</option>`).join('');
+            
+            document.getElementById('input-pml').innerHTML = options; // Utama
+            document.getElementById('input-pml-luas0').innerHTML = options; // Luas 0
+            document.getElementById('input-pml-tdkditemukan').innerHTML = options; // Tdk Ditemukan
         }
 
-        function renderDropdownPcl() {
-            const pml = document.getElementById('input-pml').value;
-            const pclSelect = document.getElementById('input-pcl');
-            if (pml && dataMitraGlobal[pml]) {
+        function renderDropdownPcl(konteks) {
+            let pmlId, pclId;
+            if (konteks === 'utama') { pmlId = 'input-pml'; pclId = 'input-pcl'; }
+            else if (konteks === 'luas0') { pmlId = 'input-pml-luas0'; pclId = 'input-pcl-luas0'; }
+            else if (konteks === 'tdkditemukan') { pmlId = 'input-pml-tdkditemukan'; pclId = 'input-pcl-tdkditemukan'; }
+
+            const pmlVal = document.getElementById(pmlId).value;
+            const pclSelect = document.getElementById(pclId);
+            
+            if (pmlVal && dataMitraGlobal[pmlVal]) {
                 pclSelect.disabled = false;
-                pclSelect.innerHTML = '<option value="">-- Semua PCL --</option>' + 
-                                      dataMitraGlobal[pml].sort().map(p => `<option value="${p}">${p}</option>`).join('');
+                pclSelect.innerHTML = '<option value="">-- Semua PCL --</option>' + dataMitraGlobal[pmlVal].sort().map(p => `<option value="${p}">${p}</option>`).join('');
             } else {
-                pclSelect.innerHTML = '<option value="">Pilih PML dahulu</option>';
-                pclSelect.disabled = true;
+                pclSelect.innerHTML = '<option value="">Pilih PML dahulu</option>'; pclSelect.disabled = true;
             }
         }
-
-        window.onload = () => { 
-            muatDataMitra(); 
-            muatGlobalData();
-            putRandomQuote(); 
-        };
 
         function switchPage(mode) {
             currentMode = mode;
@@ -552,45 +637,56 @@
             document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
 
             const activeBtn = document.getElementById('nav-' + mode);
-            activeBtn.classList.remove('text-slate-300');
-            activeBtn.classList.add('bg-orange-600', 'text-white', 'shadow-md');
+            if(activeBtn) {
+                activeBtn.classList.remove('text-slate-300');
+                activeBtn.classList.add('bg-orange-600', 'text-white', 'shadow-md');
+            }
             
             let title = 'Dashboard Interaktif';
-            if(mode === 'keluarga') title = 'Manajemen Data Keluarga';
-            if(mode === 'usaha') title = 'Manajemen Data Usaha';
-            if(mode === 'sync') title = 'Konfigurasi: Sinkronisasi Anomali';
+            if(mode === 'keluarga') title = 'Data Anomali Keluarga';
+            if(mode === 'usaha') title = 'Data Anomali Usaha';
+            if(mode === 'luas0') title = 'Usaha Luas 0';
+            if(mode === 'tdkditemukan') title = 'Usaha Tidak Ditemukan';
+            if(mode === 'sync') title = 'Sinkronisasi Data';
             document.getElementById('header-title').innerText = title;
 
-            if(mode === 'dashboard' && isPivotVisible) togglePivot();
-
-            if (mode === 'dashboard') document.getElementById('page-dashboard').classList.add('active');
-            else if (mode === 'sync') document.getElementById('page-sync').classList.add('active');
-            else {
+            if(mode === 'dashboard') {
+                document.getElementById('page-dashboard').classList.add('active');
+            } else if (mode === 'keluarga' || mode === 'usaha') {
                 document.getElementById('page-data').classList.add('active');
-                document.getElementById('th-nama').innerText = mode === 'keluarga' ? 'Nama Kepala Keluarga' : 'Nama Usaha';
+                document.getElementById('th-nama-utama').innerText = mode === 'keluarga' ? 'Nama Kepala Keluarga' : 'Nama Usaha';
+            } else if (mode === 'luas0') {
+                document.getElementById('page-luas0').classList.add('active');
+            } else if (mode === 'tdkditemukan') {
+                document.getElementById('page-tdkditemukan').classList.add('active');
+            } else if (mode === 'sync') {
+                document.getElementById('page-sync').classList.add('active');
             }
             
             if(window.innerWidth < 1024) toggleSidebar(); 
         }
 
+        /* -------------------------------------------------------------
+           BAGIAN 1: LOGIKA DASHBOARD
+        ------------------------------------------------------------- */
         function switchAnomaliTab(tab) {
             document.getElementById('tab-anomali-keluarga').className = tab === 'keluarga' ? 'px-3 py-1 text-[10px] font-bold rounded-md bg-white shadow-sm text-purple-700 transition' : 'px-3 py-1 text-[10px] font-bold rounded-md text-slate-500 hover:text-slate-700 transition';
             document.getElementById('tab-anomali-usaha').className = tab === 'usaha' ? 'px-3 py-1 text-[10px] font-bold rounded-md bg-white shadow-sm text-purple-700 transition' : 'px-3 py-1 text-[10px] font-bold rounded-md text-slate-500 hover:text-slate-700 transition';
             
             const dataObj = tab === 'keluarga' ? anomaliDataCache.keluarga : anomaliDataCache.usaha;
-            
             let anomaliArray = Object.entries(dataObj || {})
                 .map(([nama, val]) => ({ nama, total: val.total, selesai: val.selesai, belum: val.total - val.selesai }))
                 .sort((a, b) => b.total - a.total); 
             
             let anomaliMapping = {};
-            
             let shortLabels = anomaliArray.map((item, index) => {
                 let emoji = anomalyEmojiMap[item.nama] || ("❓" + " ".repeat(index)); 
-                let labelKey = emoji;
-                anomaliMapping[labelKey] = item.nama;
-                return labelKey;
+                anomaliMapping[emoji] = item.nama;
+                return emoji;
             });
+            
+            let tuntasPct = anomaliArray.map(v => v.total > 0 ? (v.selesai / v.total * 100) : 0);
+            let belumPct = anomaliArray.map(v => v.total > 0 ? (v.belum / v.total * 100) : 0);
             
             if (anomaliChart) anomaliChart.destroy();
             const ctxAnomali = document.getElementById('dash-anomali-chart').getContext('2d');
@@ -599,43 +695,36 @@
                 data: {
                     labels: shortLabels,
                     datasets: [
-                        { label: 'Tuntas', data: anomaliArray.map(v => v.selesai), backgroundColor: '#a855f7', barPercentage: 0.6 },
-                        { label: 'Belum', data: anomaliArray.map(v => v.belum), backgroundColor: '#f43f5e', barPercentage: 0.6 }
+                        { label: 'Tuntas', data: tuntasPct, backgroundColor: '#a855f7', barPercentage: 0.6 },
+                        { label: 'Belum', data: belumPct, backgroundColor: '#f43f5e', barPercentage: 0.6 }
                     ]
                 },
                 options: { 
-                    responsive: true, maintainAspectRatio: false,
-                    indexAxis: 'y', 
+                    responsive: true, maintainAspectRatio: false, indexAxis: 'y', 
                     scales: {
-                        x: { 
-                            stacked: true, 
-                            grid: { display: false }, // Hapus garis grid vertikal
-                            ticks: { display: false } // Hapus angka sumbu X (0, 100, dst)
-                        },
-                        y: { 
-                            stacked: true, 
-                            grid: { display: false }, 
-                            ticks: { font: { size: 14 }, autoSkip: false } 
-                        }
+                        x: { stacked: true, max: 100, grid: { display: false }, ticks: { display: false }, border: {display: false} },
+                        y: { stacked: true, grid: { display: false }, ticks: { font: { size: 14, family: '"Segoe UI Emoji", "Apple Color Emoji"' }, autoSkip: false }, border: {display: false} }
                     },
                     plugins: {
                         legend: { position: 'top', labels: { boxWidth: 10, font: {size: 10} } },
                         tooltip: {
                             callbacks: {
-                                title: (context) => {
-                                    let label = context[0].label;
-                                    return anomaliMapping[label] || label;
+                                title: (context) => { let label = context[0].label; return anomaliMapping[label] || label; },
+                                label: (context) => {
+                                    let dataIdx = context.dataIndex;
+                                    let rawVal = context.datasetIndex === 0 ? anomaliArray[dataIdx].selesai : anomaliArray[dataIdx].belum;
+                                    let pct = Math.round(context.raw);
+                                    return `${context.dataset.label}: ${rawVal} (${pct}%)`;
                                 }
                             }
                         },
                         datalabels: {
-                            color: '#ffffff',
-                            font: { size: 9, weight: 'bold' },
-                            // Hanya tampilkan label jika nilainya > 0 agar tidak bertumpuk di bar kosong
-                            display: function(context) {
-                                return context.dataset.data[context.dataIndex] > 0;
-                            },
-                            formatter: Math.round
+                            color: '#ffffff', font: { size: 9, weight: 'bold' },
+                            display: function(context) { return context.dataset.data[context.dataIndex] >= 5; }, 
+                            formatter: (value, context) => {
+                                let dataIdx = context.dataIndex;
+                                return context.datasetIndex === 0 ? anomaliArray[dataIdx].selesai : anomaliArray[dataIdx].belum;
+                            }
                         }
                     }
                 }
@@ -647,439 +736,178 @@
             const tgl = document.getElementById('dash-tgl').value;
             const tipe = document.getElementById('dash-tipe').value;
             
-            if(!tgl) { showToast("Harap pilih tanggal terlebih dahulu.", true); return; }
+            if(!tgl) { showToast("Pilih tanggal terlebih dahulu.", true); return; }
             
-            const skelCard = '<div class="h-8 w-24 skeleton bg-white/30 rounded inline-block"></div>';
-            document.getElementById('dash-total').innerHTML = skelCard;
-            document.getElementById('dash-selesai').innerHTML = skelCard;
-            putRandomQuote(); 
-
-            if (isPivotVisible) {
-                container.innerHTML = `
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-[400px] skeleton shrink-0"></div>
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-[400px] skeleton shrink-0"></div>
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 h-[400px] skeleton shrink-0"></div>`;
-            }
+            document.getElementById('dash-total').innerHTML = '<div class="h-8 w-24 skeleton bg-white/30 rounded inline-block"></div>';
             
             try {
-                const res = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: "getDashboard", tipe, tanggal: tgl })
-                });
+                const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "getDashboard", tipe, tanggal: tgl }) });
                 const {data} = await res.json();
                 
                 document.getElementById('dash-total').innerText = data.summary.total.toLocaleString('id-ID');
                 let persen = data.summary.total > 0 ? Math.round((data.summary.selesai / data.summary.total) * 100) : 0;
                 document.getElementById('dash-selesai').innerHTML = `${data.summary.selesai.toLocaleString('id-ID')} <span class="text-[14px] font-bold opacity-80 mb-0.5">(${persen}%)</span>`;
 
-                let pmlArray = Object.entries(data.pml || {})
-                    .map(([nama, val]) => ({ nama, total: val.total, selesai: val.selesai, belum: val.total - val.selesai }))
-                    .sort((a, b) => b.total - a.total); 
-                
-                let labelPml = pmlArray.map(item => item.nama);
-                
-                // Menghitung persentase untuk 100% Stacked Chart
+                let pmlArray = Object.entries(data.pml || {}).map(([nama, val]) => ({ nama, total: val.total, selesai: val.selesai, belum: val.total - val.selesai })).sort((a, b) => b.total - a.total); 
                 let tuntasPct = pmlArray.map(v => v.total > 0 ? (v.selesai / v.total * 100) : 0);
                 let belumPct = pmlArray.map(v => v.total > 0 ? (v.belum / v.total * 100) : 0);
                 
                 if (barChart) barChart.destroy();
-                const ctxBar = document.getElementById('dash-bar-chart').getContext('2d');
-                barChart = new Chart(ctxBar, {
+                barChart = new Chart(document.getElementById('dash-bar-chart').getContext('2d'), {
                     type: 'bar',
-                    data: {
-                        labels: labelPml,
-                        datasets: [
-                            { label: 'Tuntas', data: tuntasPct, backgroundColor: '#22c55e', barPercentage: 0.7 },
-                            { label: 'Belum', data: belumPct, backgroundColor: '#f97316', barPercentage: 0.7 }
-                        ]
-                    },
+                    data: { labels: pmlArray.map(item => item.nama), datasets: [ { label: 'Tuntas', data: tuntasPct, backgroundColor: '#22c55e', barPercentage: 0.8 }, { label: 'Belum', data: belumPct, backgroundColor: '#f97316', barPercentage: 0.8 } ] },
                     options: { 
-                        responsive: true, maintainAspectRatio: false,
-                        indexAxis: 'y', 
-                        scales: {
-                            x: { 
-                                stacked: true, 
-                                max: 100, // Memaksa rentang X menjadi exactly 100%
-                                grid: { display: false }, 
-                                title: { display: false }, 
-                                ticks: { display: false } 
-                            },
-                            y: { 
-                                stacked: true, 
-                                grid: { display: false }, 
-                                ticks: { font: { size: 9 }, autoSkip: false } 
-                            }
-                        },
+                        responsive: true, maintainAspectRatio: false, indexAxis: 'y', 
+                        scales: { x: { stacked: true, max: 100, grid: { display: false }, ticks: { display: false }, border: {display: false} }, y: { stacked: true, grid: { display: false }, ticks: { font: { size: 9 }, autoSkip: false }, border: {display: false} } },
                         plugins: {
                             legend: { position: 'top', labels: { boxWidth: 10, font: {size: 10} } },
-                            tooltip: {
-                                callbacks: {
-                                    label: (context) => {
-                                        // Mengambil angka mentah untuk Tooltip (bukan persennya)
-                                        let dataIdx = context.dataIndex;
-                                        let isTuntas = context.datasetIndex === 0;
-                                        let rawVal = isTuntas ? pmlArray[dataIdx].selesai : pmlArray[dataIdx].belum;
-                                        let pct = Math.round(context.raw);
-                                        return `${context.dataset.label}: ${rawVal} (${pct}%)`;
-                                    },
-                                    afterBody: (context) => {
-                                        let dataIdx = context[0].dataIndex;
-                                        let total = pmlArray[dataIdx].total;
-                                        return `\nTotal Beban: ${total}`;
-                                    }
-                                }
-                            },
-                            datalabels: {
-                                color: '#ffffff',
-                                font: { size: 8, weight: 'bold' },
-                                display: function(context) {
-                                    return context.dataset.data[context.dataIndex] > 0;
-                                },
-                                formatter: (value, context) => {
-                                    // Menampilkan Angka Mentah (Raw Data) ke dalam grafik persentase
-                                    let dataIdx = context.dataIndex;
-                                    let rawVal = context.datasetIndex === 0 ? pmlArray[dataIdx].selesai : pmlArray[dataIdx].belum;
-                                    return rawVal; 
-                                }
-                            }
+                            tooltip: { callbacks: { label: (ctx) => { let rawVal = ctx.datasetIndex === 0 ? pmlArray[ctx.dataIndex].selesai : pmlArray[ctx.dataIndex].belum; return `${ctx.dataset.label}: ${rawVal} (${Math.round(ctx.raw)}%)`; } } },
+                            datalabels: { color: '#ffffff', font: { size: 8, weight: 'bold' }, display: (ctx) => ctx.dataset.data[ctx.dataIndex] >= 4, formatter: (val, ctx) => ctx.datasetIndex === 0 ? pmlArray[ctx.dataIndex].selesai : pmlArray[ctx.dataIndex].belum }
                         }
                     }
                 });
 
                 let rataTotal = pmlArray.length > 0 ? (data.summary.total / pmlArray.length) : 0;
-                let scatterData = pmlArray.map(v => ({
-                    x: v.total,
-                    y: v.total > 0 ? Math.round((v.selesai/v.total)*100) : 0,
-                    pml: v.nama
-                }));
-
-                const getQuadrantColor = (x, y) => {
-                    if (x >= rataTotal && y >= 50) return '#3b82f6'; 
-                    if (x < rataTotal && y >= 50) return '#10b981'; 
-                    if (x >= rataTotal && y < 50) return '#ef4444'; 
-                    return '#f59e0b'; 
-                };
-
-                const pointColors = scatterData.map(p => getQuadrantColor(p.x, p.y));
-
-                const quadrantPlugin = {
-                    id: 'quadrant',
-                    beforeDraw(chart) {
-                        const {ctx, chartArea: {left, top, right, bottom}, scales: {x, y}} = chart;
-                        const midX = x.getPixelForValue(rataTotal);
-                        const midY = y.getPixelForValue(50);
-                        ctx.save();
-                        ctx.beginPath();
-                        ctx.lineWidth = 1;
-                        ctx.strokeStyle = '#cbd5e1';
-                        ctx.setLineDash([5, 5]);
-                        if(midX >= left && midX <= right) { ctx.moveTo(midX, top); ctx.lineTo(midX, bottom); }
-                        if(midY >= top && midY <= bottom) { ctx.moveTo(left, midY); ctx.lineTo(right, midY); }
-                        ctx.stroke();
-                        ctx.restore();
-                    }
-                };
+                let scatterData = pmlArray.map(v => ({ x: v.total, y: v.total > 0 ? Math.round((v.selesai/v.total)*100) : 0, pml: v.nama }));
+                const pointColors = scatterData.map(p => {
+                    if (p.x >= rataTotal && p.y >= 50) return '#3b82f6'; if (p.x < rataTotal && p.y >= 50) return '#10b981'; 
+                    if (p.x >= rataTotal && p.y < 50) return '#ef4444'; return '#f59e0b'; 
+                });
 
                 if (scatterChart) scatterChart.destroy();
-                const ctxScatter = document.getElementById('dash-scatter-chart').getContext('2d');
-                scatterChart = new Chart(ctxScatter, {
+                scatterChart = new Chart(document.getElementById('dash-scatter-chart').getContext('2d'), {
                     type: 'scatter',
-                    plugins: [quadrantPlugin],
-                    data: {
-                        datasets: [{
-                            label: 'PML',
-                            data: scatterData,
-                            backgroundColor: pointColors,
-                            pointRadius: 5,
-                            pointHoverRadius: 7
-                        }]
-                    },
+                    data: { datasets: [{ data: scatterData, backgroundColor: pointColors, pointRadius: 5, pointHoverRadius: 7 }] },
                     options: {
                         responsive: true, maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false }, 
-                            tooltip: {
-                                callbacks: { label: (ctx) => `${ctx.raw.pml}: Beban ${ctx.raw.x}, Tuntas ${ctx.raw.y}%` }
-                            },
-                            // Sembunyikan DataLabels khusus untuk grafik Kuadran agar tidak penuh
-                            datalabels: { display: false }
-                        },
-                        scales: {
-                            x: { title: { display: true, text: 'Total Beban', font: {size: 10} }, grid: { color: '#f8fafc' }, ticks: {font:{size:9}} },
-                            y: { title: { display: true, text: 'Tuntas (%)', font: {size: 10} }, min: 0, max: 100, grid: { color: '#f8fafc' }, ticks: {font:{size:9}} }
-                        }
+                        plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => `${ctx.raw.pml}: Beban ${ctx.raw.x}, Tuntas ${ctx.raw.y}%` } }, datalabels: { display: false } },
+                        scales: { x: { title: { display: true, text: 'Total Beban', font: {size: 9} }, grid: { color: '#f1f5f9' }, border:{display:false} }, y: { title: { display: true, text: 'Tuntas (%)', font: {size: 9} }, min: 0, max: 100, grid: { color: '#f1f5f9' }, border:{display:false} } }
                     }
                 });
 
                 anomaliDataCache.keluarga = data.jenisAnomaliKeluarga || {};
                 anomaliDataCache.usaha = data.jenisAnomaliUsaha || {};
-                
-                if(tipe === "Usaha") switchAnomaliTab('usaha');
-                else switchAnomaliTab('keluarga');
+                if(tipe === "Usaha") switchAnomaliTab('usaha'); else switchAnomaliTab('keluarga');
 
                 container.innerHTML = `
-                    ${renderTabelDash('Kecamatan', data.kec || {}, ['Kecamatan', 'Beban', 'Tuntas', 'Belum'])}
-                    ${renderTabelDash('PML', data.pml || {}, ['PML', 'Beban', 'Tuntas', 'Belum'])}
-                    ${renderTabelPclGrouped('Struktur PML & PCL', data.pmlPcl || {})}
+                    ${renderTabelPivotDash('Kecamatan', data.kec || {})}
+                    ${renderTabelPivotDash('PML', data.pml || {})}
+                    ${renderTabelPclGroupedDash(data.pmlPcl || {})}
                 `;
-
-            } catch (error) {
-                container.innerHTML = `<div class="col-span-1 lg:col-span-3 p-10 text-center text-red-500 font-bold bg-white rounded-xl border">Gagal memuat Dashboard: Server Sibuk atau Error Struktur.</div>`;
-            }
+            } catch (error) {}
         }
 
         function togglePivot() {
             const pivot = document.getElementById('pivot-section');
             const btn = document.getElementById('btn-toggle-pivot');
             isPivotVisible = !isPivotVisible;
-            
             if (isPivotVisible) {
-                pivot.classList.remove('hidden');
-                pivot.classList.add('flex');
-                setTimeout(() => {
-                    pivot.classList.remove('opacity-0');
-                    pivot.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                }, 50);
+                pivot.classList.remove('hidden'); pivot.classList.add('flex');
+                setTimeout(() => { pivot.classList.remove('opacity-0'); pivot.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, 50);
                 btn.innerHTML = `<i class="fas fa-table"></i> Sembunyikan Tabel Pivot <i class="fas fa-chevron-up ml-1"></i>`;
-                btn.classList.replace('text-slate-700', 'text-orange-600');
-                btn.classList.add('border-orange-400');
             } else {
                 pivot.classList.add('opacity-0');
-                setTimeout(() => {
-                    pivot.classList.add('hidden');
-                    pivot.classList.remove('flex'); 
-                }, 500);
+                setTimeout(() => { pivot.classList.add('hidden'); pivot.classList.remove('flex'); }, 500);
                 btn.innerHTML = `<i class="fas fa-table"></i> Tampilkan Tabel Analisis Detail <i class="fas fa-chevron-down ml-1"></i>`;
-                btn.classList.replace('text-orange-600', 'text-slate-700');
-                btn.classList.remove('border-orange-400');
                 document.getElementById('main-scroll-area').scrollTo({top: 0, behavior: 'smooth'});
             }
         }
 
-        function renderTabelDash(title, data, headers) {
-            let rows = Object.entries(data)
-                .sort((a, b) => b[1].total - a[1].total)
-                .map(([k, v]) => {
-                let cols = k.includes('|||') ? k.split('|||') : [k];
-                let persen = v.total > 0 ? Math.round((v.selesai/v.total)*100) : 0;
-                let belum = v.total - v.selesai;
-                
-                // Logika Highlight Warna Pastel
-                let bgColor = persen >= 80 ? 'bg-emerald-50 hover:bg-emerald-100' : 'bg-red-50 hover:bg-red-100';
-
-                return `<tr class="border-b transition text-[10px] ${bgColor}">
-                    ${cols.map(c => `<td class="p-2 whitespace-normal line-clamp-1 text-slate-700 font-medium" title="${c}">${c}</td>`).join('')}
-                    <td class="p-2 font-bold text-slate-700 text-center">${v.total}</td>
-                    <td class="p-2 font-bold text-emerald-600 text-center">${v.selesai}</td>
-                    <td class="p-2 font-bold text-red-500 text-center">${belum}</td>
+        function renderTabelPivotDash(title, dataObj) {
+            let rows = Object.entries(dataObj).sort((a, b) => b[1].total - a[1].total).map(([k, v]) => {
+                let pct = v.total > 0 ? Math.round((v.selesai/v.total)*100) : 0;
+                let bgColor = pct >= 80 ? 'bg-emerald-50/70 hover:bg-emerald-100' : 'bg-red-50/70 hover:bg-red-100';
+                return `<tr class="border-b border-gray-100 transition text-[10px] ${bgColor}">
+                    <td class="p-2 whitespace-normal text-slate-700 font-semibold">${k}</td>
+                    <td class="p-2 text-center text-slate-500 font-bold">${v.total}</td>
+                    <td class="p-2 text-center text-emerald-600 font-bold">${v.selesai}</td>
+                    <td class="p-2 text-center text-red-500 font-bold">${v.total - v.selesai}</td>
                 </tr>`;
             }).join('');
             
-            return `
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col h-full overflow-hidden">
-                <div class="p-3 border-b bg-slate-50 rounded-t-xl shrink-0">
-                    <h3 class="font-bold text-slate-700 text-xs uppercase"><i class="fas fa-list text-orange-400 mr-2"></i>${title}</h3>
-                </div>
-                <div class="overflow-y-auto flex-1 p-0 custom-scrollbar relative">
-                    <table class="w-full text-left">
-                        <thead class="sticky top-0 bg-white shadow-sm z-10">
-                            <tr class="text-slate-400 text-[9px] uppercase tracking-wider border-b">
-                                ${headers.map((h, i) => `<th class="p-2 bg-white ${i > 0 ? 'text-center' : ''}">${h}</th>`).join('')}
-                            </tr>
-                        </thead>
-                        <tbody>${rows}</tbody>
-                    </table>
-                </div>
-            </div>`;
+            return `<div class="bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col h-full overflow-hidden">
+                <div class="p-3 border-b bg-slate-50 shrink-0"><h3 class="font-bold text-slate-700 text-xs uppercase"><i class="fas fa-list text-orange-400 mr-2"></i>${title}</h3></div>
+                <div class="overflow-y-auto flex-1 custom-scrollbar relative"><table class="w-full text-left">
+                    <thead class="sticky top-0 bg-white z-10 border-b">
+                        <tr class="text-slate-400 text-[9px] uppercase tracking-wider bg-white">
+                            <th class="p-2 bg-white">${title}</th><th class="p-2 text-center bg-white">Beban</th><th class="p-2 text-center bg-white">Tuntas</th><th class="p-2 text-center bg-white">Belum</th>
+                        </tr>
+                    </thead><tbody>${rows}</tbody>
+                </table></div></div>`;
         }
 
-        function renderTabelPclGrouped(title, data) {
+        function renderTabelPclGroupedDash(dataObj) {
             let grouped = {};
-            for (let key in data) {
+            for (let key in dataObj) {
                 let parts = key.split('|||');
-                let pml = parts[0];
-                let pcl = parts[1] || "-";
-                if (!grouped[pml]) grouped[pml] = [];
-                grouped[pml].push({ pcl: pcl, total: data[key].total, selesai: data[key].selesai });
+                if (!grouped[parts[0]]) grouped[parts[0]] = [];
+                grouped[parts[0]].push({ pcl: parts[1] || "-", total: dataObj[key].total, selesai: dataObj[key].selesai });
             }
-
-            let sortedPmlNames = Object.keys(grouped).sort();
-            let rowsHTML = '';
             
-            sortedPmlNames.forEach((pml) => {
+            let html = '';
+            const softColors = ['bg-blue-50/50', 'bg-emerald-50/50', 'bg-purple-50/50', 'bg-amber-50/50', 'bg-rose-50/50', 'bg-cyan-50/50', 'bg-fuchsia-50/50', 'bg-teal-50/50', 'bg-indigo-50/50', 'bg-pink-50/50'];
+            
+            Object.keys(grouped).sort().forEach((pml, idx) => {
                 let pclArray = grouped[pml].sort((a, b) => b.total - a.total);
-                
-                // Header PML menggunakan warna netral agar mencolok sebagai pemisah grup
-                rowsHTML += `<tr class="bg-slate-100 border-b border-gray-200">
+                html += `<tr class="bg-slate-100 border-b border-gray-200">
                     <td colspan="4" class="p-2 font-black text-slate-700 text-[11px] tracking-wide uppercase sticky left-0"><i class="fas fa-user-tie text-slate-400 mr-2"></i>${pml}</td>
                 </tr>`;
-
+                
+                let pmlColor = softColors[idx % softColors.length];
+                
                 pclArray.forEach(item => {
-                    let persen = item.total > 0 ? Math.round((item.selesai/item.total)*100) : 0;
-                    let belum = item.total - item.selesai;
+                    let pct = item.total > 0 ? Math.round((item.selesai/item.total)*100) : 0;
+                    let perfColor = pct >= 80 ? 'text-emerald-600' : 'text-red-500';
+                    let bgHover = pct >= 80 ? 'hover:bg-emerald-100/60' : 'hover:bg-red-100/60';
                     
-                    // Logika Highlight Warna Pastel
-                    let bgColor = persen >= 80 ? 'bg-emerald-50 hover:bg-emerald-100' : 'bg-red-50 hover:bg-red-100';
-
-                    rowsHTML += `<tr class="${bgColor} border-b transition text-[10px]">
+                    html += `<tr class="${pmlColor} ${bgHover} border-b border-white/50 transition text-[10px]">
                         <td class="p-2 pl-6 whitespace-normal text-slate-700 font-medium border-l-[3px] border-slate-300"><i class="fas fa-angle-right text-slate-400 mr-1.5"></i>${item.pcl}</td>
-                        <td class="p-2 font-bold text-slate-700 text-center w-16">${item.total}</td>
+                        <td class="p-2 font-bold text-slate-500 text-center w-16">${item.total}</td>
                         <td class="p-2 font-bold text-emerald-600 text-center w-16">${item.selesai}</td>
-                        <td class="p-2 font-bold text-red-500 text-center w-16">${belum}</td>
+                        <td class="p-2 font-bold ${perfColor} text-center w-16">${item.total - item.selesai}</td>
                     </tr>`;
                 });
             });
             
-            return `
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col h-full overflow-hidden">
-                <div class="p-3 border-b bg-slate-50 rounded-t-xl shrink-0">
-                    <h3 class="font-bold text-slate-700 text-xs uppercase"><i class="fas fa-sitemap text-blue-500 mr-2"></i>${title}</h3>
-                </div>
-                <div class="overflow-y-auto flex-1 p-0 custom-scrollbar relative">
-                    <table class="w-full text-left">
-                        <thead class="sticky top-0 bg-white shadow-sm z-10">
-                            <tr class="text-slate-400 text-[9px] uppercase tracking-wider border-b">
-                                <th class="p-2 bg-white">Nama Petugas</th>
-                                <th class="p-2 bg-white text-center">Beban</th>
-                                <th class="p-2 bg-white text-center">Tuntas</th>
-                                <th class="p-2 bg-white text-center">Belum</th>
-                            </tr>
-                        </thead>
-                        <tbody>${rowsHTML}</tbody>
-                    </table>
-                </div>
-            </div>`;
+            return `<div class="bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col h-full overflow-hidden">
+                <div class="p-3 border-b bg-slate-50 shrink-0"><h3 class="font-bold text-slate-700 text-xs uppercase"><i class="fas fa-sitemap text-blue-500 mr-2"></i>Struktur PCL</h3></div>
+                <div class="overflow-y-auto flex-1 custom-scrollbar relative"><table class="w-full text-left">
+                    <thead class="sticky top-0 bg-white z-10 border-b">
+                        <tr class="text-slate-400 text-[9px] uppercase tracking-wider bg-white">
+                            <th class="p-2 bg-white">Nama Petugas</th><th class="p-2 text-center bg-white">Beban</th><th class="p-2 text-center bg-white">Tuntas</th><th class="p-2 text-center bg-white">Belum</th>
+                        </tr>
+                    </thead><tbody>${html}</tbody>
+                </table></div></div>`;
         }
 
-        function getSyncTipeArray() {
-            let arr = [];
-            if(document.getElementById('sync-keluarga').checked) arr.push('Keluarga');
-            if(document.getElementById('sync-usaha').checked) arr.push('Usaha');
-            return arr;
-        }
+        window.onload = () => { muatDataMitra(); muatGlobalData(); };
 
-        async function cekSync() {
-            const btn = document.getElementById('btn-cek-sync');
-            const baseTgl = document.getElementById('sync-base-tgl').value;
-            const targetTgl = document.getElementById('sync-target-tgl').value;
-            const tipeArr = getSyncTipeArray();
+        /* -------------------------------------------------------------
+           BAGIAN 2: LOGIKA TABEL (Paginasi Universal)
+        ------------------------------------------------------------- */
+        
+        async function tarikDataUtama() {
+            const btn = document.getElementById('btn-tarik'); const status = document.getElementById('status-text-utama');
+            const tgl = document.getElementById('input-tanggal').value; const tglBanding = document.getElementById('input-tgl-banding').value;
+            const pml = document.getElementById('input-pml').value.trim(); const pcl = document.getElementById('input-pcl').value.trim();
+            const tbody = document.getElementById('tabel-body-utama');
 
-            if(tipeArr.length === 0) { showToast("Pilih minimal satu jenis data.", true); return; }
-            if(!baseTgl || !targetTgl) { showToast("Harap lengkapi Tanggal Base dan Target.", true); return; }
-            if(baseTgl === targetTgl) { showToast("Tanggal Base dan Target tidak boleh sama.", true); return; }
-
-            const oldBtnText = btn.innerHTML;
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Mengecek Data...`;
-            btn.disabled = true; btn.classList.add('opacity-70');
-
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: "cekSync", tipeArr, baseTgl, targetTgl })
-                });
-                const result = await response.json();
-                
-                if (result.status === "sukses") {
-                    if (result.eligible === 0) {
-                        showToast("Tidak ada data yang eligible untuk disinkronkan.");
-                    } else {
-                        document.getElementById('sync-count').innerText = result.eligible;
-                        document.getElementById('sync-target-label').innerText = targetTgl;
-                        
-                        const modal = document.getElementById('sync-modal');
-                        const modalContent = document.getElementById('sync-modal-content');
-                        modal.classList.remove('hidden');
-                        setTimeout(() => {
-                            modal.classList.remove('opacity-0');
-                            modalContent.classList.remove('scale-95');
-                        }, 50);
-                    }
-                }
-            } catch (error) {
-                showToast("Gagal menghubungi server.", true);
-            } finally {
-                btn.innerHTML = oldBtnText;
-                btn.disabled = false; btn.classList.remove('opacity-70');
-            }
-        }
-
-        function closeModalSync() {
-            const modal = document.getElementById('sync-modal');
-            const modalContent = document.getElementById('sync-modal-content');
-            modalContent.classList.add('scale-95');
-            modal.classList.add('opacity-0');
-            setTimeout(() => modal.classList.add('hidden'), 300);
-        }
-
-        async function jalankanSync() {
-            const btn = document.getElementById('btn-run-sync');
-            const baseTgl = document.getElementById('sync-base-tgl').value;
-            const targetTgl = document.getElementById('sync-target-tgl').value;
-            const tipeArr = getSyncTipeArray();
-
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Memproses...`;
-            btn.disabled = true;
-
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ action: "jalankanSync", tipeArr, baseTgl, targetTgl })
-                });
-                const result = await response.json();
-                
-                if (result.status === "sukses") {
-                    closeModalSync();
-                    setTimeout(() => {
-                        showToast(`Sukses! ${result.eligible} baris data pada tanggal ${targetTgl} berhasil disinkronkan.`);
-                    }, 400);
-                }
-            } catch (error) {
-                showToast("Gagal melakukan sinkronisasi.", true);
-            } finally {
-                btn.innerHTML = `<i class="fas fa-check"></i> Ya, Sinkronkan`;
-                btn.disabled = false;
-            }
-        }
-
-        async function tarikData() {
-            const btn = document.getElementById('btn-tarik');
-            const status = document.getElementById('status-text');
-            const tgl = document.getElementById('input-tanggal').value;
-            const tglBanding = document.getElementById('input-tgl-banding').value;
-            const pml = document.getElementById('input-pml').value.trim();
-            const pcl = document.getElementById('input-pcl').value.trim();
-            const tbody = document.getElementById('tabel-body');
-
-            if (!tgl || !pml) {
-                showToast("Harap lengkapi Tanggal Data dan Nama PML.", true); return;
-            }
-            if (tglBanding && tgl === tglBanding) {
-                showToast("Tanggal Pembanding tidak boleh sama dengan Tanggal Data.", true); return;
-            }
+            if (!tgl || !pml) { showToast("Pilih Tanggal Data dan PML.", true); return; }
+            if (tglBanding && tgl === tglBanding) { showToast("Tgl Banding tidak boleh sama dgn Tgl Data.", true); return; }
 
             btn.disabled = true; btn.classList.add('opacity-50');
-            status.classList.remove('hidden', 'text-red-600'); status.classList.add('text-blue-600');
-            status.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Memuat data...`;
+            status.classList.remove('hidden', 'text-red-600'); status.classList.add('text-blue-600'); status.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Memuat...`;
             tbody.innerHTML = '<tr><td colspan="7" class="p-10 text-center text-slate-500"><i class="fas fa-circle-notch fa-spin text-3xl mb-3 block text-orange-400"></i>Sedang menganalisis data...</td></tr>';
 
             try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
-                    body: JSON.stringify({ action: "ambilData", tipe: currentMode, tanggal: tgl, pml: pml, pcl: pcl, tglBanding: tglBanding })
-                });
+                const response = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "ambilData", tipe: currentMode, tanggal: tgl, pml: pml, pcl: pcl, tglBanding: tglBanding }) });
                 const result = await response.json();
-
                 if (result.status === "sukses") {
-                    currentTableData = result.data;
-                    currentTglBanding = tglBanding;
-                    currentPage = 1; 
-                    renderTabelPaginated(); 
-                }
-                else throw new Error(result.pesan);
+                    pageState.utama.data = result.data;
+                    pageState.utama.tglBanding = tglBanding;
+                    pageState.utama.current = 1; 
+                    renderTabelPaginated('utama'); 
+                } else throw new Error(result.pesan);
             } catch (error) {
                 tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-red-500 font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Gagal menarik data: ${error.message}</td></tr>`;
                 status.classList.add('hidden');
@@ -1089,144 +917,207 @@
             }
         }
 
-        function renderTabelPaginated() {
-            const tbody = document.getElementById('tabel-body');
+        async function tarikDataAnomaliKhusus(konteks) {
+            const status = document.getElementById('status-text-' + konteks);
+            const pml = document.getElementById('input-pml-' + konteks).value.trim();
+            const pcl = document.getElementById('input-pcl-' + konteks).value.trim();
+            const tbody = document.getElementById('tabel-body-' + konteks);
+
+            if (!pml) { showToast("Pilih PML terlebih dahulu.", true); return; }
+
+            status.classList.remove('hidden', 'text-red-600'); status.classList.add('text-blue-600'); status.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Memuat...`;
+            tbody.innerHTML = `<tr><td colspan="6" class="p-10 text-center text-slate-500"><i class="fas fa-circle-notch fa-spin text-3xl mb-3 block text-orange-400"></i>Sedang memuat data...</td></tr>`;
+
+            try {
+                const response = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "ambilDataAnomaliKhusus", tipe: konteks, pml: pml, pcl: pcl }) });
+                const result = await response.json();
+                if (result.status === "sukses") {
+                    pageState[konteks].data = result.data;
+                    pageState[konteks].current = 1;
+                    renderTabelPaginated(konteks); 
+                } else throw new Error(result.pesan);
+            } catch (error) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-red-500 font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Gagal menarik data</td></tr>`;
+                status.classList.add('hidden');
+            } finally {
+                setTimeout(() => status.classList.add('hidden'), 2000);
+            }
+        }
+
+        function renderTabelPaginated(konteks) {
+            const state = pageState[konteks];
+            const tbody = document.getElementById('tabel-body-' + konteks);
             tbody.innerHTML = '';
             
-            if(currentTableData.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="p-10 text-center text-slate-500 font-medium">Luar Biasa! Tidak ada temuan anomali pada filter ini.</td></tr>';
-                updatePaginationUI();
+            if(state.data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="p-10 text-center text-slate-500 font-medium">Luar Biasa! Tidak ada temuan pada filter ini.</td></tr>';
+                updatePaginationUI(konteks);
                 return;
             }
 
-            let limit = itemsPerPage === 'all' ? currentTableData.length : Number(itemsPerPage);
-            let startIndex = (currentPage - 1) * limit;
-            let endIndex = itemsPerPage === 'all' ? currentTableData.length : startIndex + limit;
-            const paginatedData = currentTableData.slice(startIndex, endIndex);
+            let limit = state.perPage === 'all' ? state.data.length : Number(state.perPage);
+            let startIndex = (state.current - 1) * limit;
+            let endIndex = state.perPage === 'all' ? state.data.length : startIndex + limit;
+            const paginatedData = state.data.slice(startIndex, endIndex);
 
             paginatedData.forEach((row) => {
-                let statusColor = row.status === "Sudah Konfirmasi" ? "bg-emerald-100 text-emerald-700" : 
-                                  row.status === "Sedang Konfirmasi" ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700";
+                let statusVal = row.tinjut || row.status || "Belum Konfirmasi";
+                let statusColor = statusVal === "Sudah Konfirmasi" ? "bg-emerald-100 text-emerald-700" : statusVal === "Sedang Konfirmasi" ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700";
+                let linkFasihBtn = (row.linkFasih || row.link) ? `<a href="${row.linkFasih || row.link}" target="_blank" class="text-blue-500 hover:text-white hover:bg-blue-500 bg-blue-50 p-2 rounded-lg transition shadow-sm inline-block"><i class="fas fa-external-link-alt"></i></a>` : `<span class="text-slate-300 inline-block p-2"><i class="fas fa-unlink"></i></span>`;
                 
-                let linkFasihBtn = row.linkFasih ? 
-                    `<a href="${row.linkFasih}" target="_blank" class="text-blue-500 hover:text-white hover:bg-blue-500 bg-blue-50 p-2 rounded-lg transition shadow-sm inline-block" title="Buka Fasih"><i class="fas fa-external-link-alt"></i></a>` : 
-                    `<span class="text-slate-300 inline-block p-2" title="Tidak ada link"><i class="fas fa-unlink"></i></span>`;
-
-                let anomaliTeks = row.anomali ? row.anomali.toString().replace(/"/g, '&quot;') : "";
-                let namaTeks = row.nama ? row.nama.toString().replace(/"/g, '&quot;') : "";
-                
-                let badgeIrisan = row.isIrisan ? `<div class="mt-1"><span class="inline-flex items-center gap-1 rounded-full bg-purple-100 px-2 py-0.5 text-[9px] font-bold text-purple-700 border border-purple-200"><i class="fas fa-history"></i>Sisa ${currentTglBanding}</span></div>` : "";
-
                 let tr = document.createElement('tr');
                 tr.classList.add('hover:bg-slate-50', 'transition', 'group', 'border-b', 'border-gray-100');
                 
-                tr.innerHTML = `
-                    <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${row.nama}</td>
-                    <td class="p-3 whitespace-normal">
-                        <div class="inline-block text-red-600 text-[11px] font-bold bg-red-50 px-2 py-1.5 rounded-lg border border-red-100 leading-tight">
-                            ${row.anomali}
-                        </div>
-                        ${badgeIrisan}
-                    </td>
-                    <td class="p-3 text-center">${linkFasihBtn}</td>
-                    <td class="p-3 text-[11px] font-bold text-slate-600">${row.pml}</td>
-                    <td class="p-3 text-[11px] font-medium text-slate-500">${row.pcl}</td>
-                    <td class="p-3">
-                        <select onchange="updateData('${row.id}', 'Pengerjaan', this)" data-anomali="${anomaliTeks}" data-nama="${namaTeks}" class="p-1.5 text-[11px] font-bold border rounded-md shadow-sm outline-none cursor-pointer ${statusColor}">
-                            <option value="Belum Konfirmasi" ${row.status === "Belum Konfirmasi" ? "selected":""}>Belum Konfirmasi</option>
-                            <option value="Sedang Konfirmasi" ${row.status === "Sedang Konfirmasi" ? "selected":""}>Sedang Konfirmasi</option>
-                            <option value="Sudah Konfirmasi" ${row.status === "Sudah Konfirmasi" ? "selected":""}>Sudah Konfirmasi</option>
-                        </select>
-                    </td>
-                    <td class="p-3 min-w-[250px]">
-                        <textarea onchange="updateData('${row.id}', 'Catatan', this)" data-anomali="${anomaliTeks}" data-nama="${namaTeks}" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs group-hover:bg-white group-hover:border-slate-200 transition rounded resize-y text-slate-700 h-8 focus:h-16" placeholder="Ketik catatan...">${row.catatan}</textarea>
-                    </td>
-                `;
+                if (konteks === 'utama') {
+                    let anomaliTeks = row.anomali ? row.anomali.toString().replace(/"/g, '&quot;') : "";
+                    let namaTeks = row.nama ? row.nama.toString().replace(/"/g, '&quot;') : "";
+                    let badgeIrisan = row.isIrisan ? `<div class="mt-1"><span class="inline-flex items-center gap-1 rounded-full bg-purple-100 px-2 py-0.5 text-[9px] font-bold text-purple-700 border border-purple-200"><i class="fas fa-history"></i>Sisa ${state.tglBanding}</span></div>` : "";
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${row.nama}</td>
+                        <td class="p-3 whitespace-normal"><div class="inline-block text-red-600 text-[11px] font-bold bg-red-50 px-2 py-1.5 rounded-lg border border-red-100 leading-tight">${row.anomali}</div>${badgeIrisan}</td>
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3 text-[11px] font-bold text-slate-600">${row.pml}</td>
+                        <td class="p-3 text-[11px] font-medium text-slate-500">${row.pcl}</td>
+                        <td class="p-3"><select onchange="updateDataUtama('${row.id}', 'Pengerjaan', this)" data-anomali="${anomaliTeks}" data-nama="${namaTeks}" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[250px]"><textarea onchange="updateDataUtama('${row.id}', 'Catatan', this)" data-anomali="${anomaliTeks}" data-nama="${namaTeks}" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik catatan...">${row.catatan}</textarea></td>`;
+                } 
+                else if (konteks === 'luas0') {
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${row.nama}</td>
+                        <td class="p-3 whitespace-normal text-xs">${row.lokasi}</td>
+                        <td class="p-3 whitespace-normal text-xs font-medium text-slate-500"><span class="font-bold text-slate-700">${row.pml}</span><br>${row.pcl}</td>
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', ${row._row}, 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[250px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', ${row._row}, 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>`;
+                }
+                else if (konteks === 'tdkditemukan') {
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${row.nama}</td>
+                        <td class="p-3 whitespace-normal text-xs">${row.keberadaan}</td>
+                        <td class="p-3 whitespace-normal text-xs text-red-600 font-medium">${row.catatan}</td>
+                        <td class="p-3 whitespace-normal text-xs font-medium text-slate-500"><span class="font-bold text-slate-700">${row.pml}</span><br>${row.pcl}</td>
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', ${row._row}, 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[250px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', ${row._row}, 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>`;
+                }
                 tbody.appendChild(tr);
             });
-            
-            updatePaginationUI();
+            updatePaginationUI(konteks);
         }
 
-        function updatePaginationUI() {
-            const totalItems = currentTableData.length;
-            const paginationContainer = document.getElementById('pagination-container');
+        function updatePaginationUI(konteks) {
+            const state = pageState[konteks];
+            const totalItems = state.data.length;
+            const container = document.getElementById('pagination-container-' + konteks);
             
-            if (totalItems === 0) {
-                 paginationContainer.classList.add('hidden');
-                 paginationContainer.classList.remove('flex');
-                 return;
-            }
-            paginationContainer.classList.remove('hidden');
-            paginationContainer.classList.add('flex');
+            if (totalItems === 0) { container.classList.add('hidden'); container.classList.remove('flex'); return; }
+            container.classList.remove('hidden'); container.classList.add('flex');
 
-            let limit = itemsPerPage === 'all' ? totalItems : Number(itemsPerPage);
-            const totalPages = itemsPerPage === 'all' ? 1 : Math.ceil(totalItems / limit);
-            const btnPrev = document.getElementById('btn-prev-page');
-            const btnNext = document.getElementById('btn-next-page');
-            const pageInfo = document.getElementById('page-info');
-
-            btnPrev.disabled = currentPage === 1;
-            btnNext.disabled = currentPage >= totalPages;
+            let limit = state.perPage === 'all' ? totalItems : Number(state.perPage);
+            const totalPages = state.perPage === 'all' ? 1 : Math.ceil(totalItems / limit);
             
-            let startItem = (currentPage - 1) * limit + 1;
-            let endItem = Math.min(currentPage * limit, totalItems);
+            document.getElementById('btn-prev-' + konteks).disabled = state.current === 1;
+            document.getElementById('btn-next-' + konteks).disabled = state.current >= totalPages;
             
-            pageInfo.innerHTML = `Menampilkan <span class="text-slate-800 font-black mx-1">${startItem}-${endItem}</span> dari <span class="text-slate-800 font-black mx-1">${totalItems}</span> Data`;
+            let startItem = (state.current - 1) * limit + 1;
+            let endItem = Math.min(state.current * limit, totalItems);
+            document.getElementById('page-info-' + konteks).innerHTML = `Menampilkan <span class="text-slate-800 font-black mx-1">${startItem}-${endItem}</span> dari <span class="text-slate-800 font-black mx-1">${totalItems}</span> Data`;
         }
 
-        function changePage(delta) {
-            currentPage += delta;
-            renderTabelPaginated();
-            document.getElementById('tabel-body').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        function changePage(konteks, delta) {
+            pageState[konteks].current += delta;
+            renderTabelPaginated(konteks);
+            document.getElementById('tabel-body-' + konteks).scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        function changeItemsPerPage() {
-            const select = document.getElementById('items-per-page').value;
-            itemsPerPage = select === 'all' ? 'all' : Number(select);
-            currentPage = 1; 
-            renderTabelPaginated();
+        function changeItemsPerPage(konteks) {
+            const select = document.getElementById('items-per-page-' + konteks).value;
+            pageState[konteks].perPage = select === 'all' ? 'all' : Number(select);
+            pageState[konteks].current = 1; 
+            renderTabelPaginated(konteks);
         }
 
-        async function updateData(id, kolom, inputElement) {
+        /* -------------------------------------------------------------
+           BAGIAN 3: FUNGSI UPDATE DATA KE BACKEND
+        ------------------------------------------------------------- */
+
+        async function updateDataUtama(id, kolom, inputElement) {
             const nilaiBaru = inputElement.value;
-            const status = document.getElementById('status-text');
+            const status = document.getElementById('status-text-utama');
             const aktifTgl = document.getElementById('input-tanggal').value;
             const aktifAnomali = inputElement.getAttribute('data-anomali');
             const aktifNama = inputElement.getAttribute('data-nama'); 
             
-            if(document.getElementById('page-data').classList.contains('active')) {
-                status.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Menyimpan...`;
-                status.classList.remove('hidden', 'text-blue-600', 'text-emerald-600', 'text-red-600');
-                status.classList.add('text-orange-500');
-            }
+            status.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Menyimpan...`;
+            status.classList.remove('hidden', 'text-blue-600', 'text-emerald-600', 'text-red-600'); status.classList.add('text-orange-500');
             inputElement.disabled = true;
 
             try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({ 
-                        action: "updateData", tipe: currentMode, 
-                        id: id, tanggal: aktifTgl, anomali: aktifAnomali, nama: aktifNama,
-                        kolom: kolom, nilai: nilaiBaru 
-                    })
-                });
+                const response = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "updateData", tipe: currentMode, id: id, tanggal: aktifTgl, anomali: aktifAnomali, nama: aktifNama, kolom: kolom, nilai: nilaiBaru }) });
                 const result = await response.json();
-
                 if (result.status === "sukses") {
-                    status.innerHTML = `<i class="fas fa-check mr-1"></i> Tersimpan!`;
-                    status.classList.replace('text-orange-500', 'text-emerald-600');
-                    if(kolom === 'Pengerjaan') {
-                        inputElement.className = `p-1.5 text-[11px] font-bold border rounded-md shadow-sm outline-none cursor-pointer ${nilaiBaru === 'Sudah Konfirmasi' ? 'bg-emerald-100 text-emerald-700' : nilaiBaru === 'Sedang Konfirmasi' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`;
-                    }
+                    status.innerHTML = `<i class="fas fa-check mr-1"></i> Tersimpan!`; status.classList.replace('text-orange-500', 'text-emerald-600');
+                    if(kolom === 'Pengerjaan') inputElement.className = `p-1.5 text-[11px] font-bold border rounded-md outline-none ${nilaiBaru === 'Sudah Konfirmasi' ? 'bg-emerald-100 text-emerald-700' : nilaiBaru === 'Sedang Konfirmasi' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`;
                 } else throw new Error(result.pesan);
-            } catch (error) {
-                showToast("Gagal menyimpan data: " + error.message, true);
-            } finally {
-                inputElement.disabled = false;
-                setTimeout(() => status.classList.add('hidden'), 3000);
-            }
+            } catch (error) { showToast("Gagal: " + error.message, true); } 
+            finally { inputElement.disabled = false; setTimeout(() => status.classList.add('hidden'), 3000); }
+        }
+
+        async function updateDataAnomaliKhusus(konteks, rowNum, kolom, inputElement) {
+            const nilaiBaru = inputElement.value;
+            const status = document.getElementById('status-text-' + konteks);
+            
+            status.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Menyimpan...`;
+            status.classList.remove('hidden', 'text-blue-600', 'text-emerald-600', 'text-red-600'); status.classList.add('text-orange-500');
+            inputElement.disabled = true;
+
+            try {
+                const response = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "updateDataAnomaliKhusus", tipe: konteks, id: rowNum, kolom: kolom, nilai: nilaiBaru }) });
+                const result = await response.json();
+                if (result.status === "sukses") {
+                    status.innerHTML = `<i class="fas fa-check mr-1"></i> Tersimpan!`; status.classList.replace('text-orange-500', 'text-emerald-600');
+                    if(kolom === 'tinjut') inputElement.className = `p-1.5 text-[11px] font-bold border rounded-md outline-none ${nilaiBaru === 'Sudah Konfirmasi' ? 'bg-emerald-100 text-emerald-700' : nilaiBaru === 'Sedang Konfirmasi' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`;
+                } else throw new Error(result.pesan);
+            } catch (error) { showToast("Gagal: " + error.message, true); } 
+            finally { inputElement.disabled = false; setTimeout(() => status.classList.add('hidden'), 3000); }
+        }
+
+        /* -------------------------------------------------------------
+           BAGIAN 4: FUNGSI SYNC (Sama seperti sebelumnya)
+        ------------------------------------------------------------- */
+        function getSyncTipeArray() { let arr = []; if(document.getElementById('sync-keluarga').checked) arr.push('Keluarga'); if(document.getElementById('sync-usaha').checked) arr.push('Usaha'); return arr; }
+        
+        async function cekSync() {
+            const btn = document.getElementById('btn-cek-sync'); const baseTgl = document.getElementById('sync-base-tgl').value; const targetTgl = document.getElementById('sync-target-tgl').value; const tipeArr = getSyncTipeArray();
+            if(tipeArr.length === 0 || !baseTgl || !targetTgl) { showToast("Lengkapi form sync.", true); return; }
+            if(baseTgl === targetTgl) { showToast("Tgl Base & Target sama.", true); return; }
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Mengecek...`; btn.disabled = true;
+
+            try {
+                const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "cekSync", tipeArr, baseTgl, targetTgl }) });
+                const result = await res.json();
+                if (result.status === "sukses") {
+                    if (result.eligible === 0) showToast("Tidak ada data eligible.");
+                    else {
+                        document.getElementById('sync-count').innerText = result.eligible; document.getElementById('sync-target-label').innerText = targetTgl;
+                        const modal = document.getElementById('sync-modal'); const modalContent = document.getElementById('sync-modal-content');
+                        modal.classList.remove('hidden'); setTimeout(() => { modal.classList.remove('opacity-0'); modalContent.classList.remove('scale-95'); }, 50);
+                    }
+                }
+            } catch (error) { showToast("Gagal koneksi.", true); } finally { btn.innerHTML = `<i class="fas fa-search"></i> Cek Data`; btn.disabled = false; }
+        }
+
+        function closeModalSync() { const modal = document.getElementById('sync-modal'); const modalContent = document.getElementById('sync-modal-content'); modalContent.classList.add('scale-95'); modal.classList.add('opacity-0'); setTimeout(() => modal.classList.add('hidden'), 300); }
+
+        async function jalankanSync() {
+            const btn = document.getElementById('btn-run-sync'); const baseTgl = document.getElementById('sync-base-tgl').value; const targetTgl = document.getElementById('sync-target-tgl').value; const tipeArr = getSyncTipeArray();
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Memproses...`; btn.disabled = true;
+
+            try {
+                const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "jalankanSync", tipeArr, baseTgl, targetTgl }) });
+                const result = await res.json();
+                if (result.status === "sukses") { closeModalSync(); setTimeout(() => { showToast(`Sukses! ${result.eligible} baris disinkronkan.`); }, 400); }
+            } catch (error) { showToast("Gagal sync.", true); } finally { btn.innerHTML = `Ya, Sinkronkan`; btn.disabled = false; }
         }
     </script>
 </body>
