@@ -305,13 +305,14 @@
 
             <!-- HALAMAN: ANOMALI KHUSUS - LUAS 0 -->
             <div id="page-luas0" class="page-content hidden flex-col shrink-0 min-h-full">
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-expand-arrows-alt text-blue-500 mr-2"></i>Usaha Tetap tanpa Penguasaan Tanah</h2>
-                        <p class="text-sm text-slate-600 mb-2 md:mb-0">Status Tempat = Tetap (01-09), tetapi luas lahan yang digunakan = 0.</p>
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-expand-arrows-alt text-blue-500 mr-2"></i>Usaha Tetap tanpa Penguasaan Tanah</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>Usaha dengan Status Tempat = Tetap (lokasi usaha = 01,02,03,04,05,06,07,08,09), tetapi luas lahan yang digunakan = 0.</p>
+                        <p class="mt-2 font-bold text-slate-800"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Usaha dengan status bangunan tetap harus memiliki lahan yg dikuasai (tidak boleh 0 m2)</p>
                     </div>
                     
-                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100 w-full md:w-auto">
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
                         <div>
                             <label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML <span class="text-red-500">*</span></label>
                             <select id="input-pml-luas0" onchange="renderDropdownPcl('luas0')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[140px] bg-white">
@@ -372,13 +373,21 @@
 
             <!-- HALAMAN: ANOMALI KHUSUS - TIDAK DITEMUKAN -->
             <div id="page-tdkditemukan" class="page-content hidden flex-col shrink-0 min-h-full">
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-store-slash text-red-500 mr-2"></i>Usaha Tidak Ditemukan, Tutup, Ganda</h2>
-                        <p class="text-sm text-slate-600 mb-2 md:mb-0">Usaha dengan Status Keberadaan berkode 0, 3, dan 4.</p>
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-store-slash text-red-500 mr-2"></i>Usaha Tidak Ditemukan, Tutup, dan Ganda</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>Usaha dengan Status Keberadaan pada SE2026-P berkode 0, 3, dan 4.</p>
+                        <div class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200">
+                            <p class="mb-1"><i class="fas fa-exclamation-circle text-orange-500 mr-1"></i>Pastikan Catatan terisi dan sesuai dengan isian petugas. Cth :</p>
+                            <ul class="list-none space-y-1 pl-5">
+                                <li>0. Tidak Ditemukan : Pindah, Tidak berada di wilayah SLS/SUB SLS, dsb</li>
+                                <li>3. Tutup : Usaha sudah tutup, usaha tidak beroperasi lagi , dsb</li>
+                                <li>4. Ganda : Usaha Duplikat dengan usaha XXX (Nama prelist). Pastikan ada prelist dengan nama yang sama di SLS/SUBSLS tersebut.</li>
+                            </ul>
+                        </div>
                     </div>
                     
-                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100 w-full md:w-auto">
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
                         <div>
                             <label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML <span class="text-red-500">*</span></label>
                             <select id="input-pml-tdkditemukan" onchange="renderDropdownPcl('tdkditemukan')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[140px] bg-white">
