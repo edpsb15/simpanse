@@ -1242,7 +1242,7 @@
                     let valGaji = row.gaji ? Number(row.gaji).toLocaleString('id-ID') : 0;
                     
                     let calcFormula = '';
-                    if (konteks === 'incomegaji') {
+                    if (konteks === 'incomegaji' || konteks === 'keuntungan25') {
                         calcFormula = `
                             <div class="flex justify-between"><span>Nilai Pendapatan</span><span>Rp ${Number(row.pendapatan||0).toLocaleString('id-ID')}</span></div>
                             <div class="flex justify-between border-b border-slate-300 pb-1"><span>Biaya Pembelian (-)</span><span class="text-red-500">Rp ${Number(row.pembelian||0).toLocaleString('id-ID')}</span></div>
@@ -1250,7 +1250,7 @@
                             <div class="flex justify-between border-b border-slate-300 pb-1"><span>Operasional (-)</span><span class="text-red-500">Rp ${Number(row.operasional||0).toLocaleString('id-ID')}</span></div>
                             <div class="flex justify-between font-bold text-blue-600 mt-2 text-base border-t border-slate-300 pt-1"><span>Nilai Tambah (=)</span><span>Rp ${valNilaiTambah}</span></div>
                         `;
-                    } else {
+                    } else if (konteks === 'keuntungan26') {
                         calcFormula = `
                             <div class="flex justify-between"><span>Pendapatan (Bln)</span><span>Rp ${Number(row.pendapatan||0).toLocaleString('id-ID')}</span></div>
                             <div class="flex justify-between border-b border-slate-300 pb-1"><span>Pembelian (Bln) (-)</span><span class="text-red-500">Rp ${Number(row.pembelian||0).toLocaleString('id-ID')}</span></div>
