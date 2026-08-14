@@ -62,21 +62,16 @@
                     <i id="anomali-icon" class="fas fa-chevron-right text-[10px] transition-transform"></i>
                 </button>
                 <div id="anomali-menu" class="dropdown-menu flex flex-col pl-9 pr-2 mt-1 space-y-1 h-0 overflow-hidden">
-                    <button onclick="switchPage('luas0')" id="nav-luas0" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">
-                        Usaha Luas 0
-                    </button>
-                    <button onclick="switchPage('tdkditemukan')" id="nav-tdkditemukan" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">
-                        Tidak Ditemukan (U)
-                    </button>
-                    <button onclick="switchPage('keuntungan25')" id="nav-keuntungan25" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">
-                        Nilai Tambah (2025)
-                    </button>
-                    <button onclick="switchPage('keuntungan26')" id="nav-keuntungan26" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">
-                        Nilai Tambah (2026)
-                    </button>
-                    <button onclick="switchPage('incomegaji')" id="nav-incomegaji" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">
-                        Nilai Tambah VS Gaji
-                    </button>
+                    <button onclick="switchPage('luas0')" id="nav-luas0" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Usaha Luas 0</button>
+                    <button onclick="switchPage('tdkditemukan')" id="nav-tdkditemukan" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Tidak Ditemukan (U)</button>
+                    <button onclick="switchPage('keuntungan25')" id="nav-keuntungan25" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Nilai Tambah (2025)</button>
+                    <button onclick="switchPage('keuntungan26')" id="nav-keuntungan26" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Nilai Tambah (2026)</button>
+                    <button onclick="switchPage('incomegaji')" id="nav-incomegaji" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Nilai Tambah VS Gaji</button>
+                    <button onclick="switchPage('katajualan')" id="nav-katajualan" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Kat-A Berjualan</button>
+                    <button onclick="switchPage('namautp')" id="nav-namautp" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Nama UTP</button>
+                    <button onclick="switchPage('luasekstrim')" id="nav-luasekstrim" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Luas Ekstrim</button>
+                    <button onclick="switchPage('aset0')" id="nav-aset0" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Aset=0</button>
+                    <button onclick="switchPage('norekening')" id="nav-norekening" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Tanpa Rekening</button>
                 </div>
             </div>
 
@@ -325,7 +320,6 @@
                         <div>
                             <label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML <span class="text-red-500">*</span></label>
                             <select id="input-pml-luas0" onchange="renderDropdownPcl('luas0')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[140px] bg-white">
-                                <!-- Populated dynamically -->
                             </select>
                         </div>
                         <div>
@@ -360,7 +354,6 @@
                         </table>
                     </div>
                     
-                    <!-- Paginator Luas 0 -->
                     <div id="pagination-container-luas0" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex flex-wrap items-center justify-between shrink-0 gap-4">
                         <div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider">
                             <span>Tampilkan:</span>
@@ -632,6 +625,111 @@
                 </div>
             </div>
 
+            <!-- HALAMAN: ANOMALI KHUSUS - KAT-A BERJUALAN -->
+            <div id="page-katajualan" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-shopping-basket text-amber-500 mr-2"></i>Usaha Kategori A Menjual Barang / Jasa</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>Usaha Pertanian melakukan kegiatan penjualan barang (Blok II r.13.b3 = 1) atau aktivitas jasa (Blok II r.13.b4 = 1).</p>
+                        <p class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Pastikan KBLI sudah benar. Sewajarnya Kategori A terisi kode 2 pada r.13.b4.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML *</label><select id="input-pml-katajualan" onchange="renderDropdownPcl('katajualan')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white"></select></div>
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Ops)</label><select id="input-pcl-katajualan" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white" disabled><option value="">Pilih PML dahulu</option></select></div>
+                        <button onclick="tarikDataAnomaliKhusus('katajualan')" class="bg-amber-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-amber-700 transition h-[38px]"><i class="fas fa-search mr-2"></i> Tampilkan</button>
+                        <div id="status-text-katajualan" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg">...</div>
+                    </div>
+                </div>
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative"><table class="w-full text-left text-sm whitespace-nowrap"><thead class="bg-slate-50 sticky top-0 z-10 shadow-sm"><tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200"><th class="p-4 w-1/4 font-bold">Nama Usaha / Petugas</th><th class="p-4 font-bold">Kategori</th><th class="p-4 font-bold text-center">Penjualan</th><th class="p-4 font-bold text-center">Jasa</th><th class="p-4 font-bold text-center">Fasih</th><th class="p-4 font-bold">Tindak Lanjut</th><th class="p-4 min-w-[200px] font-bold">Keterangan</th></tr></thead><tbody id="tabel-body-katajualan" class="divide-y divide-gray-100 text-gray-700"><tr><td colspan="7" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan PML dan tekan "Tampilkan"</td></tr></tbody></table></div>
+                    <div id="pagination-container-katajualan" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider"><span>Tampilkan:</span><select id="items-per-page-katajualan" onchange="changeItemsPerPage('katajualan')" class="border rounded p-1.5 outline-none"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="all">Semua</option></select></div><div id="page-info-katajualan" class="text-xs font-bold text-slate-500">0 dari 0</div><div class="flex gap-2"><button onclick="changePage('katajualan', -1)" id="btn-prev-katajualan" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Prev</button><button onclick="changePage('katajualan', 1)" id="btn-next-katajualan" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Next</button></div></div>
+                </div>
+            </div>
+
+            <!-- HALAMAN: ANOMALI KHUSUS - NAMA UTP -->
+            <div id="page-namautp" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-seedling text-green-600 mr-2"></i>Penamaan UTP tidak sesuai</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>UTP adalah Usaha Pertanian Perorangan.</p>
+                        <p class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Perbaiki Nama Usaha atau perbaiki KBLI Kategori Usaha.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML *</label><select id="input-pml-namautp" onchange="renderDropdownPcl('namautp')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white"></select></div>
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Ops)</label><select id="input-pcl-namautp" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white" disabled><option value="">Pilih PML dahulu</option></select></div>
+                        <button onclick="tarikDataAnomaliKhusus('namautp')" class="bg-green-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition h-[38px]"><i class="fas fa-search mr-2"></i> Tampilkan</button>
+                        <div id="status-text-namautp" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg">...</div>
+                    </div>
+                </div>
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative"><table class="w-full text-left text-sm whitespace-nowrap"><thead class="bg-slate-50 sticky top-0 z-10 shadow-sm"><tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200"><th class="p-4 w-1/3 font-bold">Nama Usaha / Petugas</th><th class="p-4 font-bold text-center">Kategori</th><th class="p-4 font-bold text-center">Fasih</th><th class="p-4 font-bold">Tindak Lanjut</th><th class="p-4 min-w-[200px] font-bold">Keterangan</th></tr></thead><tbody id="tabel-body-namautp" class="divide-y divide-gray-100 text-gray-700"><tr><td colspan="5" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan PML dan tekan "Tampilkan"</td></tr></tbody></table></div>
+                    <div id="pagination-container-namautp" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider"><span>Tampilkan:</span><select id="items-per-page-namautp" onchange="changeItemsPerPage('namautp')" class="border rounded p-1.5 outline-none"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="all">Semua</option></select></div><div id="page-info-namautp" class="text-xs font-bold text-slate-500">0 dari 0</div><div class="flex gap-2"><button onclick="changePage('namautp', -1)" id="btn-prev-namautp" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Prev</button><button onclick="changePage('namautp', 1)" id="btn-next-namautp" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Next</button></div></div>
+                </div>
+            </div>
+
+            <!-- HALAMAN: ANOMALI KHUSUS - LUAS EKSTRIM -->
+            <div id="page-luasekstrim" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-ruler-combined text-blue-500 mr-2"></i>Luas Lahan Pertanian Ekstrim</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>Luas lahan pertanian lebih besar dari 1 Ha (10.000 m2).</p>
+                        <p class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Konfirmasi luas lahan ke petugas atau responden secara langsung.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML *</label><select id="input-pml-luasekstrim" onchange="renderDropdownPcl('luasekstrim')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white"></select></div>
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Ops)</label><select id="input-pcl-luasekstrim" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white" disabled><option value="">Pilih PML dahulu</option></select></div>
+                        <button onclick="tarikDataAnomaliKhusus('luasekstrim')" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition h-[38px]"><i class="fas fa-search mr-2"></i> Tampilkan</button>
+                        <div id="status-text-luasekstrim" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg">...</div>
+                    </div>
+                </div>
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative"><table class="w-full text-left text-sm whitespace-nowrap"><thead class="bg-slate-50 sticky top-0 z-10 shadow-sm"><tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200"><th class="p-4 w-1/3 font-bold">Nama Usaha / Petugas</th><th class="p-4 font-bold text-right text-blue-600">Luas Lahan (m²)</th><th class="p-4 font-bold text-center">Fasih</th><th class="p-4 font-bold">Tindak Lanjut</th><th class="p-4 min-w-[200px] font-bold">Keterangan</th></tr></thead><tbody id="tabel-body-luasekstrim" class="divide-y divide-gray-100 text-gray-700"><tr><td colspan="5" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan PML dan tekan "Tampilkan"</td></tr></tbody></table></div>
+                    <div id="pagination-container-luasekstrim" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider"><span>Tampilkan:</span><select id="items-per-page-luasekstrim" onchange="changeItemsPerPage('luasekstrim')" class="border rounded p-1.5 outline-none"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="all">Semua</option></select></div><div id="page-info-luasekstrim" class="text-xs font-bold text-slate-500">0 dari 0</div><div class="flex gap-2"><button onclick="changePage('luasekstrim', -1)" id="btn-prev-luasekstrim" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Prev</button><button onclick="changePage('luasekstrim', 1)" id="btn-next-luasekstrim" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Next</button></div></div>
+                </div>
+            </div>
+
+            <!-- HALAMAN: ANOMALI KHUSUS - ASET = 0 -->
+            <div id="page-aset0" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-box-open text-purple-500 mr-2"></i>Usaha dengan Aset = 0</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>Usaha selain pertanian tapi tidak punya aset, misal warung tidak adakah meja, kursi, etalase nya?</p>
+                        <p class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Konfirmasi jumlah asset pada usaha.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML *</label><select id="input-pml-aset0" onchange="renderDropdownPcl('aset0')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white"></select></div>
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Ops)</label><select id="input-pcl-aset0" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white" disabled><option value="">Pilih PML dahulu</option></select></div>
+                        <button onclick="tarikDataAnomaliKhusus('aset0')" class="bg-purple-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-purple-700 transition h-[38px]"><i class="fas fa-search mr-2"></i> Tampilkan</button>
+                        <div id="status-text-aset0" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg">...</div>
+                    </div>
+                </div>
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative"><table class="w-full text-left text-sm whitespace-nowrap"><thead class="bg-slate-50 sticky top-0 z-10 shadow-sm"><tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200"><th class="p-4 w-1/3 font-bold">Nama Usaha / Petugas</th><th class="p-4 font-bold text-right text-red-500">Total Aset (Rp)</th><th class="p-4 font-bold text-center">Fasih</th><th class="p-4 font-bold">Tindak Lanjut</th><th class="p-4 min-w-[200px] font-bold">Keterangan</th></tr></thead><tbody id="tabel-body-aset0" class="divide-y divide-gray-100 text-gray-700"><tr><td colspan="5" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan PML dan tekan "Tampilkan"</td></tr></tbody></table></div>
+                    <div id="pagination-container-aset0" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider"><span>Tampilkan:</span><select id="items-per-page-aset0" onchange="changeItemsPerPage('aset0')" class="border rounded p-1.5 outline-none"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="all">Semua</option></select></div><div id="page-info-aset0" class="text-xs font-bold text-slate-500">0 dari 0</div><div class="flex gap-2"><button onclick="changePage('aset0', -1)" id="btn-prev-aset0" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Prev</button><button onclick="changePage('aset0', 1)" id="btn-next-aset0" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Next</button></div></div>
+                </div>
+            </div>
+
+            <!-- HALAMAN: ANOMALI KHUSUS - TIDAK PUNYA REKENING -->
+            <div id="page-norekening" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-wallet text-slate-600 mr-2"></i>Pekerja Formal Tidak Punya Rekening</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>Pekerja Formal seperti ASN, POLRI, TNI tapi tidak ada rekening, lalu bagaimana penggajiannya, masih cash?</p>
+                        <p class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Konfirmasi kepemilikan rekening.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML *</label><select id="input-pml-norekening" onchange="renderDropdownPcl('norekening')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white"></select></div>
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Ops)</label><select id="input-pcl-norekening" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white" disabled><option value="">Pilih PML dahulu</option></select></div>
+                        <button onclick="tarikDataAnomaliKhusus('norekening')" class="bg-slate-700 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-slate-800 transition h-[38px]"><i class="fas fa-search mr-2"></i> Tampilkan</button>
+                        <div id="status-text-norekening" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg">...</div>
+                    </div>
+                </div>
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative"><table class="w-full text-left text-sm whitespace-nowrap"><thead class="bg-slate-50 sticky top-0 z-10 shadow-sm"><tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200"><th class="p-4 w-1/3 font-bold">Nama Orang / Petugas</th><th class="p-4 font-bold">Profesi / Pekerjaan</th><th class="p-4 font-bold text-center">Fasih</th><th class="p-4 font-bold">Tindak Lanjut</th><th class="p-4 min-w-[200px] font-bold">Keterangan</th></tr></thead><tbody id="tabel-body-norekening" class="divide-y divide-gray-100 text-gray-700"><tr><td colspan="5" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan PML dan tekan "Tampilkan"</td></tr></tbody></table></div>
+                    <div id="pagination-container-norekening" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider"><span>Tampilkan:</span><select id="items-per-page-norekening" onchange="changeItemsPerPage('norekening')" class="border rounded p-1.5 outline-none"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="all">Semua</option></select></div><div id="page-info-norekening" class="text-xs font-bold text-slate-500">0 dari 0</div><div class="flex gap-2"><button onclick="changePage('norekening', -1)" id="btn-prev-norekening" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Prev</button><button onclick="changePage('norekening', 1)" id="btn-next-norekening" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Next</button></div></div>
+                </div>
+            </div>
+
             <!-- HALAMAN: SYNC ANOMALI -->
             <div id="page-sync" class="page-content hidden flex-col shrink-0 min-h-full">
                 <div class="max-w-3xl mx-auto w-full bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden mt-6 shrink-0">
@@ -723,14 +821,19 @@
         let isPivotVisible = false;
         let anomaliDataCache = { keluarga: {}, usaha: {} };
         
-        // Paginator Configuration 
+        // Paginator Configuration untuk seluruh halaman anomali
         let pageState = {
             utama: { data: [], tglBanding: "", current: 1, perPage: 10 },
             luas0: { data: [], current: 1, perPage: 10 },
             tdkditemukan: { data: [], current: 1, perPage: 10 },
             keuntungan25: { data: [], current: 1, perPage: 10 },
             keuntungan26: { data: [], current: 1, perPage: 10 },
-            incomegaji: { data: [], current: 1, perPage: 10 }
+            incomegaji: { data: [], current: 1, perPage: 10 },
+            katajualan: { data: [], current: 1, perPage: 10 },
+            namautp: { data: [], current: 1, perPage: 10 },
+            luasekstrim: { data: [], current: 1, perPage: 10 },
+            aset0: { data: [], current: 1, perPage: 10 },
+            norekening: { data: [], current: 1, perPage: 10 }
         };
 
         const anomalyEmojiMap = {
@@ -827,6 +930,11 @@
             document.getElementById('input-pml-keuntungan25').innerHTML = options;
             document.getElementById('input-pml-keuntungan26').innerHTML = options;
             document.getElementById('input-pml-incomegaji').innerHTML = options;
+            document.getElementById('input-pml-katajualan').innerHTML = options;
+            document.getElementById('input-pml-namautp').innerHTML = options;
+            document.getElementById('input-pml-luasekstrim').innerHTML = options;
+            document.getElementById('input-pml-aset0').innerHTML = options;
+            document.getElementById('input-pml-norekening').innerHTML = options;
         }
 
         function renderDropdownPcl(konteks) {
@@ -837,6 +945,11 @@
             else if (konteks === 'keuntungan25') { pmlId = 'input-pml-keuntungan25'; pclId = 'input-pcl-keuntungan25'; }
             else if (konteks === 'keuntungan26') { pmlId = 'input-pml-keuntungan26'; pclId = 'input-pcl-keuntungan26'; }
             else if (konteks === 'incomegaji') { pmlId = 'input-pml-incomegaji'; pclId = 'input-pcl-incomegaji'; }
+            else if (konteks === 'katajualan') { pmlId = 'input-pml-katajualan'; pclId = 'input-pcl-katajualan'; }
+            else if (konteks === 'namautp') { pmlId = 'input-pml-namautp'; pclId = 'input-pcl-namautp'; }
+            else if (konteks === 'luasekstrim') { pmlId = 'input-pml-luasekstrim'; pclId = 'input-pcl-luasekstrim'; }
+            else if (konteks === 'aset0') { pmlId = 'input-pml-aset0'; pclId = 'input-pcl-aset0'; }
+            else if (konteks === 'norekening') { pmlId = 'input-pml-norekening'; pclId = 'input-pcl-norekening'; }
 
             const pmlVal = document.getElementById(pmlId).value;
             const pclSelect = document.getElementById(pclId);
@@ -873,27 +986,30 @@
             if(mode === 'keuntungan25') title = 'Inkonsistensi Nilai Tambah 2025';
             if(mode === 'keuntungan26') title = 'Inkonsistensi Nilai Tambah 2026';
             if(mode === 'incomegaji') title = 'Inkonsistensi Nilai Tambah dan Gaji';
+            if(mode === 'katajualan') title = 'Usaha Kategori A Menjual Barang / Jasa';
+            if(mode === 'namautp') title = 'Penamaan UTP tidak sesuai';
+            if(mode === 'luasekstrim') title = 'Luas Lahan Pertanian Ekstrim';
+            if(mode === 'aset0') title = 'Usaha dengan Aset = 0';
+            if(mode === 'norekening') title = 'Pekerja Formal Tidak Punya Rekening';
             if(mode === 'sync') title = 'Sinkronisasi Data';
             
             document.getElementById('header-title').innerText = title;
 
-            if(mode === 'dashboard') {
-                document.getElementById('page-dashboard').classList.add('active');
+            if(mode === 'dashboard') { document.getElementById('page-dashboard').classList.add('active');
             } else if (mode === 'keluarga' || mode === 'usaha') {
                 document.getElementById('page-data').classList.add('active');
                 document.getElementById('th-nama-utama').innerText = mode === 'keluarga' ? 'Nama Kepala Keluarga' : 'Nama Usaha';
-            } else if (mode === 'luas0') {
-                document.getElementById('page-luas0').classList.add('active');
-            } else if (mode === 'tdkditemukan') {
-                document.getElementById('page-tdkditemukan').classList.add('active');
-            } else if (mode === 'keuntungan25') {
-                document.getElementById('page-keuntungan25').classList.add('active');
-            } else if (mode === 'keuntungan26') {
-                document.getElementById('page-keuntungan26').classList.add('active');
-            } else if (mode === 'incomegaji') {
-                document.getElementById('page-incomegaji').classList.add('active');
-            } else if (mode === 'sync') {
-                document.getElementById('page-sync').classList.add('active');
+            } else if (mode === 'luas0') { document.getElementById('page-luas0').classList.add('active');
+            } else if (mode === 'tdkditemukan') { document.getElementById('page-tdkditemukan').classList.add('active');
+            } else if (mode === 'keuntungan25') { document.getElementById('page-keuntungan25').classList.add('active');
+            } else if (mode === 'keuntungan26') { document.getElementById('page-keuntungan26').classList.add('active');
+            } else if (mode === 'incomegaji') { document.getElementById('page-incomegaji').classList.add('active');
+            } else if (mode === 'katajualan') { document.getElementById('page-katajualan').classList.add('active');
+            } else if (mode === 'namautp') { document.getElementById('page-namautp').classList.add('active');
+            } else if (mode === 'luasekstrim') { document.getElementById('page-luasekstrim').classList.add('active');
+            } else if (mode === 'aset0') { document.getElementById('page-aset0').classList.add('active');
+            } else if (mode === 'norekening') { document.getElementById('page-norekening').classList.add('active');
+            } else if (mode === 'sync') { document.getElementById('page-sync').classList.add('active');
             }
             
             if(window.innerWidth < 1024) toggleSidebar(); 
@@ -1153,6 +1269,8 @@
             
             let colCount = 6;
             if (konteks === 'tdkditemukan' || konteks === 'incomegaji') colCount = 7;
+            if (konteks === 'katajualan') colCount = 7;
+            if (konteks === 'namautp' || konteks === 'luasekstrim' || konteks === 'aset0' || konteks === 'norekening') colCount = 5;
             
             tbody.innerHTML = `<tr><td colspan="${colCount}" class="p-10 text-center text-slate-500"><i class="fas fa-circle-notch fa-spin text-3xl mb-3 block text-orange-400"></i>Sedang memuat data...</td></tr>`;
 
@@ -1179,6 +1297,8 @@
             
             let colCount = 6;
             if (konteks === 'utama' || konteks === 'tdkditemukan' || konteks === 'incomegaji') colCount = 7;
+            if (konteks === 'katajualan') colCount = 7;
+            if (konteks === 'namautp' || konteks === 'luasekstrim' || konteks === 'aset0' || konteks === 'norekening') colCount = 5;
             
             if(state.data.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="${colCount}" class="p-10 text-center text-slate-500 font-medium">Luar Biasa! Tidak ada temuan pada filter ini.</td></tr>`;
@@ -1204,6 +1324,8 @@
                 // Escape quotes for safe HTML embedding
                 let safeNama = row.nama ? row.nama.toString().replace(/'/g, "\\'") : "";
                 let safePml = row.pml ? row.pml.toString().replace(/'/g, "\\'") : "";
+                // Handle complex specific name fields
+                let displayNama = row.namaLengkap ? row.namaLengkap : row.nama; 
                 
                 if (konteks === 'utama') {
                     let anomaliTeks = row.anomali ? row.anomali.toString().replace(/"/g, '&quot;') : "";
@@ -1271,6 +1393,55 @@
                             <button onclick="showCalcModal('${encodedCalc}')" class="ml-2 text-blue-500 hover:text-white hover:bg-blue-500 p-1.5 rounded-full transition bg-blue-50" title="Lihat Rincian Perhitungan"><i class="fas fa-calculator text-[10px]"></i></button>
                         </td>
                         ${gajiCol}
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[200px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>
+                    `;
+                }
+                else if (konteks === 'katajualan') {
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${displayNama}<br><span class="text-[10px] text-slate-500 font-normal"><i class="fas fa-user-tie"></i> ${row.pml} | ${row.pcl}</span></td>
+                        <td class="p-3 whitespace-normal text-[11px] text-center font-bold text-amber-600">${row.kategori}</td>
+                        <td class="p-3 whitespace-normal text-xs text-center"><span class="bg-slate-100 px-2 py-1 rounded border">${row.penjualan}</span></td>
+                        <td class="p-3 whitespace-normal text-xs text-center"><span class="bg-slate-100 px-2 py-1 rounded border">${row.jasa}</span></td>
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[200px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>
+                    `;
+                }
+                else if (konteks === 'namautp') {
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${displayNama}<br><span class="text-[10px] text-slate-500 font-normal"><i class="fas fa-user-tie"></i> ${row.pml} | ${row.pcl}</span></td>
+                        <td class="p-3 whitespace-normal text-xs text-center font-bold text-green-700">${row.kategori}</td>
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[200px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>
+                    `;
+                }
+                else if (konteks === 'luasekstrim') {
+                    let valLuas = Number(row.luas || 0).toLocaleString('id-ID');
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${displayNama}<br><span class="text-[10px] text-slate-500 font-normal"><i class="fas fa-user-tie"></i> ${row.pml} | ${row.pcl}</span></td>
+                        <td class="p-3 whitespace-nowrap text-xs text-right font-bold text-blue-600">${valLuas}</td>
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[200px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>
+                    `;
+                }
+                else if (konteks === 'aset0') {
+                    let valAset = Number(row.aset || 0).toLocaleString('id-ID');
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${displayNama}<br><span class="text-[10px] text-slate-500 font-normal"><i class="fas fa-user-tie"></i> ${row.pml} | ${row.pcl}</span></td>
+                        <td class="p-3 whitespace-nowrap text-xs text-right font-bold text-red-500">${valAset}</td>
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[200px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>
+                    `;
+                }
+                else if (konteks === 'norekening') {
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${displayNama}<br><span class="text-[10px] text-slate-500 font-normal"><i class="fas fa-user-tie"></i> ${row.pml} | ${row.pcl}</span></td>
+                        <td class="p-3 whitespace-normal text-[11px] font-medium text-slate-600">${row.pekerjaan}</td>
                         <td class="p-3 text-center">${linkFasihBtn}</td>
                         <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
                         <td class="p-3 min-w-[200px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>
