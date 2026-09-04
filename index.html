@@ -48,7 +48,7 @@
             
             <hr class="border-slate-800 my-2">
             
-            <!-- MENU ANOMALI KHUSUS (DIPERBARUI) -->
+            <!-- MENU ANOMALI KHUSUS (DIPERBARUI DENGAN 22 MODUL) -->
             <div>
                 <button onclick="switchPage('dashboardkhusus'); toggleAnomaliMenu(true);" id="nav-dashboardkhusus" class="nav-btn w-full flex items-center justify-between p-3 text-left rounded-lg text-slate-400 hover:bg-slate-800 transition font-bold text-xs uppercase tracking-wider">
                     <span class="flex items-center"><i class="fas fa-exclamation-triangle w-6 text-yellow-500"></i> Anomali Khusus</span>
@@ -69,6 +69,14 @@
                     <button onclick="switchPage('jenisatap')" id="nav-jenisatap" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Jenis Atap</button>
                     <button onclick="switchPage('jeniskawasan')" id="nav-jeniskawasan" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Jenis Kawasan</button>
                     <button onclick="switchPage('keluargacemara')" id="nav-keluargacemara" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Keluarga Cemara</button>
+                    <button onclick="switchPage('fasilitasbab')" id="nav-fasilitasbab" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Fasilitas BAB</button>
+                    <button onclick="switchPage('klosetseptictank')" id="nav-klosetseptictank" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Kloset vs SepticTank</button>
+                    <button onclick="switchPage('kondisirumah')" id="nav-kondisirumah" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Kondisi Rumah</button>
+                    <button onclick="switchPage('lantaivskloset')" id="nav-lantaivskloset" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Lantai vs Kloset</button>
+                    <button onclick="switchPage('ijazah')" id="nav-ijazah" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Ijazah</button>
+                    <button onclick="switchPage('rumdin')" id="nav-rumdin" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Rumah Dinas</button>
+                    <button onclick="switchPage('sumberair')" id="nav-sumberair" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Sumber Air</button>
+                    <button onclick="switchPage('sumur')" id="nav-sumur" class="nav-btn w-full flex items-center p-2 text-left rounded-lg text-slate-300 hover:bg-slate-800 transition text-sm">Sumur</button>
                 </div>
             </div>
 
@@ -223,12 +231,11 @@
                 </footer>
             </div>
 
-            <!-- HALAMAN BARU: DASHBOARD ANOMALI KHUSUS -->
             <div id="page-dashboardkhusus" class="page-content hidden flex-col shrink-0 min-h-full">
                 <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0 flex justify-between items-end flex-wrap gap-4">
                     <div>
                         <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>Dashboard Anomali Khusus</h2>
-                        <p class="text-sm text-slate-600">Progress tindak lanjut pengerjaan 14 modul Anomali Khusus lintas waktu secara keseluruhan.</p>
+                        <p class="text-sm text-slate-600">Progress tindak lanjut pengerjaan 22 modul Anomali Khusus lintas waktu secara keseluruhan.</p>
                     </div>
                     <div class="flex items-center gap-3">
                         <div id="status-text-khusus" class="text-sm font-bold text-blue-600 hidden bg-blue-50 px-4 py-2 rounded-lg"><i class="fas fa-spinner fa-spin mr-2"></i>Memuat...</div>
@@ -619,7 +626,7 @@
                 <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
                     <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-users-slash text-slate-500 mr-2"></i>Keluarga Cemara</h2>
                     <div class="text-sm text-slate-600 mb-4">
-                        <p>Tidak terdapat Kepala Keluarga dalam 1 KK atau terdapat 2 suami/istri dalam 1 KK. (AK= Anggota Keluarga; KK= Kepala Keluarga)</p>
+                        <p>Tidak terdapat Kepala Keluarga dalam 1 KK atau terdapat 2 suami/istri dalam 1 KK. AK= Anggota Keluarga; KK= Kepala Keluarga</p>
                         <p class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Perbaharui rincian 8 Blok I.</p>
                     </div>
                     <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
@@ -632,6 +639,174 @@
                 <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
                     <div class="overflow-y-auto custom-scrollbar flex-1 relative"><table class="w-full text-left text-sm whitespace-nowrap"><thead class="bg-slate-50 sticky top-0 z-10 shadow-sm"><tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200"><th class="p-4 w-1/4 font-bold">Nama / Petugas</th><th class="p-4 font-bold text-center">AK</th><th class="p-4 font-bold text-center">KK</th><th class="p-4 font-bold text-center">Suami/Istri</th><th class="p-4 font-bold text-center">Fasih</th><th class="p-4 font-bold">Tindak Lanjut</th><th class="p-4 min-w-[200px] font-bold">Keterangan</th></tr></thead><tbody id="tabel-body-keluargacemara" class="divide-y divide-gray-100 text-gray-700"><tr><td colspan="7" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan PML dan tekan "Tampilkan"</td></tr></tbody></table></div>
                     <div id="pagination-container-keluargacemara" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider"><span>Tampilkan:</span><select id="items-per-page-keluargacemara" onchange="changeItemsPerPage('keluargacemara')" class="border rounded p-1.5 outline-none"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="all">Semua</option></select></div><div id="page-info-keluargacemara" class="text-xs font-bold text-slate-500">0 dari 0</div><div class="flex gap-2"><button onclick="changePage('keluargacemara', -1)" id="btn-prev-keluargacemara" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Prev</button><button onclick="changePage('keluargacemara', 1)" id="btn-next-keluargacemara" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Next</button></div></div>
+                </div>
+            </div>
+
+            <!-- HALAMAN: ANOMALI KHUSUS - FASILITAS BAB -->
+            <div id="page-fasilitasbab" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-restroom text-blue-400 mr-2"></i>Fasilitas BAB</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>Fasilitas BAB yang digunakan Keluarga berkode 6 dan 4 (Tidak ada / Ada, di MCK umum).</p>
+                        <p class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Konfirmasi Fasilitas BAB, berikan catatan.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML *</label><select id="input-pml-fasilitasbab" onchange="renderDropdownPcl('fasilitasbab')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white"></select></div>
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Ops)</label><select id="input-pcl-fasilitasbab" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white" disabled><option value="">Pilih PML dahulu</option></select></div>
+                        <button onclick="tarikDataAnomaliKhusus('fasilitasbab')" class="bg-slate-700 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-slate-800 transition h-[38px]"><i class="fas fa-search mr-2"></i> Tampilkan</button>
+                        <div id="status-text-fasilitasbab" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg">...</div>
+                    </div>
+                </div>
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative"><table class="w-full text-left text-sm whitespace-nowrap"><thead class="bg-slate-50 sticky top-0 z-10 shadow-sm"><tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200"><th class="p-4 w-1/3 font-bold">Nama / Petugas</th><th class="p-4 font-bold text-slate-700">Fasilitas BAB</th><th class="p-4 font-bold text-center">Fasih</th><th class="p-4 font-bold">Tindak Lanjut</th><th class="p-4 min-w-[200px] font-bold">Keterangan</th></tr></thead><tbody id="tabel-body-fasilitasbab" class="divide-y divide-gray-100 text-gray-700"><tr><td colspan="5" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan PML dan tekan "Tampilkan"</td></tr></tbody></table></div>
+                    <div id="pagination-container-fasilitasbab" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider"><span>Tampilkan:</span><select id="items-per-page-fasilitasbab" onchange="changeItemsPerPage('fasilitasbab')" class="border rounded p-1.5 outline-none"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="all">Semua</option></select></div><div id="page-info-fasilitasbab" class="text-xs font-bold text-slate-500">0 dari 0</div><div class="flex gap-2"><button onclick="changePage('fasilitasbab', -1)" id="btn-prev-fasilitasbab" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Prev</button><button onclick="changePage('fasilitasbab', 1)" id="btn-next-fasilitasbab" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Next</button></div></div>
+                </div>
+            </div>
+
+            <!-- HALAMAN: ANOMALI KHUSUS - KLOSET VS SEPTICTANK -->
+            <div id="page-klosetseptictank" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-toilet text-blue-500 mr-2"></i>Kloset elit, SepticTank sulit</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>Jenis Kloset Leher Angsa namun pembuangannya Kolam/sawah/sungai/danau/laut, Lubang tanah, Pantai/tanah lapang/kebun, dan Lainnya.</p>
+                        <p class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Konfirmasi kesesuaian jenis Kloset dan fasilitas pembuangan BAB.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML *</label><select id="input-pml-klosetseptictank" onchange="renderDropdownPcl('klosetseptictank')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white"></select></div>
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Ops)</label><select id="input-pcl-klosetseptictank" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white" disabled><option value="">Pilih PML dahulu</option></select></div>
+                        <button onclick="tarikDataAnomaliKhusus('klosetseptictank')" class="bg-slate-700 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-slate-800 transition h-[38px]"><i class="fas fa-search mr-2"></i> Tampilkan</button>
+                        <div id="status-text-klosetseptictank" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg">...</div>
+                    </div>
+                </div>
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative"><table class="w-full text-left text-sm whitespace-nowrap"><thead class="bg-slate-50 sticky top-0 z-10 shadow-sm"><tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200"><th class="p-4 w-1/4 font-bold">Nama / Petugas</th><th class="p-4 font-bold text-slate-700">Jenis Kloset</th><th class="p-4 font-bold text-slate-700">Tempat Pembuangan</th><th class="p-4 font-bold text-center">Fasih</th><th class="p-4 font-bold">Tindak Lanjut</th><th class="p-4 min-w-[200px] font-bold">Keterangan</th></tr></thead><tbody id="tabel-body-klosetseptictank" class="divide-y divide-gray-100 text-gray-700"><tr><td colspan="6" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan PML dan tekan "Tampilkan"</td></tr></tbody></table></div>
+                    <div id="pagination-container-klosetseptictank" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider"><span>Tampilkan:</span><select id="items-per-page-klosetseptictank" onchange="changeItemsPerPage('klosetseptictank')" class="border rounded p-1.5 outline-none"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="all">Semua</option></select></div><div id="page-info-klosetseptictank" class="text-xs font-bold text-slate-500">0 dari 0</div><div class="flex gap-2"><button onclick="changePage('klosetseptictank', -1)" id="btn-prev-klosetseptictank" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Prev</button><button onclick="changePage('klosetseptictank', 1)" id="btn-next-klosetseptictank" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Next</button></div></div>
+                </div>
+            </div>
+
+            <!-- HALAMAN: ANOMALI KHUSUS - KONDISI RUMAH -->
+            <div id="page-kondisirumah" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-house-damage text-amber-600 mr-2"></i>Kondisi Rumah (Lantai, Dinding, & Atap)</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>Kondisi Lantai, Dinding, & Atap nya ucakk, aciannn :(</p>
+                        <p class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Konfirmasi kondisi Perumahan, berikan catatan.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML *</label><select id="input-pml-kondisirumah" onchange="renderDropdownPcl('kondisirumah')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white"></select></div>
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Ops)</label><select id="input-pcl-kondisirumah" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white" disabled><option value="">Pilih PML dahulu</option></select></div>
+                        <button onclick="tarikDataAnomaliKhusus('kondisirumah')" class="bg-slate-700 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-slate-800 transition h-[38px]"><i class="fas fa-search mr-2"></i> Tampilkan</button>
+                        <div id="status-text-kondisirumah" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg">...</div>
+                    </div>
+                </div>
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative"><table class="w-full text-left text-sm whitespace-nowrap"><thead class="bg-slate-50 sticky top-0 z-10 shadow-sm"><tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200"><th class="p-4 w-1/4 font-bold">Nama / Petugas</th><th class="p-4 font-bold text-slate-700">Kondisi</th><th class="p-4 font-bold text-center">Fasih</th><th class="p-4 font-bold">Tindak Lanjut</th><th class="p-4 min-w-[200px] font-bold">Keterangan</th></tr></thead><tbody id="tabel-body-kondisirumah" class="divide-y divide-gray-100 text-gray-700"><tr><td colspan="5" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan PML dan tekan "Tampilkan"</td></tr></tbody></table></div>
+                    <div id="pagination-container-kondisirumah" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider"><span>Tampilkan:</span><select id="items-per-page-kondisirumah" onchange="changeItemsPerPage('kondisirumah')" class="border rounded p-1.5 outline-none"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="all">Semua</option></select></div><div id="page-info-kondisirumah" class="text-xs font-bold text-slate-500">0 dari 0</div><div class="flex gap-2"><button onclick="changePage('kondisirumah', -1)" id="btn-prev-kondisirumah" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Prev</button><button onclick="changePage('kondisirumah', 1)" id="btn-next-kondisirumah" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Next</button></div></div>
+                </div>
+            </div>
+
+            <!-- HALAMAN: ANOMALI KHUSUS - LANTAI VS KLOSET -->
+            <div id="page-lantaivskloset" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-puzzle-piece text-slate-500 mr-2"></i>Lantai Keramik, Kloset Antik :(</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>Anomali kewajaran Kondisi Lantai keramik dengan jenis kloset yang kurang memadai.</p>
+                        <p class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Konfirmasi kondisi Lantai dan Kloset, berikan catatan.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML *</label><select id="input-pml-lantaivskloset" onchange="renderDropdownPcl('lantaivskloset')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white"></select></div>
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Ops)</label><select id="input-pcl-lantaivskloset" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white" disabled><option value="">Pilih PML dahulu</option></select></div>
+                        <button onclick="tarikDataAnomaliKhusus('lantaivskloset')" class="bg-slate-700 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-slate-800 transition h-[38px]"><i class="fas fa-search mr-2"></i> Tampilkan</button>
+                        <div id="status-text-lantaivskloset" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg">...</div>
+                    </div>
+                </div>
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative"><table class="w-full text-left text-sm whitespace-nowrap"><thead class="bg-slate-50 sticky top-0 z-10 shadow-sm"><tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200"><th class="p-4 w-1/4 font-bold">Nama / Petugas</th><th class="p-4 font-bold text-slate-700">Lantai</th><th class="p-4 font-bold text-slate-700">Kloset</th><th class="p-4 font-bold text-center">Fasih</th><th class="p-4 font-bold">Tindak Lanjut</th><th class="p-4 min-w-[200px] font-bold">Keterangan</th></tr></thead><tbody id="tabel-body-lantaivskloset" class="divide-y divide-gray-100 text-gray-700"><tr><td colspan="6" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan PML dan tekan "Tampilkan"</td></tr></tbody></table></div>
+                    <div id="pagination-container-lantaivskloset" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider"><span>Tampilkan:</span><select id="items-per-page-lantaivskloset" onchange="changeItemsPerPage('lantaivskloset')" class="border rounded p-1.5 outline-none"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="all">Semua</option></select></div><div id="page-info-lantaivskloset" class="text-xs font-bold text-slate-500">0 dari 0</div><div class="flex gap-2"><button onclick="changePage('lantaivskloset', -1)" id="btn-prev-lantaivskloset" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Prev</button><button onclick="changePage('lantaivskloset', 1)" id="btn-next-lantaivskloset" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Next</button></div></div>
+                </div>
+            </div>
+
+            <!-- HALAMAN: ANOMALI KHUSUS - IJAZAH -->
+            <div id="page-ijazah" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-graduation-cap text-indigo-500 mr-2"></i>Ijazah</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>Ijazah | Pendidikan terakhir yang ditamatkan adalah S2 atau S3.</p>
+                        <p class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Konfirmasi ijazah, berikan catatan.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML *</label><select id="input-pml-ijazah" onchange="renderDropdownPcl('ijazah')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white"></select></div>
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Ops)</label><select id="input-pcl-ijazah" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white" disabled><option value="">Pilih PML dahulu</option></select></div>
+                        <button onclick="tarikDataAnomaliKhusus('ijazah')" class="bg-slate-700 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-slate-800 transition h-[38px]"><i class="fas fa-search mr-2"></i> Tampilkan</button>
+                        <div id="status-text-ijazah" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg">...</div>
+                    </div>
+                </div>
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative"><table class="w-full text-left text-sm whitespace-nowrap"><thead class="bg-slate-50 sticky top-0 z-10 shadow-sm"><tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200"><th class="p-4 w-1/3 font-bold">Nama / Petugas</th><th class="p-4 font-bold text-indigo-700">Ijazah</th><th class="p-4 font-bold text-center">Fasih</th><th class="p-4 font-bold">Tindak Lanjut</th><th class="p-4 min-w-[200px] font-bold">Keterangan</th></tr></thead><tbody id="tabel-body-ijazah" class="divide-y divide-gray-100 text-gray-700"><tr><td colspan="5" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan PML dan tekan "Tampilkan"</td></tr></tbody></table></div>
+                    <div id="pagination-container-ijazah" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider"><span>Tampilkan:</span><select id="items-per-page-ijazah" onchange="changeItemsPerPage('ijazah')" class="border rounded p-1.5 outline-none"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="all">Semua</option></select></div><div id="page-info-ijazah" class="text-xs font-bold text-slate-500">0 dari 0</div><div class="flex gap-2"><button onclick="changePage('ijazah', -1)" id="btn-prev-ijazah" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Prev</button><button onclick="changePage('ijazah', 1)" id="btn-next-ijazah" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Next</button></div></div>
+                </div>
+            </div>
+
+            <!-- HALAMAN: ANOMALI KHUSUS - RUMAH DINAS -->
+            <div id="page-rumdin" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-building text-slate-600 mr-2"></i>Rumah Dinas</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>Kewajaran antara Kepemilikan Rumah Dinas dengan kedudukan bekerja.</p>
+                        <p class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Konfirmasi kewajaran kepemilikan rumah dengan pekerjaan. berikan catatan.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML *</label><select id="input-pml-rumdin" onchange="renderDropdownPcl('rumdin')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white"></select></div>
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Ops)</label><select id="input-pcl-rumdin" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white" disabled><option value="">Pilih PML dahulu</option></select></div>
+                        <button onclick="tarikDataAnomaliKhusus('rumdin')" class="bg-slate-700 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-slate-800 transition h-[38px]"><i class="fas fa-search mr-2"></i> Tampilkan</button>
+                        <div id="status-text-rumdin" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg">...</div>
+                    </div>
+                </div>
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative"><table class="w-full text-left text-sm whitespace-nowrap"><thead class="bg-slate-50 sticky top-0 z-10 shadow-sm"><tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200"><th class="p-4 w-1/3 font-bold">Nama / Petugas</th><th class="p-4 font-bold text-slate-700">Pekerjaan Utama</th><th class="p-4 font-bold text-center">Fasih</th><th class="p-4 font-bold">Tindak Lanjut</th><th class="p-4 min-w-[200px] font-bold">Keterangan</th></tr></thead><tbody id="tabel-body-rumdin" class="divide-y divide-gray-100 text-gray-700"><tr><td colspan="5" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan PML dan tekan "Tampilkan"</td></tr></tbody></table></div>
+                    <div id="pagination-container-rumdin" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider"><span>Tampilkan:</span><select id="items-per-page-rumdin" onchange="changeItemsPerPage('rumdin')" class="border rounded p-1.5 outline-none"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="all">Semua</option></select></div><div id="page-info-rumdin" class="text-xs font-bold text-slate-500">0 dari 0</div><div class="flex gap-2"><button onclick="changePage('rumdin', -1)" id="btn-prev-rumdin" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Prev</button><button onclick="changePage('rumdin', 1)" id="btn-next-rumdin" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Next</button></div></div>
+                </div>
+            </div>
+
+            <!-- HALAMAN: ANOMALI KHUSUS - SUMBER AIR -->
+            <div id="page-sumberair" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-tint text-cyan-500 mr-2"></i>Sumber Air su dekat</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>Ketidakwajaran Sumber air keluarga (Air Minum Kemasan).</p>
+                        <p class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Konfirmasi Sumber air utama, berikan catatan.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML *</label><select id="input-pml-sumberair" onchange="renderDropdownPcl('sumberair')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white"></select></div>
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Ops)</label><select id="input-pcl-sumberair" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white" disabled><option value="">Pilih PML dahulu</option></select></div>
+                        <button onclick="tarikDataAnomaliKhusus('sumberair')" class="bg-slate-700 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-slate-800 transition h-[38px]"><i class="fas fa-search mr-2"></i> Tampilkan</button>
+                        <div id="status-text-sumberair" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg">...</div>
+                    </div>
+                </div>
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative"><table class="w-full text-left text-sm whitespace-nowrap"><thead class="bg-slate-50 sticky top-0 z-10 shadow-sm"><tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200"><th class="p-4 w-1/3 font-bold">Nama / Petugas</th><th class="p-4 font-bold text-slate-700">Sumber Air</th><th class="p-4 font-bold text-center">Fasih</th><th class="p-4 font-bold">Tindak Lanjut</th><th class="p-4 min-w-[200px] font-bold">Keterangan</th></tr></thead><tbody id="tabel-body-sumberair" class="divide-y divide-gray-100 text-gray-700"><tr><td colspan="5" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan PML dan tekan "Tampilkan"</td></tr></tbody></table></div>
+                    <div id="pagination-container-sumberair" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider"><span>Tampilkan:</span><select id="items-per-page-sumberair" onchange="changeItemsPerPage('sumberair')" class="border rounded p-1.5 outline-none"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="all">Semua</option></select></div><div id="page-info-sumberair" class="text-xs font-bold text-slate-500">0 dari 0</div><div class="flex gap-2"><button onclick="changePage('sumberair', -1)" id="btn-prev-sumberair" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Prev</button><button onclick="changePage('sumberair', 1)" id="btn-next-sumberair" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Next</button></div></div>
+                </div>
+            </div>
+
+            <!-- HALAMAN: ANOMALI KHUSUS - SUMUR -->
+            <div id="page-sumur" class="page-content hidden flex-col shrink-0 min-h-full">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 shrink-0">
+                    <h2 class="text-xl font-bold text-slate-800 mb-1"><i class="fas fa-water text-cyan-600 mr-2"></i>Sumur</h2>
+                    <div class="text-sm text-slate-600 mb-4">
+                        <p>Ketidakwajaran Sumber air keluarga berupa Sumur, mata air.</p>
+                        <p class="mt-2 font-bold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200"><i class="fas fa-info-circle text-blue-500 mr-1"></i>Konfirmasi Sumber air utama, berikan catatan.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 items-end bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PML *</label><select id="input-pml-sumur" onchange="renderDropdownPcl('sumur')" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white"></select></div>
+                        <div><label class="block font-semibold text-xs text-gray-500 uppercase tracking-wider mb-1">PCL (Ops)</label><select id="input-pcl-sumur" class="border border-gray-300 rounded-lg p-2 text-sm w-full min-w-[150px] bg-white" disabled><option value="">Pilih PML dahulu</option></select></div>
+                        <button onclick="tarikDataAnomaliKhusus('sumur')" class="bg-slate-700 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-slate-800 transition h-[38px]"><i class="fas fa-search mr-2"></i> Tampilkan</button>
+                        <div id="status-text-sumur" class="text-sm font-medium text-blue-600 hidden whitespace-nowrap bg-blue-50 px-3 py-1.5 rounded-lg">...</div>
+                    </div>
+                </div>
+                <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="overflow-y-auto custom-scrollbar flex-1 relative"><table class="w-full text-left text-sm whitespace-nowrap"><thead class="bg-slate-50 sticky top-0 z-10 shadow-sm"><tr class="text-slate-600 text-xs uppercase tracking-wider border-b border-gray-200"><th class="p-4 w-1/3 font-bold">Nama / Petugas</th><th class="p-4 font-bold text-slate-700">Sumber Air</th><th class="p-4 font-bold text-center">Fasih</th><th class="p-4 font-bold">Tindak Lanjut</th><th class="p-4 min-w-[200px] font-bold">Keterangan</th></tr></thead><tbody id="tabel-body-sumur" class="divide-y divide-gray-100 text-gray-700"><tr><td colspan="5" class="p-10 text-center text-gray-400"><i class="fas fa-table text-4xl mb-3 block opacity-50"></i>Tentukan PML dan tekan "Tampilkan"</td></tr></tbody></table></div>
+                    <div id="pagination-container-sumur" class="hidden bg-slate-50 border-t border-gray-200 p-3 flex items-center justify-between shrink-0"><div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider"><span>Tampilkan:</span><select id="items-per-page-sumur" onchange="changeItemsPerPage('sumur')" class="border rounded p-1.5 outline-none"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="all">Semua</option></select></div><div id="page-info-sumur" class="text-xs font-bold text-slate-500">0 dari 0</div><div class="flex gap-2"><button onclick="changePage('sumur', -1)" id="btn-prev-sumur" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Prev</button><button onclick="changePage('sumur', 1)" id="btn-next-sumur" class="px-4 py-2 border bg-white rounded-lg text-xs font-bold">Next</button></div></div>
                 </div>
             </div>
 
@@ -742,7 +917,15 @@
             jenislantai: { data: [], current: 1, perPage: 10 },
             jenisatap: { data: [], current: 1, perPage: 10 },
             jeniskawasan: { data: [], current: 1, perPage: 10 },
-            keluargacemara: { data: [], current: 1, perPage: 10 }
+            keluargacemara: { data: [], current: 1, perPage: 10 },
+            fasilitasbab: { data: [], current: 1, perPage: 10 },
+            klosetseptictank: { data: [], current: 1, perPage: 10 },
+            kondisirumah: { data: [], current: 1, perPage: 10 },
+            lantaivskloset: { data: [], current: 1, perPage: 10 },
+            ijazah: { data: [], current: 1, perPage: 10 },
+            rumdin: { data: [], current: 1, perPage: 10 },
+            sumberair: { data: [], current: 1, perPage: 10 },
+            sumur: { data: [], current: 1, perPage: 10 }
         };
 
         const anomalyEmojiMap = {
@@ -830,6 +1013,14 @@
             if(mode === 'jenisatap') title = 'Jenis Atap Rumah';
             if(mode === 'jeniskawasan') title = 'Jenis Kawasan Beroperasi';
             if(mode === 'keluargacemara') title = 'Keluarga Cemara';
+            if(mode === 'fasilitasbab') title = 'Fasilitas BAB';
+            if(mode === 'klosetseptictank') title = 'Kloset vs SepticTank';
+            if(mode === 'kondisirumah') title = 'Kondisi Rumah';
+            if(mode === 'lantaivskloset') title = 'Lantai vs Kloset';
+            if(mode === 'ijazah') title = 'Ijazah';
+            if(mode === 'rumdin') title = 'Rumah Dinas';
+            if(mode === 'sumberair') title = 'Sumber Air';
+            if(mode === 'sumur') title = 'Sumur';
             if(mode === 'sync') title = 'Sinkronisasi Data';
             
             document.getElementById('header-title').innerText = title;
@@ -855,6 +1046,14 @@
             } else if (mode === 'jenisatap') { document.getElementById('page-jenisatap').classList.add('active');
             } else if (mode === 'jeniskawasan') { document.getElementById('page-jeniskawasan').classList.add('active');
             } else if (mode === 'keluargacemara') { document.getElementById('page-keluargacemara').classList.add('active');
+            } else if (mode === 'fasilitasbab') { document.getElementById('page-fasilitasbab').classList.add('active');
+            } else if (mode === 'klosetseptictank') { document.getElementById('page-klosetseptictank').classList.add('active');
+            } else if (mode === 'kondisirumah') { document.getElementById('page-kondisirumah').classList.add('active');
+            } else if (mode === 'lantaivskloset') { document.getElementById('page-lantaivskloset').classList.add('active');
+            } else if (mode === 'ijazah') { document.getElementById('page-ijazah').classList.add('active');
+            } else if (mode === 'rumdin') { document.getElementById('page-rumdin').classList.add('active');
+            } else if (mode === 'sumberair') { document.getElementById('page-sumberair').classList.add('active');
+            } else if (mode === 'sumur') { document.getElementById('page-sumur').classList.add('active');
             } else if (mode === 'sync') { document.getElementById('page-sync').classList.add('active');
             }
             
@@ -914,6 +1113,14 @@
             document.getElementById('input-pml-jenisatap').innerHTML = options;
             document.getElementById('input-pml-jeniskawasan').innerHTML = options;
             document.getElementById('input-pml-keluargacemara').innerHTML = options;
+            document.getElementById('input-pml-fasilitasbab').innerHTML = options;
+            document.getElementById('input-pml-klosetseptictank').innerHTML = options;
+            document.getElementById('input-pml-kondisirumah').innerHTML = options;
+            document.getElementById('input-pml-lantaivskloset').innerHTML = options;
+            document.getElementById('input-pml-ijazah').innerHTML = options;
+            document.getElementById('input-pml-rumdin').innerHTML = options;
+            document.getElementById('input-pml-sumberair').innerHTML = options;
+            document.getElementById('input-pml-sumur').innerHTML = options;
         }
 
         function renderDropdownPcl(konteks) {
@@ -933,6 +1140,14 @@
             else if (konteks === 'jenisatap') { pmlId = 'input-pml-jenisatap'; pclId = 'input-pcl-jenisatap'; }
             else if (konteks === 'jeniskawasan') { pmlId = 'input-pml-jeniskawasan'; pclId = 'input-pcl-jeniskawasan'; }
             else if (konteks === 'keluargacemara') { pmlId = 'input-pml-keluargacemara'; pclId = 'input-pcl-keluargacemara'; }
+            else if (konteks === 'fasilitasbab') { pmlId = 'input-pml-fasilitasbab'; pclId = 'input-pcl-fasilitasbab'; }
+            else if (konteks === 'klosetseptictank') { pmlId = 'input-pml-klosetseptictank'; pclId = 'input-pcl-klosetseptictank'; }
+            else if (konteks === 'kondisirumah') { pmlId = 'input-pml-kondisirumah'; pclId = 'input-pcl-kondisirumah'; }
+            else if (konteks === 'lantaivskloset') { pmlId = 'input-pml-lantaivskloset'; pclId = 'input-pcl-lantaivskloset'; }
+            else if (konteks === 'ijazah') { pmlId = 'input-pml-ijazah'; pclId = 'input-pcl-ijazah'; }
+            else if (konteks === 'rumdin') { pmlId = 'input-pml-rumdin'; pclId = 'input-pcl-rumdin'; }
+            else if (konteks === 'sumberair') { pmlId = 'input-pml-sumberair'; pclId = 'input-pcl-sumberair'; }
+            else if (konteks === 'sumur') { pmlId = 'input-pml-sumur'; pclId = 'input-pcl-sumur'; }
 
             const pmlVal = document.getElementById(pmlId).value;
             const pclSelect = document.getElementById(pclId);
@@ -1597,6 +1812,78 @@
                         <td class="p-3 whitespace-nowrap text-xs text-center font-bold text-blue-600 bg-blue-50/50 border-r border-slate-100">${row.art}</td>
                         <td class="p-3 whitespace-nowrap text-xs text-center font-bold text-amber-600 bg-amber-50/50 border-r border-slate-100">${row.krt}</td>
                         <td class="p-3 whitespace-nowrap text-xs text-center font-bold text-rose-600 bg-rose-50/50">${row.suamiIstri}</td>
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[200px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>
+                    `;
+                }
+                else if (konteks === 'fasilitasbab') {
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${displayNama}<br><span class="text-[10px] text-slate-500 font-normal"><i class="fas fa-user-tie"></i> ${row.pml} | ${row.pcl}</span></td>
+                        <td class="p-3 whitespace-normal text-xs font-medium text-slate-700">${row.fasilitas_bab}</td>
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[200px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>
+                    `;
+                }
+                else if (konteks === 'klosetseptictank') {
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${displayNama}<br><span class="text-[10px] text-slate-500 font-normal"><i class="fas fa-user-tie"></i> ${row.pml} | ${row.pcl}</span></td>
+                        <td class="p-3 whitespace-normal text-[11px] text-slate-600">${row.kloset}</td>
+                        <td class="p-3 whitespace-normal text-[11px] font-bold text-blue-600">${row.pembuangan}</td>
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[200px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>
+                    `;
+                }
+                else if (konteks === 'kondisirumah') {
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${displayNama}<br><span class="text-[10px] text-slate-500 font-normal"><i class="fas fa-user-tie"></i> ${row.pml} | ${row.pcl}</span></td>
+                        
+                        <!-- GABUNGAN 3 DATA KONDISI KE DALAM 1 KOLOM (TD) -->
+                        <td class="p-3 whitespace-nowrap text-[11px]">
+                            <div class="mb-1"><span class="font-bold text-slate-500 inline-block w-12">Lantai</span><span class="text-amber-700 font-medium">: ${row.kondisi_lantai}</span></div>
+                            <div class="mb-1"><span class="font-bold text-slate-500 inline-block w-12">Dinding</span><span class="text-amber-700 font-medium">: ${row.kondisi_dinding}</span></div>
+                            <div><span class="font-bold text-slate-500 inline-block w-12">Atap</span><span class="text-amber-700 font-medium">: ${row.kondisi_atap}</span></div>
+                        </td>
+                        
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[200px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>
+                    `;
+                }
+                else if (konteks === 'lantaivskloset') {
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${displayNama}<br><span class="text-[10px] text-slate-500 font-normal"><i class="fas fa-user-tie"></i> ${row.pml} | ${row.pcl}</span></td>
+                        <td class="p-3 whitespace-normal text-[11px] text-slate-600 font-medium">${row.lantai}</td>
+                        <td class="p-3 whitespace-normal text-[11px] font-bold text-cyan-600">${row.kloset}</td>
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[200px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>
+                    `;
+                }
+                else if (konteks === 'ijazah') {
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${displayNama}<br><span class="text-[10px] text-slate-500 font-normal"><i class="fas fa-user-tie"></i> ${row.pml} | ${row.pcl}</span></td>
+                        <td class="p-3 whitespace-normal text-xs font-bold text-purple-700">${row.ijazah}</td>
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[200px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>
+                    `;
+                }
+                else if (konteks === 'rumdin') {
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${displayNama}<br><span class="text-[10px] text-slate-500 font-normal"><i class="fas fa-user-tie"></i> ${row.pml} | ${row.pcl}</span></td>
+                        <td class="p-3 whitespace-normal text-xs font-medium text-slate-600">${row.kedudukan}</td>
+                        <td class="p-3 text-center">${linkFasihBtn}</td>
+                        <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
+                        <td class="p-3 min-w-[200px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>
+                    `;
+                }
+                else if (konteks === 'sumberair' || konteks === 'sumur') {
+                    tr.innerHTML = `
+                        <td class="p-3 font-semibold text-slate-800 whitespace-normal text-xs leading-tight">${displayNama}<br><span class="text-[10px] text-slate-500 font-normal"><i class="fas fa-user-tie"></i> ${row.pml} | ${row.pcl}</span></td>
+                        <td class="p-3 whitespace-normal text-xs font-bold text-blue-600">${row.sumber_air}</td>
                         <td class="p-3 text-center">${linkFasihBtn}</td>
                         <td class="p-3"><select onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'tinjut', this)" class="p-1.5 text-[11px] font-bold border rounded-md outline-none ${statusColor}"><option value="Belum Konfirmasi" ${statusVal==="Belum Konfirmasi"?"selected":""}>Belum Konfirmasi</option><option value="Sedang Konfirmasi" ${statusVal==="Sedang Konfirmasi"?"selected":""}>Sedang Konfirmasi</option><option value="Sudah Konfirmasi" ${statusVal==="Sudah Konfirmasi"?"selected":""}>Sudah Konfirmasi</option></select></td>
                         <td class="p-3 min-w-[200px]"><textarea onchange="updateDataAnomaliKhusus('${konteks}', '${safeNama}', '${safePml}', 'ket', this)" class="w-full border-b-2 border-transparent bg-transparent focus:border-orange-500 outline-none px-2 py-1 text-xs transition rounded resize-y h-8 focus:h-16" placeholder="Ketik keterangan...">${row.ket}</textarea></td>
