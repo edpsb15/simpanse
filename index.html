@@ -2007,25 +2007,95 @@
             finally { inputElement.disabled = false; setTimeout(() => status.classList.add('hidden'), 3000); }
         }
 
-        async function updateDataAnomaliKhusus(konteks, namaTarget, pmlTarget, kolom, inputElement) {
-            const nilaiBaru = inputElement.value;
-            const status = document.getElementById('status-text-' + konteks);
+        async function updateDataAnomaliKhusus(tipe, arg1, arg2, arg3, arg4) {
+            let idRow, kolom, elemen;
+
+            // 1. DETEKSI FORMAT PARAMETER HTML
+            // Jika arg4 ada isinya, berarti ini HTML format lama (tipe, nama, pml, kolom, elemen)
+            if (arg4 !== undefined) {
+                let nama = arg1;
+                let pml = arg2;
+                kolom = arg3;
+                elemen = arg4;
+
+                // Mencari ID Baris dari memori (state) berdasarkan Nama dan PML
+                let rowData = pageState[tipe].data.find(r => r.nama === nama && r.pml === pml);
+                
+                if (rowData && rowData.id) {
+                    idRow = rowData.id;
+                } else {
+                    showToast("Gagal mendeteksi ID Baris di memori. Silakan muat ulang tabel.", true);
+                    return;
+                }
+            } 
+            // Jika arg4 kosong, berarti ini HTML format baru (tipe, id, kolom, elemen)
+            else {
+                idRow = arg1;
+                kolom = arg2;
+                elemen = arg3;
+            }
+
+            // 2. SIMPAN STATE AWAL ELEMEN & BERIKAN EFEK LOADING
+            const nilaiBaru = elemen.value;
+            const originalClass = elemen.className;
             
-            status.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Menyimpan...`;
-            status.classList.remove('hidden', 'text-blue-600', 'text-emerald-600', 'text-red-600'); status.classList.add('text-orange-500');
-            inputElement.disabled = true;
+            // Matikan elemen sementara agar user tidak klik berkali-kali saat proses simpan
+            elemen.disabled = true;
+            elemen.classList.add('opacity-50', 'cursor-wait');
 
+            // 3. PROSES PENGIRIMAN DATA KE SERVER (APPS SCRIPT)
             try {
-                const response = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "updateData", tipe: konteks, nama: namaTarget, pml: pmlTarget, kolom: kolom, nilai: nilaiBaru }) });
-                const result = await response.json();
-                if (result.status === "sukses") {
-                    status.innerHTML = `<i class="fas fa-check mr-1"></i> Tersimpan!`; status.classList.replace('text-orange-500', 'text-emerald-600');
-                    if(kolom === 'tinjut') inputElement.className = `p-1.5 text-[11px] font-bold border rounded-md outline-none ${nilaiBaru === 'Sudah Konfirmasi' ? 'bg-emerald-100 text-emerald-700' : nilaiBaru === 'Sedang Konfirmasi' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`;
-                } else throw new Error(result.pesan);
-            } catch (error) { showToast("Gagal: " + error.message, true); } 
-            finally { inputElement.disabled = false; setTimeout(() => status.classList.add('hidden'), 3000); }
-        }
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        action: "updateData",
+                        tipe: tipe,
+                        id: idRow,       // Pasti mengirimkan angka (ID Baris)
+                        kolom: kolom,
+                        nilai: nilaiBaru
+                    })
+                });
 
+                const result = await response.json();
+
+                if (result.status === "sukses") {
+                    showToast("Data berhasil diperbarui!");
+                    
+                    // Simpan perubahan ke memori lokal agar tidak hilang saat pindah halaman (pagination)
+                    const dataIndex = pageState[tipe].data.findIndex(r => r.id === idRow);
+                    if (dataIndex !== -1) {
+                        pageState[tipe].data[dataIndex][kolom] = nilaiBaru;
+                    }
+
+                    // Ganti warna visual jika yang diubah adalah status 'tinjut'
+                    if (kolom === 'tinjut') {
+                        elemen.className = "p-1.5 text-[11px] font-bold border rounded-md outline-none transition " + 
+                        (nilaiBaru === "Sudah Konfirmasi" ? "bg-emerald-100 text-emerald-700" : 
+                        (nilaiBaru === "Sedang Konfirmasi" ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700"));
+                    } else {
+                        // Kembalikan class asli untuk textarea/keterangan
+                        elemen.className = originalClass; 
+                    }
+                } else {
+                    throw new Error(result.pesan || "Gagal menyimpan perubahan ke server.");
+                }
+            } catch (error) {
+                // Tampilkan pesan error dan kembalikan visual ke semula
+                showToast("Error Sistem: " + error.message, true);
+                elemen.className = originalClass;
+                
+                // Kembalikan nilai dropdown/teks ke data yang ada di memori lokal jika gagal
+                const dataIndex = pageState[tipe].data.findIndex(r => r.id === idRow);
+                if (dataIndex !== -1) {
+                    elemen.value = pageState[tipe].data[dataIndex][kolom];
+                }
+            } finally {
+                // Nyalakan kembali elemen setelah proses selesai
+                elemen.disabled = false;
+                elemen.classList.remove('opacity-50', 'cursor-wait');
+            }
+        }
+        
         function showCalcModal(encodedHtml) {
             document.getElementById('calc-modal-body').innerHTML = decodeURIComponent(encodedHtml);
             const modal = document.getElementById('calc-modal');
